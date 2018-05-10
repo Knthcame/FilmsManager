@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿using FilmsManager.Views;
 using Xamarin.Forms;
 
 namespace FilmsManager
 {
-	public partial class App : Application
+    public partial class App : Application
 	{
 		public App ()
 		{
 			InitializeComponent();
 
-			MainPage = new FilmsManager.MainPage();
+			MainPage = new HomePage();
 		}
 
 		protected override void OnStart ()
