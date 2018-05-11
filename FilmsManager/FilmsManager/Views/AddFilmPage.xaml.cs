@@ -12,15 +12,32 @@ namespace FilmsManager.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class AddFilmPage : ContentPage
 	{
-		public AddFilmPage ()
+        Movie AddingMovie;
+
+        public AddFilmPage ()
 		{
 			InitializeComponent ();
-            Movie AddingMovie = new Movie();
+            AddingMovie = new Movie();
 		}
 
-        public void OnCheckButtonPressed()
+        public async Task OnCheckButtonPressed()
         {
-
+            if(AddingMovie.MovieTitle==null | AddingMovie.MovieGenre == null)
+            {
+                await DisplayAlert("Error!",
+                "Not all values have been inserted",
+                "OK");
+            }
         }
-	}
+
+        void OnTitleAdded()
+        {
+            AddingMovie.MovieTitle = Title.Text;
+        }
+
+        void OnGenreAdded()
+        {
+            AddingMovie.MovieGenre = Title.Text;
+        }
+    }
 }

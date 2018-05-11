@@ -5,13 +5,18 @@
              Title="Add film">
     <ContentPage.Content>
         <StackLayout>
-            <Entry Placeholder="Insert Movie Title" 
-                   HorizontalOptions="FillAndExpand"
-                   VerticalOptions="Start"/>
+            
+            <Entry  x:Name="Title"
+                    Placeholder="Insert Movie Title" 
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Start"
+                    PropertyChanged="OnTitleAdded"/>
 
-            <Entry Placeholder="Insert Movie Genre" 
-                   HorizontalOptions="FillAndExpand"
-                   VerticalOptions="Start"/>
+            <Entry  x:Name="Genre"
+                    Placeholder="Insert Movie Genre" 
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Start"
+                    PropertyChanged="OnGenreAdded"/>
 
             <Button x:Name="CheckButton"
                     Pressed="OnCheckButtonPressed"
@@ -20,6 +25,7 @@
                     Image="Check3.png"
                     WidthRequest="50"
                     HeightRequest="50"/>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
