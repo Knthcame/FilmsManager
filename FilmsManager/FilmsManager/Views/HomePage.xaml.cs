@@ -16,5 +16,10 @@ namespace FilmsManager.Views
             MovieView.ItemsSource = movieList;
             movieList.Add(item: new Movie { MovieTitle = "Infinity war", MovieGenre = "Marvel", MovieIcon=ImageSource.FromFile("icon.png") });
         }
+
+        async public void OnAddButtonPressed()
+        {
+            await Navigation.PushAsync(new AddFilmPage());
+        }
 	}
 }

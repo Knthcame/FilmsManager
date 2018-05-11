@@ -15,6 +15,12 @@ namespace FilmsManager.Views
 		public AddFilmPage ()
 		{
 			InitializeComponent ();
+            Movie AddingMovie = new Movie();
 		}
+
+        public void OnCheckButtonPressed()
+        {
+
+        }
 	}
 }

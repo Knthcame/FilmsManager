@@ -18,9 +18,11 @@
                 </ListView.ItemTemplate>
             </ListView>
             
-            <Button VerticalOptions="End"
+            <Button x:Name="AddButton"
+                    VerticalOptions="End"
                     HorizontalOptions="Fill"
-                    Text="ADD"/>
+                    Text="ADD"
+                    Pressed="OnAddButtonPressed"/>
             
         </StackLayout>
     </ContentPage.Content>
