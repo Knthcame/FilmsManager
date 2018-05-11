@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using FilmsManager.ViewModels;
+using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace FilmsManager.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class HomePage : ContentPage
 	{
-		public HomePage ()
+        ObservableCollection<Movie> movieList = new ObservableCollection<Movie>();
+        public HomePage ()
 		{
 			InitializeComponent ();
-		}
+            BindingContext = new HomeViewModel();
+            MovieView.ItemsSource = movieList;
+            movieList.Add(item: new Movie { MovieTitle = "Infinity war", MovieGenre = "Marvel", MovieIcon=ImageSource.FromFile("icon.png") });
+        }
 	}
 }
