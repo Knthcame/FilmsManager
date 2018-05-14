@@ -8,9 +8,8 @@ using Xamarin.Forms;
 
 namespace FilmsManager.ViewModels
 {
-	public class HomeViewModel : ContentPage
+	public class HomeViewModel : BaseViewModel
 	{
-        
         public HomeViewModel ()
 		{
             

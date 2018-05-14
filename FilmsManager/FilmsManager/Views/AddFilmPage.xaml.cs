@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using FilmsManager.Models;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -7,17 +8,17 @@ namespace FilmsManager.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class AddFilmPage : ContentPage
 	{
-        Movie AddingMovie = new Movie();
+        MovieModel AddingMovie = new MovieModel();
 
         public AddFilmPage ()
 		{
 			InitializeComponent();
-            AddingMovie.MovieIcon = "icon.png";
+            AddingMovie.Image = "icon.png";
 		}
 
         public async Task OnCheckButtonPressed()
         {
-            if(AddingMovie.MovieTitle==null | AddingMovie.MovieGenre == null)
+            if(AddingMovie.Title==null | AddingMovie.Genre == null)
             {
                 await DisplayAlert("Error!",
                 "Not all values have been inserted",
@@ -30,12 +31,12 @@ namespace FilmsManager.Views
 
         void OnTitleAdded()
         {
-            AddingMovie.MovieTitle = Title.Text;
+            AddingMovie.Title = Title.Text;
         }
 
         void OnGenreAdded()
         {
-            AddingMovie.MovieGenre = Genre.Text;
+            AddingMovie.Genre = Genre.Text;
         }
 
         void OnImageAdded()
