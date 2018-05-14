@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace FilmsManager.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class AddFilmPage : ContentPage
 	{
-        Movie AddingMovie;
+        Movie AddingMovie = new Movie();
 
         public AddFilmPage ()
 		{
-			InitializeComponent ();
-            AddingMovie = new Movie();
+			InitializeComponent();
+            AddingMovie.MovieIcon = "icon.png";
 		}
 
         public async Task OnCheckButtonPressed()
@@ -27,7 +22,10 @@ namespace FilmsManager.Views
                 await DisplayAlert("Error!",
                 "Not all values have been inserted",
                 "OK");
+                return;
             }
+            HomePage.AddMovie(AddingMovie);
+            await Navigation.PopAsync();
         }
 
         void OnTitleAdded()
@@ -37,7 +35,12 @@ namespace FilmsManager.Views
 
         void OnGenreAdded()
         {
-            AddingMovie.MovieGenre = Title.Text;
+            AddingMovie.MovieGenre = Genre.Text;
+        }
+
+        void OnImageAdded()
+        {
+
         }
     }
 }

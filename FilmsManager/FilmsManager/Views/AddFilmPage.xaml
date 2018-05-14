@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FilmsManager.Views.AddFilmPage"
              Title="Add film">
+    
     <ContentPage.Content>
         <StackLayout>
             
@@ -17,6 +18,12 @@
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="Start"
                     PropertyChanged="OnGenreAdded"/>
+
+            <Button x:Name="Image"
+                    Image="icon.png"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="StartAndExpand"
+                    PropertyChanged="OnImageAdded"/>
 
             <Button x:Name="CheckButton"
                     Pressed="OnCheckButtonPressed"

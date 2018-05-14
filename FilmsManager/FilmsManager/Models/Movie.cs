@@ -1,8 +1,8 @@
 ﻿using Xamarin.Forms;
 
-namespace FilmsManager
+namespace FilmsManager.Models
 {
-    class Movie
+    public class Movie : System.Object
     {
         public string MovieTitle { get; set; }
         public string MovieGenre { get; set; }
