@@ -7,17 +7,18 @@
     <ContentPage.Content>
         <StackLayout>
             
-            <Entry  x:Name="Title"
-                    Placeholder="Insert Movie Title" 
+            <Entry  Placeholder="Insert Movie Title" 
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="Start"
-                    PropertyChanged="OnTitleAdded"/>
+                    PropertyChanged="OnTitleAdded"
+                    Text="{Binding Title}"/>
 
             <Entry  x:Name="Genre"
                     Placeholder="Insert Movie Genre" 
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="Start"
-                    PropertyChanged="OnGenreAdded"/>
+                    PropertyChanged="OnGenreAdded"
+                    Text="{Binding Genre}}"/>
 
             <Button x:Name="Image"
                     Image="icon.png"

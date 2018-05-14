@@ -1,4 +1,5 @@
 ﻿using FilmsManager.Models;
+using FilmsManager.ViewModels;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -10,9 +11,10 @@ namespace FilmsManager.Views
 	{
         MovieModel AddingMovie = new MovieModel();
 
-        public AddFilmPage ()
+        public AddFilmPage()
 		{
 			InitializeComponent();
+            BindingContext = new AddFilmViewModel();
             AddingMovie.Image = "icon.png";
 		}
 
@@ -25,7 +27,7 @@ namespace FilmsManager.Views
                 "OK");
                 return;
             }
-            HomePage.AddMovie(AddingMovie);
+            HomeViewModel.AddMovie(AddingMovie);
             await Navigation.PopAsync();
         }
 

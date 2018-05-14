@@ -7,12 +7,12 @@
     <ContentPage.Content>
         <StackLayout>
 
-            <ListView   x:Name="MovieView">
+            <ListView ItemsSource="{Binding MovieList}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ImageCell Text="{Binding MovieTitle}"
-                                   Detail="{Binding MovieGenre}"
-                                   ImageSource="{Binding MovieIcon}"/>
+                        <ImageCell Text="{Binding Title}"
+                                   Detail="{Binding Genre}"
+                                   ImageSource="{Binding Image}"/>
 
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -22,7 +22,7 @@
                     VerticalOptions="End"
                     HorizontalOptions="Fill"
                     Text="ADD"
-                    Pressed="OnAddButtonPressed"/>
+                    Command="{Binding NavigateCommand}"/>
             
         </StackLayout>
     </ContentPage.Content>
