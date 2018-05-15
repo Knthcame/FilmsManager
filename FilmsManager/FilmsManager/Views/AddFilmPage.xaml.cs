@@ -33,12 +33,12 @@ namespace FilmsManager.Views
 
         void OnTitleAdded()
         {
-            AddingMovie.Title = Title.Text;
+            //AddingMovie.Title = Title.Text;
         }
 
         void OnGenreAdded()
         {
-            AddingMovie.Genre = Genre.Text;
+            //AddingMovie.Genre = Genre.Text;
         }
 
         void OnImageAdded()

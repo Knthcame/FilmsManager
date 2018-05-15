@@ -1,11 +1,15 @@
-﻿using FilmsManager.Views;
+﻿using FilmsManager.Services;
+using FilmsManager.Services.Interfaces;
+using FilmsManager.Views;
 using Xamarin.Forms;
 
 namespace FilmsManager
 {
     public partial class App : Application
 	{
-		public App ()
+        public static INavigationService NavigationService = new CustomNavigationService();
+
+        public App ()
 		{
 			InitializeComponent();
 			MainPage = new NavigationPage(new HomePage());

@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using FilmsManager.Models;
+using System;
 using System.Windows.Input;
 
 namespace FilmsManager.ViewModels
@@ -8,6 +7,9 @@ namespace FilmsManager.ViewModels
     class AddFilmViewModel
     {
         public ICommand AddCommand { get; set; }
+        public string MovieTitle;
+        public string MovieGenre;
+        public string MovieImage;
 
         public AddFilmViewModel()
         {
@@ -27,7 +29,7 @@ namespace FilmsManager.ViewModels
 
         public void Execute(object parameter)
         {
-            
+            new MovieModel();
         }
     }
 }

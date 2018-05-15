@@ -11,14 +11,14 @@
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="Start"
                     PropertyChanged="OnTitleAdded"
-                    Text="{Binding Title}"/>
+                    Text="{Binding MovieTitle}"/>
 
             <Entry  x:Name="Genre"
                     Placeholder="Insert Movie Genre" 
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="Start"
                     PropertyChanged="OnGenreAdded"
-                    Text="{Binding Genre}}"/>
+                    Text="{Binding MovieGenre}}"/>
 
             <Button x:Name="Image"
                     Image="icon.png"
@@ -27,7 +27,7 @@
                     PropertyChanged="OnImageAdded"/>
 
             <Button x:Name="CheckButton"
-                    Pressed="OnCheckButtonPressed"
+                    Command="{Binding AddCommand}"
                     HorizontalOptions="End"
                     VerticalOptions="EndAndExpand"
                     Image="Check3.png"

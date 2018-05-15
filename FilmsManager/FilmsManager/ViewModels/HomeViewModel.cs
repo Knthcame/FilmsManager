@@ -1,5 +1,5 @@
 ﻿using FilmsManager.Models;
-using FilmsManager.Views;
+using FilmsManager.Services.Interfaces;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -10,9 +10,11 @@ namespace FilmsManager.ViewModels
 	{
         public static ObservableCollection<MovieModel> MovieList { get; set; } = new ObservableCollection<MovieModel>();
         public ICommand NavigateCommand { get; set; }
+        INavigationService _navigationService;
 
-        public HomeViewModel ()
+        public HomeViewModel (INavigationService NavigationService)
 		{
+            _navigationService = NavigationService;
             NavigateCommand = new NavigateCommand();
         }
 
@@ -33,7 +35,7 @@ namespace FilmsManager.ViewModels
 
         public void Execute(object parameter)
         {
-            new HomePage().OnAddButtonPressed();
+            
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FilmsManager.Models
+namespace FilmsManager.Services.Interfaces
 {
     public interface INavigationService
     {
