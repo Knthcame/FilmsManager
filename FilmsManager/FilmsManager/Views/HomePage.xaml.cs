@@ -13,10 +13,5 @@ namespace FilmsManager.Views
 			InitializeComponent ();
             BindingContext = new HomeViewModel(App.NavigationService);
         }
-        
-        async public void OnAddButtonPressed()
-        {
-            await Navigation.PushAsync(new AddFilmPage());
-        }
     }
 }

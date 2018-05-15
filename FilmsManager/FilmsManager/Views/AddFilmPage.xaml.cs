@@ -1,4 +1,5 @@
 ﻿using FilmsManager.Models;
+using FilmsManager.Services.Interfaces;
 using FilmsManager.ViewModels;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -9,27 +10,12 @@ namespace FilmsManager.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class AddFilmPage : ContentPage
 	{
-        MovieModel AddingMovie = new MovieModel();
 
-        public AddFilmPage()
+        public AddFilmPage(INavigationService navigationService)
 		{
 			InitializeComponent();
-            BindingContext = new AddFilmViewModel();
-            AddingMovie.Image = "icon.png";
+            BindingContext = new AddFilmViewModel(navigationService, this);
 		}
-
-        public async Task OnCheckButtonPressed()
-        {
-            if(AddingMovie.Title==null | AddingMovie.Genre == null)
-            {
-                await DisplayAlert("Error!",
-                "Not all values have been inserted",
-                "OK");
-                return;
-            }
-            HomeViewModel.AddMovie(AddingMovie);
-            await Navigation.PopAsync();
-        }
 
         void OnTitleAdded()
         {

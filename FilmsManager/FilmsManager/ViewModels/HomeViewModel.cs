@@ -3,6 +3,7 @@ using FilmsManager.Services.Interfaces;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace FilmsManager.ViewModels
 {
@@ -10,12 +11,10 @@ namespace FilmsManager.ViewModels
 	{
         public ObservableCollection<MovieModel> MovieList { get; set; } = new ObservableCollection<MovieModel>();
         public ICommand NavigateCommand { get; set; }
-        protected INavigationService _navigationService;
 
-        public HomeViewModel (INavigationService NavigationService)
+        public HomeViewModel (INavigationService NavigationService, ContentPage page) : base(NavigationService)
 		{
-            _navigationService = NavigationService;
-            NavigateCommand = new NavigateCommand(_navigationService);
+            NavigateCommand = new NavigateCommand(_navigationService, page);
         }
 
         public void AddMovie(MovieModel addingMovie)
@@ -28,10 +27,12 @@ namespace FilmsManager.ViewModels
     {
         public event EventHandler CanExecuteChanged;
         INavigationService _navigationService;
+        ContentPage page;
 
-        public NavigateCommand(INavigationService navigationService)
+        public NavigateCommand(INavigationService navigationService, ContentPage page)
         {
             _navigationService = navigationService;
+            this.page = page;
         }
 
         public bool CanExecute(object parameter)
@@ -41,7 +42,7 @@ namespace FilmsManager.ViewModels
 
         public void Execute(object parameter)
         {
-            _navigationService.NavigateAsync("AddFilmPage");
+            _navigationService.NavigateAsync("AddFilmPage", _navigationService, false);
         }
     }
 }

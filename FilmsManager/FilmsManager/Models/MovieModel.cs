@@ -8,6 +8,13 @@ namespace FilmsManager.Models
         private string _genre;
         private string _image;
 
+        public MovieModel(string title, string genre, string image)
+        {
+            _title = title;
+            _genre = genre;
+            _image = image;
+        }
+
         public string Title
         {
             get => _title;
