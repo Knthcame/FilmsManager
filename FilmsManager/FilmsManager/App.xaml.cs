@@ -1,6 +1,5 @@
 ﻿using FilmsManager.Services;
 using FilmsManager.Services.Interfaces;
-using FilmsManager.Views;
 using Xamarin.Forms;
 
 namespace FilmsManager
@@ -12,8 +11,13 @@ namespace FilmsManager
         public App ()
 		{
 			InitializeComponent();
-			MainPage = new NavigationPage(new HomePage());
-		}
+            NavigationService.Configure("MainPage", typeof(Views.HomePage));
+            NavigationService.Configure("AddFilmPage", typeof(Views.AddFilmPage));
+            NavigationService.Configure("PickImagePage", typeof(Views.PickImagePage));
+            var mainPage = ((CustomNavigationService)NavigationService).SetRootPage("MainPage");
+
+            MainPage = mainPage;
+        }
 
 		protected override void OnStart ()
 		{
