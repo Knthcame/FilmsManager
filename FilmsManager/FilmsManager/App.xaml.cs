@@ -11,10 +11,10 @@ namespace FilmsManager
         public App ()
 		{
 			InitializeComponent();
-            NavigationService.Configure("MainPage", typeof(Views.HomePage));
+            NavigationService.Configure("HomePage", typeof(Views.HomePage));
             NavigationService.Configure("AddFilmPage", typeof(Views.AddFilmPage));
             NavigationService.Configure("PickImagePage", typeof(Views.PickImagePage));
-            var mainPage = ((CustomNavigationService)NavigationService).SetRootPage("MainPage");
+            var mainPage = ((CustomNavigationService)NavigationService).SetRootPage("HomePage");
 
             MainPage = mainPage;
         }

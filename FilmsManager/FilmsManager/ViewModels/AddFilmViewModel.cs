@@ -1,6 +1,7 @@
 ﻿using FilmsManager.Models;
 using FilmsManager.Services.Interfaces;
 using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -8,36 +9,60 @@ namespace FilmsManager.ViewModels
 {
     class AddFilmViewModel : BaseViewModel
     {
-        public ICommand AddCommand { get; set; }
-        public string MovieTitle;
-        public string MovieGenre;
-        public string MovieImage;
-        ContentPage page;
+        private string _movieImage;
+        private string _movieGenre;
+        private string _movieTitle;
 
-        public AddFilmViewModel(INavigationService navigationService, ContentPage page) : base (navigationService)
+        public ICommand AddCommand { get; set; }
+        public string MovieTitle
         {
-            AddCommand = new AddCommand(navigationService, page, MovieTitle, MovieGenre, MovieImage);
-            this.page = page;
+            get => _movieTitle;
+            set
+            {
+                _movieTitle = value;
+                RaisePropertyChanged();
+            }
         }
 
+        public string MovieGenre
+        {
+            get => _movieGenre;
+            set
+            {
+                _movieGenre = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public string MovieImage
+        {
+            get => _movieImage;
+            set
+            {
+                _movieImage = value;
+                RaisePropertyChanged();
+            }
+        }
+
+
+        public AddFilmViewModel(ObservableCollection<MovieModel> MovieList )
+        {
+            AddCommand = new AddCommand(App.NavigationService, this, MovieList);
+        }
     }
 
     internal class AddCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
-        INavigationService _navigationService;
-        public string MovieTitle;
-        public string MovieGenre;
-        public string MovieImage;
-        ContentPage page;
+        private readonly INavigationService _navigationService;
+        private readonly AddFilmViewModel _viewModel;
+        private ObservableCollection<MovieModel> _movieList;
 
-        public AddCommand(INavigationService navigationService, ContentPage page, string Title, string Genre, string Image)
+        public AddCommand(INavigationService navigationService, AddFilmViewModel viewModel, ObservableCollection<MovieModel> MovieList)
         {
             _navigationService = navigationService;
-            MovieTitle = Title;
-            MovieGenre = Genre;
-            MovieImage = Image;
-            this.page = page;
+            _viewModel = viewModel;
+            _movieList = MovieList;
         }
 
         public bool CanExecute(object parameter)
@@ -47,14 +72,14 @@ namespace FilmsManager.ViewModels
 
         public async void Execute(object parameter)
         {
-            if (MovieTitle == null | MovieGenre == null)
+            if (_viewModel.MovieTitle == null | _viewModel.MovieGenre == null)
             {
-                await page.DisplayAlert("Error!",
-                "Not all values have been inserted",
-                "OK");
+                //await page.DisplayAlert("Error!",
+                //"Not all values have been inserted",
+                //"OK");
                 return;
             }
-            new MovieModel(MovieTitle, MovieGenre, MovieImage);
+            _movieList.Add(new MovieModel(_viewModel.MovieTitle, _viewModel.MovieGenre, _viewModel.MovieImage));
             await _navigationService.GoBack();
         }
     }

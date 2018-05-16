@@ -11,7 +11,7 @@ namespace FilmsManager.Views
         public HomePage ()
 		{
 			InitializeComponent ();
-            BindingContext = new HomeViewModel(App.NavigationService);
+            BindingContext = new HomeViewModel();
         }
     }
 }

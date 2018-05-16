@@ -1,6 +1,7 @@
 ﻿using FilmsManager.Models;
 using FilmsManager.Services.Interfaces;
 using FilmsManager.ViewModels;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -11,14 +12,10 @@ namespace FilmsManager.Views
 	public partial class AddFilmPage : ContentPage
 	{
 
-        public AddFilmPage(INavigationService navigationService)
+        public AddFilmPage(ObservableCollection<MovieModel> MovieList)
 		{
 			InitializeComponent();
-            BindingContext = new AddFilmViewModel(navigationService, this);
-		}
-
-        void OnTitleAdded()
-        {
+            BindingContext = new AddFilmViewModel(MovieList);
             //AddingMovie.Title = Title.Text;
         }
 

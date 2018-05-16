@@ -12,27 +12,26 @@ namespace FilmsManager.ViewModels
         public ObservableCollection<MovieModel> MovieList { get; set; } = new ObservableCollection<MovieModel>();
         public ICommand NavigateCommand { get; set; }
 
-        public HomeViewModel (INavigationService NavigationService, ContentPage page) : base(NavigationService)
+        public HomeViewModel ()
 		{
-            NavigateCommand = new NavigateCommand(_navigationService, page);
+            NavigateCommand = new NavigateCommand(MovieList);
         }
 
-        public void AddMovie(MovieModel addingMovie)
-        {
-            MovieList.Add(addingMovie);
-        }
+        //public void AddMovie(MovieModel addingMovie)
+        //{
+        //    MovieList.Add(addingMovie);
+        //}
     }
 
     internal class NavigateCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
-        INavigationService _navigationService;
-        ContentPage page;
+        INavigationService _navigationService = App.NavigationService;
+        private ObservableCollection<MovieModel> MovieList;
 
-        public NavigateCommand(INavigationService navigationService, ContentPage page)
+        public NavigateCommand(ObservableCollection<MovieModel> movieList)
         {
-            _navigationService = navigationService;
-            this.page = page;
+            MovieList= movieList;
         }
 
         public bool CanExecute(object parameter)
@@ -42,7 +41,7 @@ namespace FilmsManager.ViewModels
 
         public void Execute(object parameter)
         {
-            _navigationService.NavigateAsync("AddFilmPage", _navigationService, false);
+            _navigationService.NavigateAsync("AddFilmPage", MovieList);
         }
     }
 }

@@ -10,14 +10,12 @@
             <Entry  Placeholder="Insert Movie Title" 
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="Start"
-                    PropertyChanged="OnTitleAdded"
                     Text="{Binding MovieTitle}"/>
 
             <Entry  x:Name="Genre"
                     Placeholder="Insert Movie Genre" 
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="Start"
-                    PropertyChanged="OnGenreAdded"
                     Text="{Binding MovieGenre}}"/>
 
             <Button x:Name="Image"
