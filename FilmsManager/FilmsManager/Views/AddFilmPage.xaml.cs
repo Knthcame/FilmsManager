@@ -11,22 +11,11 @@ namespace FilmsManager.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class AddFilmPage : ContentPage
 	{
-
         public AddFilmPage(ObservableCollection<MovieModel> MovieList)
 		{
 			InitializeComponent();
             BindingContext = new AddFilmViewModel(MovieList);
             //AddingMovie.Title = Title.Text;
-        }
-
-        void OnGenreAdded()
-        {
-            //AddingMovie.Genre = Genre.Text;
-        }
-
-        void OnImageAdded()
-        {
-
         }
     }
 }

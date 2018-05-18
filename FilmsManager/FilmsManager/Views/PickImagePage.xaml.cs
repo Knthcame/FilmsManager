@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using FilmsManager.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace FilmsManager.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class PickImagePage : ContentPage
 	{
 		public PickImagePage ()
 		{
 			InitializeComponent ();
+            BindingContext = new PickImageViewModel();
 		}
 	}
 }

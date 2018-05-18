@@ -3,17 +3,18 @@ using FilmsManager.Services.Interfaces;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using Xamarin.Forms;
 
 namespace FilmsManager.ViewModels
 {
     class AddFilmViewModel : BaseViewModel
     {
-        private string _movieImage;
+        private string _movieImage = "icon.png";
         private string _movieGenre;
         private string _movieTitle;
 
         public ICommand AddCommand { get; set; }
+        public ICommand OpenGalleryCommand { get; set; }
+
         public string MovieTitle
         {
             get => _movieTitle;
@@ -45,9 +46,10 @@ namespace FilmsManager.ViewModels
         }
 
 
-        public AddFilmViewModel(ObservableCollection<MovieModel> MovieList )
+        public AddFilmViewModel(ObservableCollection<MovieModel> movieList )
         {
-            AddCommand = new AddCommand(App.NavigationService, this, MovieList);
+            AddCommand = new AddCommand(NavigationService, this, movieList);
+            OpenGalleryCommand = new OpenGalleryCommand(NavigationService);
         }
     }
 
@@ -81,6 +83,27 @@ namespace FilmsManager.ViewModels
             }
             _movieList.Add(new MovieModel(_viewModel.MovieTitle, _viewModel.MovieGenre, _viewModel.MovieImage));
             await _navigationService.GoBack();
+        }
+    }
+
+    internal class OpenGalleryCommand : ICommand
+    {
+        public event EventHandler CanExecuteChanged;
+        private readonly INavigationService _navigationService;
+
+        public OpenGalleryCommand(INavigationService navigationService)
+        {
+            _navigationService = navigationService;
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public async void Execute(object parameter)
+        {
+            await _navigationService.NavigateAsync("PickImagePage");
         }
     }
 }

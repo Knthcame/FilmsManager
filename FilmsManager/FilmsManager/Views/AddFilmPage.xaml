@@ -19,10 +19,10 @@
                     Text="{Binding MovieGenre}}"/>
 
             <Button x:Name="Image"
-                    Image="icon.png"
+                    Image="{Binding MovieImage}"
+                    Command="{Binding OpenGalleryCommand}"
                     HorizontalOptions="CenterAndExpand"
-                    VerticalOptions="StartAndExpand"
-                    PropertyChanged="OnImageAdded"/>
+                    VerticalOptions="StartAndExpand"/>
 
             <Button x:Name="CheckButton"
                     Command="{Binding AddCommand}"
