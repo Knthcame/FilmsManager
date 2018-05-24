@@ -1,6 +1,5 @@
 ﻿using FilmsManager.Models;
-using FilmsManager.Services.Interfaces;
-using System;
+using FilmsManager.ViewModels.Commands;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -9,9 +8,26 @@ namespace FilmsManager.ViewModels
 
     public class PickImageViewModel : BaseViewModel
     {
+        private PickImageModel _selectedImage;
+
         private ICommand PickImageCommand { get; set; }
 
         public ObservableCollection<PickImageModel> ImageList { get; set; }
+
+        public PickImageModel SelectedImage
+        {
+            get => _selectedImage;
+            set
+            {
+                _selectedImage = value;
+                RaisePropertyChanged();
+
+                if(_selectedImage != null)
+                {
+                    NavigationService.GoBack();
+                }
+            }
+        }
 
         public PickImageViewModel()
         {
@@ -46,28 +62,5 @@ namespace FilmsManager.ViewModels
                 Image = "SearchIcon2.png"
             }
         };
-    }
-
-    internal class PickImageCommand : ICommand
-    {
-        public event EventHandler CanExecuteChanged;
-
-        private INavigationService _navigationService;
-        private string _image;
-
-        public PickImageCommand(INavigationService navigationService)
-        {
-            _navigationService = navigationService;
-        }
-        public bool CanExecute(object parameter)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Execute(object parameter)
-        {
-            _image = (string) parameter;
-            _navigationService.GoBack();
-        }
     }
 }

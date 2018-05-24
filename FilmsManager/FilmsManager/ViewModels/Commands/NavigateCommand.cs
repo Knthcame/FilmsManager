@@ -4,25 +4,9 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
-namespace FilmsManager.ViewModels
+namespace FilmsManager.ViewModels.Commands
 {
-    public class HomeViewModel : BaseViewModel
-	{
-        public ObservableCollection<MovieModel> MovieList { get; set; } = new ObservableCollection<MovieModel>();
-        public ICommand NavigateCommand { get; set; }
-
-        public HomeViewModel ()
-		{
-            MovieList.Add(new MovieModel("test", "test2", "icon.jpg"));
-            NavigateCommand = new NavigateCommand(NavigationService, MovieList);
-        }
-
-        //public void AddMovie(MovieModel addingMovie)
-        //{
-        //    MovieList.Add(addingMovie);
-        //}
-    }
-    internal class NavigateCommand : ICommand
+    public class NavigateCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
         private readonly INavigationService _navigationService;
@@ -31,7 +15,7 @@ namespace FilmsManager.ViewModels
         public NavigateCommand(INavigationService navigationService, ObservableCollection<MovieModel> movieList)
         {
             _navigationService = navigationService;
-            _movieList = movieList;
+            _movieList= movieList;
         }
 
         public bool CanExecute(object parameter)

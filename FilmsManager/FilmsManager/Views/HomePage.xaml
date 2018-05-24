@@ -28,6 +28,11 @@
     </ContentPage.Content>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="SearchButton" Order="Primary" Icon="SearchIcon2.png" Priority="1"/>
+        <ToolbarItem Name="SearchButton" 
+                     Order="Primary" 
+                     Icon="SearchIcon2.png" 
+                     Priority="1">
+            
+        </ToolbarItem>
     </ContentPage.ToolbarItems>
 </ContentPage>

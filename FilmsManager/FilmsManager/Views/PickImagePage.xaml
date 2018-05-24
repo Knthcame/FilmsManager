@@ -1,8 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:b="clr-namespace:FilmsManager.Behaviors"
              x:Class="FilmsManager.Views.PickImagePage"
-             Title="Pick an Image">
+             Title="Pick an Image"
+             x:Name="Page">
+   
     <ContentPage.Content>
         <StackLayout>
             <Grid HorizontalOptions="StartAndExpand"
@@ -11,18 +14,17 @@
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions>
+                
                 <ListView ItemsSource="{Binding ImageList}">
+                    <ListView.Behaviors>
+                        <b:EventToCommandBehavior Command="PickImageCommand"/>
+                    </ListView.Behaviors>
+                    
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <Image Source="{Binding Image}"
-                                       Aspect="AspectFit">
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding PickImageCommand}"
-                                                              CommandParameter="Image"
-                                                              NumberOfTapsRequired="1"/>
-                                    </Image.GestureRecognizers>
-                                </Image>
+                                       Aspect="AspectFit"/>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
