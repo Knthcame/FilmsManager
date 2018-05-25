@@ -3,6 +3,7 @@ using FilmsManager.Services.Interfaces;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace FilmsManager.ViewModels.Commands
 {
@@ -29,9 +30,7 @@ namespace FilmsManager.ViewModels.Commands
         {
             if (_viewModel.MovieTitle == null | _viewModel.MovieGenre == null)
             {
-                //await page.DisplayAlert("Error!",
-                //"Not all values have been inserted",
-                //"OK");
+				MessagingCenter.Send<AddCommand>(this, "Incomplete");
                 return;
             }
             _movieList.Add(new MovieModel(_viewModel.MovieTitle, _viewModel.MovieGenre, _viewModel.MovieImage));

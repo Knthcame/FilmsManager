@@ -1,4 +1,5 @@
-﻿using FilmsManager.Services.Interfaces;
+﻿using FilmsManager.Models;
+using FilmsManager.Services.Interfaces;
 using System;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -24,9 +25,10 @@ namespace FilmsManager.ViewModels.Commands
 
         public void Execute(object parameter)
         {
-            _image = (string) parameter;
-            MessagingCenter.Send(this, "tick", _image);
-            _navigationService.GoBack();
+			PickImageModel model =(PickImageModel) parameter;
+			_image = model.Image;
+			MessagingCenter.Send(this, "PickImage", _image);
+			_navigationService.GoBack();
         }
     }
 }

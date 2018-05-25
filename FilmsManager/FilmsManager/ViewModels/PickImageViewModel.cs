@@ -10,7 +10,7 @@ namespace FilmsManager.ViewModels
     {
         private PickImageModel _selectedImage;
 
-        private ICommand PickImageCommand { get; set; }
+        public ICommand PickImageCommand { get; set; }
 
         public ObservableCollection<PickImageModel> ImageList { get; set; }
 

@@ -19,9 +19,9 @@ namespace FilmsManager.ViewModels.Commands
             return true;
         }
 
-        public async void Execute(object parameter)
+        public void Execute(object parameter)
         {
-            await _navigationService.NavigateAsync("PickImagePage");
+            _navigationService.NavigateAsync("PickImagePage");
         }
     }
 }

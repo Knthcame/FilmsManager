@@ -13,7 +13,6 @@ namespace FilmsManager.ViewModels
 
         public HomeViewModel ()
 		{
-            MovieList.Add(new MovieModel("test", "test2", "icon.jpg"));
             NavigateCommand = new NavigateCommand(NavigationService, MovieList);
         }
 

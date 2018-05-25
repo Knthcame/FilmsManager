@@ -50,7 +50,7 @@ namespace FilmsManager.ViewModels
         {
             AddCommand = new AddCommand(NavigationService, this, movieList);
             OpenGalleryCommand = new OpenGalleryCommand(NavigationService);
-            MessagingCenter.Subscribe<PickImageCommand, string>(this, "tick", (s, a) => MovieImage = a);
+            MessagingCenter.Subscribe<PickImageCommand, string>(this, "PickImage", (s, a) => MovieImage = a);
         }
     }
 }

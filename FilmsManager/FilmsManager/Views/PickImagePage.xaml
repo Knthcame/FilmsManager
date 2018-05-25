@@ -2,10 +2,17 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:b="clr-namespace:FilmsManager.Behaviors"
+             xmlns:c="clr-namespace:FilmsManager.Converters"
              x:Class="FilmsManager.Views.PickImagePage"
-             Title="Pick an Image"
-             x:Name="Page">
-   
+             Title="Pick an Image">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <b:ListViewSelectedItemBehavior x:Key="PickImageCommand"/>
+            <c:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <ContentPage.Content>
         <StackLayout>
             <Grid HorizontalOptions="StartAndExpand"
@@ -17,7 +24,8 @@
                 
                 <ListView ItemsSource="{Binding ImageList}">
                     <ListView.Behaviors>
-                        <b:EventToCommandBehavior Command="PickImageCommand"/>
+                        <b:ListViewSelectedItemBehavior Command="{Binding PickImageCommand}"
+                                                  Converter="{StaticResource SelectedItemConverter}"/>
                     </ListView.Behaviors>
                     
                     <ListView.ItemTemplate>
