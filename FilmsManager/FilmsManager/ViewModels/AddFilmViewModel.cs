@@ -1,6 +1,8 @@
 ﻿using FilmsManager.Models;
+using FilmsManager.Services.Interfaces;
 using FilmsManager.ViewModels.Commands;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -52,5 +54,12 @@ namespace FilmsManager.ViewModels
             OpenGalleryCommand = new OpenGalleryCommand(NavigationService);
             MessagingCenter.Subscribe<PickImageCommand, string>(this, "PickImage", (s, a) => MovieImage = a);
         }
-    }
+
+		public virtual async Task<bool> OnBackButtonPressedAsync()
+		{
+			bool action = await DependencyService.Get<INotificationHelper>().ShowDialog("Abort addition?", "Are you sure you want to cancel adding a movie?", "Yes, abort", "No, stay");
+			if (action) await NavigationService.GoBack();
+			return action;
+		}
+	}
 }

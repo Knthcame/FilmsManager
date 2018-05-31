@@ -1,4 +1,5 @@
-﻿using FilmsManager.Services;
+﻿using Acr.UserDialogs;
+using FilmsManager.Services;
 using FilmsManager.Services.Interfaces;
 using Xamarin.Forms;
 
@@ -14,10 +15,11 @@ namespace FilmsManager
             NavigationService.Configure("HomePage", typeof(Views.HomePage));
             NavigationService.Configure("AddFilmPage", typeof(Views.AddFilmPage));
             NavigationService.Configure("PickImagePage", typeof(Views.PickImagePage));
-            var mainPage = ((CustomNavigationService)NavigationService).SetRootPage("HomePage");
+			NavigationService.Configure("SearchFilmPage", typeof(Views.SearchFilmPage));
+			var mainPage = ((CustomNavigationService)NavigationService).SetRootPage("HomePage");
 
             MainPage = mainPage;
-        }
+		}
 
 		protected override void OnStart ()
 		{

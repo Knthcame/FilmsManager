@@ -30,7 +30,8 @@ namespace FilmsManager.ViewModels.Commands
         {
             if (_viewModel.MovieTitle == null | _viewModel.MovieGenre == null)
             {
-				MessagingCenter.Send<AddCommand>(this, "Incomplete");
+				bool action = await DependencyService.Get<INotificationHelper>().ShowDialog("Missing entries", " Not all values have been inserted. Abort adding film?", "Yes, abort", "No,stay");
+				if (action) await _navigationService.GoBack();
                 return;
             }
             _movieList.Add(new MovieModel(_viewModel.MovieTitle, _viewModel.MovieGenre, _viewModel.MovieImage));

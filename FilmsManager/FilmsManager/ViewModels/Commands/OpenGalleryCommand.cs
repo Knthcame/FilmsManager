@@ -21,7 +21,7 @@ namespace FilmsManager.ViewModels.Commands
 
         public void Execute(object parameter)
         {
-            _navigationService.NavigateAsync("PickImagePage");
+            _navigationService.NavigateModalAsync("PickImagePage");
         }
     }
 }

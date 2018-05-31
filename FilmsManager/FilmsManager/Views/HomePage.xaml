@@ -27,12 +27,11 @@
         </StackLayout>
     </ContentPage.Content>
 
-    <ContentPage.ToolbarItems>
+    <!--<ContentPage.ToolbarItems>
         <ToolbarItem Name="SearchButton" 
                      Order="Primary" 
-                     Icon="SearchIcon2.png" 
-                     Priority="1">
-            
-        </ToolbarItem>
-    </ContentPage.ToolbarItems>
+                     Icon="SearchIcon2.png"
+                     Command="{Binding SearchCommand}"
+                     CommandParameter="{Binding MovieList}"/>
+    </ContentPage.ToolbarItems>-->
 </ContentPage>

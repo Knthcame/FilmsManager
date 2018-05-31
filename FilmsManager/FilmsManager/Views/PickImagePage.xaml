@@ -14,18 +14,18 @@
     </ContentPage.Resources>
     
     <ContentPage.Content>
-        <StackLayout>
-            <Grid HorizontalOptions="StartAndExpand"
-                  VerticalOptions="StartAndExpand">
+        <Grid HorizontalOptions="StartAndExpand"
+              VerticalOptions="StartAndExpand">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions>
-                
+
+            <StackLayout>
                 <ListView ItemsSource="{Binding ImageList}">
                     <ListView.Behaviors>
                         <b:ListViewSelectedItemBehavior Command="{Binding PickImageCommand}"
-                                                  Converter="{StaticResource SelectedItemConverter}"/>
+                                                        Converter="{StaticResource SelectedItemConverter}"/>
                     </ListView.Behaviors>
                     
                     <ListView.ItemTemplate>
@@ -36,8 +36,8 @@
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
-        </StackLayout>
+                </ListView>    
+            </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

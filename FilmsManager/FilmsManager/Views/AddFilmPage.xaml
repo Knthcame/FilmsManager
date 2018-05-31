@@ -16,10 +16,12 @@
                     Placeholder="Insert Movie Genre" 
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="Start"
-                    Text="{Binding MovieGenre}}"/>
+                    Text="{Binding MovieGenre}"/>
 
             <Button x:Name="Image"
                     Image="{Binding MovieImage}"
+                    HeightRequest="100"
+                    WidthRequest="100"
                     Command="{Binding OpenGalleryCommand}"
                     HorizontalOptions="CenterAndExpand"
                     VerticalOptions="StartAndExpand"/>

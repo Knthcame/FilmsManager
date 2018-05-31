@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FilmsManager.Views.SearchFilmPage"
+             Title="Film Searcher">
+    <ContentPage.Content>
+        <StackLayout>
+            <SearchBar Text="{Binding TextEntry}"
+                       Placeholder="Insert Movie Title to Search for"
+                       SearchCommand="{Binding SearchFilmCommand}"
+                       SearchCommandParameter="{Binding TextEntry}"
+                       HeightRequest="60"/>
+
+            <ListView ItemsSource="{Binding MovieList}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ImageCell Text="{Binding Title}"
+                                   Detail="{Binding Genre}"
+                                   ImageSource="{Binding Image}"/>
+
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            
+            </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

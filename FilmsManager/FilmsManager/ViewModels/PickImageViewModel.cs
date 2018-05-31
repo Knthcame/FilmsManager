@@ -55,12 +55,88 @@ namespace FilmsManager.ViewModels
             },
             new PickImageModel()
             {
-                Image = "SearchIcon.png"
+                Image = "search.png"
             },
-            new PickImageModel()
-            {
-                Image = "SearchIcon2.png"
-            }
-        };
+			new PickImageModel()
+			{
+				Image = "icon.png"
+			},
+			new PickImageModel()
+			{
+				Image = "Check3.png"
+			},
+			new PickImageModel()
+			{
+				Image = "Check.png"
+			},
+			new PickImageModel()
+			{
+				Image = "Check2.png"
+			},
+			new PickImageModel()
+			{
+				Image = "search.png"
+			},
+			new PickImageModel()
+			{
+				Image = "icon.png"
+			},
+			new PickImageModel()
+			{
+				Image = "Check3.png"
+			},
+			new PickImageModel()
+			{
+				Image = "Check.png"
+			},
+			new PickImageModel()
+			{
+				Image = "Check2.png"
+			},
+			new PickImageModel()
+			{
+				Image = "search.png"
+			},
+			new PickImageModel()
+			{
+				Image = "icon.png"
+			},
+			new PickImageModel()
+			{
+				Image = "Check3.png"
+			},
+			new PickImageModel()
+			{
+				Image = "Check.png"
+			},
+			new PickImageModel()
+			{
+				Image = "Check2.png"
+			},
+			new PickImageModel()
+			{
+				Image = "search.png"
+			},
+			new PickImageModel()
+			{
+				Image = "icon.png"
+			},
+			new PickImageModel()
+			{
+				Image = "Check3.png"
+			},
+			new PickImageModel()
+			{
+				Image = "Check.png"
+			},
+			new PickImageModel()
+			{
+				Image = "Check2.png"
+			},
+			new PickImageModel()
+			{
+				Image = "search.png"
+			}
+		};
     }
 }
