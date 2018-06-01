@@ -7,7 +7,7 @@ namespace FilmsManager.ViewModels
 	public class SearchFilmViewModel : BaseViewModel
 	{
 		private string _textEntry;
-		private ObservableCollection<MovieModel> _movieList;
+		private ObservableCollection<MovieModel> _filteredMovieList;
 
 		public string TextEntry
 		{
@@ -18,12 +18,13 @@ namespace FilmsManager.ViewModels
 				RaisePropertyChanged();
 			}
 		}
-		public ObservableCollection<MovieModel> MovieList
+		public ObservableCollection<MovieModel> MovieList { get; set; }
+
+		public ObservableCollection<MovieModel> FilteredMovieList
 		{
-			get => _movieList;
-			set
+			get => _filteredMovieList; set
 			{
-				_movieList = value;
+				_filteredMovieList = value;
 				RaisePropertyChanged();
 			}
 		}

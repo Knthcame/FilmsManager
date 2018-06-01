@@ -11,7 +11,7 @@
                        SearchCommandParameter="{Binding TextEntry}"
                        HeightRequest="60"/>
 
-            <ListView ItemsSource="{Binding MovieList}">
+            <ListView ItemsSource="{Binding FilteredMovieList}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ImageCell Text="{Binding Title}"
