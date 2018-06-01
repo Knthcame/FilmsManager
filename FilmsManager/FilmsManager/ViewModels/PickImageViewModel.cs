@@ -45,103 +45,27 @@ namespace FilmsManager.ViewModels
         {
             new PickImageModel()
             {
-                Image = "icon.png"
+                Image = "Shrek.png"
             },
             new PickImageModel()
             {
-                Image = "Check3.png"
+                Image = "Shrek2.png"
             },
             new PickImageModel()
             {
-                Image = "Check.png"
-            },
-            new PickImageModel()
-            {
-                Image = "Check2.png"
-            },
-            new PickImageModel()
-            {
-                Image = "search.png"
+                Image = "Shrek3.png"
             },
 			new PickImageModel()
 			{
-				Image = "icon.png"
+				Image = "infinity_war.png"
 			},
 			new PickImageModel()
 			{
-				Image = "Check3.png"
+				Image = "HarryPotter.png"
 			},
 			new PickImageModel()
 			{
-				Image = "Check.png"
-			},
-			new PickImageModel()
-			{
-				Image = "Check2.png"
-			},
-			new PickImageModel()
-			{
-				Image = "search.png"
-			},
-			new PickImageModel()
-			{
-				Image = "icon.png"
-			},
-			new PickImageModel()
-			{
-				Image = "Check3.png"
-			},
-			new PickImageModel()
-			{
-				Image = "Check.png"
-			},
-			new PickImageModel()
-			{
-				Image = "Check2.png"
-			},
-			new PickImageModel()
-			{
-				Image = "search.png"
-			},
-			new PickImageModel()
-			{
-				Image = "icon.png"
-			},
-			new PickImageModel()
-			{
-				Image = "Check3.png"
-			},
-			new PickImageModel()
-			{
-				Image = "Check.png"
-			},
-			new PickImageModel()
-			{
-				Image = "Check2.png"
-			},
-			new PickImageModel()
-			{
-				Image = "search.png"
-			},
-			new PickImageModel()
-			{
-				Image = "icon.png"
-			},
-			new PickImageModel()
-			{
-				Image = "Check3.png"
-			},
-			new PickImageModel()
-			{
-				Image = "Check.png"
-			},
-			new PickImageModel()
-			{
-				Image = "Check2.png"
-			},
-			new PickImageModel()
-			{
-				Image = "search.png"
+				Image = "LOTR.png"
 			}
 		};
 	public virtual async Task<bool> OnBackButtonPressedAsync()

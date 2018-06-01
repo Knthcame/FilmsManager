@@ -27,7 +27,8 @@
                         <DataTemplate>
                             <ViewCell>
                                 <Image Source="{Binding Image}"
-                                       Aspect="AspectFit"/>
+                                       Aspect="AspectFit"
+                                       />
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>

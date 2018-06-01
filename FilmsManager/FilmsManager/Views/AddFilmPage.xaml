@@ -18,9 +18,14 @@
                     VerticalOptions="Start"
                     Text="{Binding MovieGenre}"/>
 
-            <Button x:Name="Image"
-                    Image="{Binding MovieImage}"
-                    HeightRequest="100"
+
+            <Image Source="{Binding MovieImage}"
+                   Aspect="AspectFit"
+                   HeightRequest="200"/>
+
+
+            <Button Text="Choose film image"
+                    HeightRequest="80"
                     WidthRequest="100"
                     Command="{Binding OpenGalleryCommand}"
                     HorizontalOptions="CenterAndExpand"
