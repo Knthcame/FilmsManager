@@ -14,15 +14,10 @@
     </ContentPage.Resources>
     
     <ContentPage.Content>
-        <Grid HorizontalOptions="StartAndExpand"
-              VerticalOptions="StartAndExpand">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.5*"/>
-                    <ColumnDefinition Width="0.5*"/>
-                </Grid.ColumnDefinitions>
-
+        
+        
             <StackLayout>
-                <ListView ItemsSource="{Binding ImageList}">
+                <ListView ItemsSource="{Binding ImageList}" HasUnevenRows="True">
                     <ListView.Behaviors>
                         <b:ListViewSelectedItemBehavior Command="{Binding PickImageCommand}"
                                                         Converter="{StaticResource SelectedItemConverter}"/>
@@ -38,6 +33,5 @@
                     </ListView.ItemTemplate>
                 </ListView>    
             </StackLayout>
-        </Grid>
     </ContentPage.Content>
 </ContentPage>

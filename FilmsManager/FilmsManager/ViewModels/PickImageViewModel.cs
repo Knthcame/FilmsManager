@@ -1,7 +1,10 @@
 ﻿using FilmsManager.Models;
+using FilmsManager.Services.Interfaces;
 using FilmsManager.ViewModels.Commands;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace FilmsManager.ViewModels
 {
@@ -13,6 +16,8 @@ namespace FilmsManager.ViewModels
         public ICommand PickImageCommand { get; set; }
 
         public ObservableCollection<PickImageModel> ImageList { get; set; }
+
+		private readonly INavigationService _navigationService;
 
         public PickImageModel SelectedImage
         {
@@ -29,9 +34,10 @@ namespace FilmsManager.ViewModels
             }
         }
 
-        public PickImageViewModel()
+        public PickImageViewModel(INavigationService navigationService)
         {
             PickImageCommand = new PickImageCommand(NavigationService);
+			_navigationService = NavigationService;
             LoadImages();
         }
 
@@ -138,5 +144,11 @@ namespace FilmsManager.ViewModels
 				Image = "search.png"
 			}
 		};
+	public virtual async Task<bool> OnBackButtonPressedAsync()
+	{
+		bool action = await DependencyService.Get<INotificationHelper>().ShowDialog("Abort image selection?", "Are you sure you want to cancel selecting a picture?", "Yes, abort", "No, stay");
+		if (action) await _navigationService.GoBack();
+		return action;
+	}
     }
 }

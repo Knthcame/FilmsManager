@@ -10,7 +10,14 @@ namespace FilmsManager.Views
 		public PickImagePage ()
 		{
 			InitializeComponent ();
-            BindingContext = new PickImageViewModel();
+            BindingContext = new PickImageViewModel(App.NavigationService);
+		}
+
+		protected override bool OnBackButtonPressed()
+		{
+			var bindingContext = BindingContext as PickImageViewModel;
+			bindingContext?.OnBackButtonPressedAsync();
+			return true;
 		}
 	}
 }
