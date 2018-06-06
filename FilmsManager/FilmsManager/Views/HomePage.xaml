@@ -2,8 +2,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FilmsManager.Views.HomePage"
-             xmlns:VM="clr-namespace:FilmsManager.ViewModels"
-             Title="Films Manager"
              Icon="icon.png">
     
     <ContentPage.Content>
@@ -30,15 +28,11 @@
     </ContentPage.Content>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="SearchButton" 
+        <ToolbarItem x:Name="SearchButton" 
                      Order="Primary" 
                      Icon="search.png"
                      Command="{Binding SearchCommand}"
-                     CommandParameter="{Binding MovieList}">
-            <ToolbarItem.BindingContext>
-                <VM:HomeViewModel/>
-            </ToolbarItem.BindingContext>
+                     CommandParameter="{Binding .}">
         </ToolbarItem>
-        
     </ContentPage.ToolbarItems>
 </ContentPage>

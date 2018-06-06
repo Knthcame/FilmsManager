@@ -35,8 +35,8 @@ namespace FilmsManager.ViewModels.Commands
 
 		public void Execute(object parameter)
 		{
-			ObservableCollection<MovieModel> MovieList = parameter as ObservableCollection<MovieModel>;
-			_navigationService.NavigateAsync("SearchFilmPage", MovieList);
+			var viewModel = parameter as HomeViewModel;
+			_navigationService.NavigateAsync("SearchFilmPage", viewModel.MovieList);
 		}
 	}
 }

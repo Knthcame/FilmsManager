@@ -11,7 +11,8 @@ namespace FilmsManager.Views
         public HomePage ()
 		{
 			InitializeComponent ();
-            BindingContext = new HomeViewModel();
+			BindingContext = new HomeViewModel();
+            
 			//var toolbarItem = new ToolbarItem();
 			//toolbarItem.BindingContext = this.BindingContext;
 			//toolbarItem.SetBinding(MenuItem.CommandProperty, new Binding("SearchCommand"));
@@ -20,6 +21,9 @@ namespace FilmsManager.Views
 			//toolbarItem.Text = "Search Film";
 			//toolbarItem.Icon = "search.png";
 			//this.ToolbarItems.Add(toolbarItem);
+
+			//ToolbarItem SearchButton;
+			//SearchButton.BindingContext = this.BindingContext;
 		}
 		
     }
