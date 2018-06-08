@@ -26,7 +26,8 @@
                     VerticalOptions="End"
                     HorizontalOptions="Fill"
                     Text="ADD"
-                    Command="{Binding NavigateCommand}"/>
+                    Command="{Binding NavigateCommand}"
+                    BackgroundColor="White"/>
             
         </StackLayout>
     </ContentPage.Content>
