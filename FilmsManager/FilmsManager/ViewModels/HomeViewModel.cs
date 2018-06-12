@@ -16,7 +16,6 @@ namespace FilmsManager.ViewModels
 
 		public static ObservableCollection<GenreModel> GenreList { get; set; } = new ObservableCollection<GenreModel>()
 		{
-			new GenreModel("Choose genre:"),
 			new GenreModel("Fantasy"),
 			new GenreModel("Action"),
 			new GenreModel("Drama"),
