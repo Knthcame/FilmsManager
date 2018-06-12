@@ -2,8 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FilmsManager.Views.SearchFilmPage"
+             xmlns:b="clr-namespace:FilmsManager.Behaviors"
              Title="Film Searcher"
-             BackgroundImage="Back1">
+             BackgroundImage="Back6">
     
     <ContentPage.Content>
         <StackLayout>
@@ -13,7 +14,17 @@
                        PlaceholderColor="LightGray"
                        SearchCommand="{Binding SearchFilmCommand}"
                        SearchCommandParameter="{Binding TextEntry}"
-                       HeightRequest="60"/>
+                       HeightRequest="60"
+                       IsVisible="{Binding SearchBarVisible}"/>
+
+            <Picker    Title="Movie Genre"
+                       TextColor="Black"
+                       ItemsSource="{Binding GenreList}"
+                       ItemDisplayBinding="{Binding Name}"
+                       SelectedItem="{Binding SelectedGenre, Mode=TwoWay}"
+                       IsVisible="{Binding PickerVisible}"
+                       BackgroundColor="White">
+            </Picker>
 
             <ListView ItemsSource="{Binding FilteredMovieList}">
                     <ListView.ItemTemplate>
@@ -26,8 +37,11 @@
 
                         </DataTemplate>
                     </ListView.ItemTemplate>
-                </ListView>
-            
-            </StackLayout>
+            </ListView>
+
+            <Button Text="{Binding AlternativeType, StringFormat= 'Search by \{0\}'}"
+                    Command="{Binding SwapSearchCommand}"/>
+
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

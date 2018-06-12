@@ -32,10 +32,22 @@ namespace FilmsManager.ViewModels.Commands
             {
 				bool action = await DependencyService.Get<INotificationHelper>().ShowDialog("Missing entries", " Not all values have been inserted. Abort adding film?", "Yes, abort", "No,stay");
 				if (action) await _navigationService.GoBack();
-                return;
             }
-            _movieList.Add(new MovieModel(_viewModel.MovieTitle, _viewModel.MovieGenre, _viewModel.MovieImage));
-            await _navigationService.GoBack();
+			else if (_viewModel.MovieImage == "icon.png")
+			{
+				bool action = await DependencyService.Get<INotificationHelper>().ShowDialog("Default image", "Are you sure you want to go with the default image?", "Yes", "No, i want to choose one");
+				if (action)
+				{
+					_movieList.Add(new MovieModel(_viewModel.MovieTitle, _viewModel.MovieGenre, _viewModel.MovieImage));
+					await _navigationService.GoBack();
+				}
+			}
+			else
+			{
+				_movieList.Add(new MovieModel(_viewModel.MovieTitle, _viewModel.MovieGenre, _viewModel.MovieImage));
+				await _navigationService.GoBack();
+			}
+            
         }
     }
 }

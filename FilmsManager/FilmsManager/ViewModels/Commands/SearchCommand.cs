@@ -10,7 +10,6 @@ namespace FilmsManager.ViewModels.Commands
 	{
 		private readonly INavigationService _navigationService;
 
-
 		public SearchCommand(INavigationService navigationService)
 		{
 			_navigationService = navigationService;

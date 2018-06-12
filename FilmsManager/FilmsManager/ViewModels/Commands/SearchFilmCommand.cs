@@ -23,8 +23,16 @@ namespace FilmsManager.ViewModels.Commands
 
 		public void Execute(object parameter)
 		{
-			string text = (string)parameter;
-			_viewModel.FilteredMovieList = new ObservableCollection<MovieModel>(_viewModel.MovieList.Where(m => m.Title.Contains(text)));
+			string text = (string) parameter;
+			switch (_viewModel.SearchType)
+			{
+				case "Title":
+					_viewModel.FilteredMovieList = new ObservableCollection<MovieModel>(_viewModel.MovieList.Where(m => m.Title.Contains(text)));
+			break;
+				case "Genre":
+					_viewModel.FilteredMovieList = new ObservableCollection<MovieModel>(_viewModel.MovieList.Where(m => m.Genre.Equals(text)));
+			break;
+			}	
 		}
 	}
 }

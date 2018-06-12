@@ -19,16 +19,7 @@ namespace FilmsManager.ViewModels
 		public ICommand AddCommand { get; set; }
 		public ICommand OpenGalleryCommand { get; set; }
 
-		public IList<GenreModel> GenreList { get; set; } = new ObservableCollection<GenreModel>()
-		{
-			new GenreModel("Fantasy"),
-			new GenreModel("Action"),
-			new GenreModel("Drama"),
-			new GenreModel("Humour"),
-			new GenreModel("Terror"),
-			new GenreModel("ScieneFiction"),
-			new GenreModel("Super Heroes")
-		};
+		public IList<GenreModel> GenreList { get; set; } = HomeViewModel.GenreList;
 
 		public GenreModel SelectedGenre
 		{

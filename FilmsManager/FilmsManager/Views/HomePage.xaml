@@ -4,7 +4,7 @@
              x:Class="FilmsManager.Views.HomePage"
              Icon="icon.png"
              Title="Films Manager"
-             BackgroundImage="Back1">
+             BackgroundImage="Back6">
     
     <ContentPage.Content>
         <StackLayout>
@@ -13,9 +13,9 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ImageCell Text="{Binding Title}"
-                                   TextColor="LightBlue"
+                                   TextColor="White"
                                    Detail="{Binding Genre}"
-                                   DetailColor="White"
+                                   DetailColor="Gray"
                                    ImageSource="{Binding Image}"/>
 
                     </DataTemplate>
@@ -26,8 +26,9 @@
                     VerticalOptions="End"
                     HorizontalOptions="Fill"
                     Text="ADD"
+                    TextColor="Black"
                     Command="{Binding NavigateCommand}"
-                    BackgroundColor="White"/>
+                    BackgroundColor="#999999"/>
             
         </StackLayout>
     </ContentPage.Content>
