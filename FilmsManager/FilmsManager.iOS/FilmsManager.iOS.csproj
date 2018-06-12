@@ -101,16 +101,6 @@
     <BundleResource Include="Resources\Default-Portrait%402x.png" />
     <BundleResource Include="Resources\Default.png" />
     <BundleResource Include="Resources\Default%402x.png" />
-    <BundleResource Include="Resources\Icon-60%402x.png" />
-    <BundleResource Include="Resources\Icon-60%403x.png" />
-    <BundleResource Include="Resources\Icon-76.png" />
-    <BundleResource Include="Resources\Icon-76%402x.png" />
-    <BundleResource Include="Resources\Icon-Small-40.png" />
-    <BundleResource Include="Resources\Icon-Small-40%402x.png" />
-    <BundleResource Include="Resources\Icon-Small-40%403x.png" />
-    <BundleResource Include="Resources\Icon-Small.png" />
-    <BundleResource Include="Resources\Icon-Small%402x.png" />
-    <BundleResource Include="Resources\Icon-Small%403x.png" />
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
   </ItemGroup>
   <ItemGroup>
@@ -160,9 +150,6 @@
     <BundleResource Include="Resources\HarryPotter.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\icon.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\icon.png" />
   </ItemGroup>
   <ItemGroup>
@@ -188,5 +175,8 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Shrek3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Back6.jpg" />
   </ItemGroup>
 </Project>
