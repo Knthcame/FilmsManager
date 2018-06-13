@@ -15,10 +15,15 @@
                     <DataTemplate>
                         <ViewCell Height="90">
                             <Frame BorderColor="White"
-                                   CornerRadius="12"
                                    Margin="0,3"
                                    Padding="0,0,0,0"
                                    BackgroundColor="Transparent">
+                                <Frame.CornerRadius>
+                                    <OnPlatform  x:TypeArguments="x:Single">
+                                        <On Platform="Android" Value="12" />
+                                        <On Platform="iOS" Value="2" />
+                                    </OnPlatform>
+                                </Frame.CornerRadius>
                                 <StackLayout>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -26,13 +31,13 @@
                                             <ColumnDefinition Width="35*"/>
                                             <ColumnDefinition Width="35*"/>
                                         </Grid.ColumnDefinitions>
-                                        
+
                                         <Frame BorderColor="LightGray"
                                                CornerRadius="0"
                                                Grid.Column="1"
                                                BackgroundColor="Transparent"
                                                Padding="0">
-                                            
+
                                             <Label  Text="{Binding Title}"
                                                     TextColor="White"
                                                     FontSize="Large"
@@ -47,7 +52,7 @@
                                                FontSize="Medium"
                                                Grid.Column="2"
                                                VerticalOptions="CenterAndExpand"/>
-                                
+
                                         <Image Source="{Binding Image}"
                                                Grid.Column="0"
                                                VerticalOptions="Center"
