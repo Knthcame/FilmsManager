@@ -8,7 +8,37 @@
     
     <ContentPage.Content>
         <StackLayout>
+            <Frame BorderColor="Black"
+                   CornerRadius="0"
+                   BackgroundColor="LightGray"
+                   Padding="0"
+                   Margin="0">
+                
+                 <Grid HeightRequest="30">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="35*"/>
+                        <ColumnDefinition Width="35*"/>
+                    </Grid.ColumnDefinitions>
+                
+                    <Label Text="Image"
+                           HorizontalOptions="CenterAndExpand"
+                           VerticalOptions="CenterAndExpand"
+                           Grid.Column="0"/>
 
+                    <Label Text="Title"
+                           HorizontalOptions="CenterAndExpand"
+                           VerticalOptions="CenterAndExpand"
+                           Grid.Column="1"/>
+
+                    <Label Text="Genre"
+                           HorizontalOptions="CenterAndExpand"
+                           VerticalOptions="CenterAndExpand"
+                           Grid.Column="2"/>
+                </Grid>               
+            </Frame>
+
+            
             <ListView ItemsSource="{Binding MovieList}"
                       HasUnevenRows="True">
                 <ListView.ItemTemplate>
@@ -16,12 +46,13 @@
                         <ViewCell Height="90">
                             <Frame BorderColor="White"
                                    Margin="0,3"
-                                   Padding="0,0,0,0"
-                                   BackgroundColor="Transparent">
+                                   Padding="0"
+                                   BackgroundColor="Transparent"
+                                   HasShadow="False">
                                 <Frame.CornerRadius>
                                     <OnPlatform  x:TypeArguments="x:Single">
-                                        <On Platform="Android" Value="12" />
-                                        <On Platform="iOS" Value="2" />
+                                        <On Platform="Android" Value="12"/>
+                                        <On Platform="iOS" Value="2"/>
                                     </OnPlatform>
                                 </Frame.CornerRadius>
                                 <StackLayout>
@@ -36,7 +67,8 @@
                                                CornerRadius="0"
                                                Grid.Column="1"
                                                BackgroundColor="Transparent"
-                                               Padding="0">
+                                               Padding="0"
+                                               Margin="0">
 
                                             <Label  Text="{Binding Title}"
                                                     TextColor="White"
@@ -51,13 +83,15 @@
                                                TextColor="LightGray"
                                                FontSize="Medium"
                                                Grid.Column="2"
-                                               VerticalOptions="CenterAndExpand"/>
+                                               VerticalOptions="CenterAndExpand"
+                                               HorizontalOptions="CenterAndExpand"/>
 
                                         <Image Source="{Binding Image}"
                                                Grid.Column="0"
                                                VerticalOptions="Center"
                                                HorizontalOptions="Center"
-                                               BackgroundColor="White"/>
+                                               BackgroundColor="White"
+                                               Margin="5,1,0,1"/>
 
                                     </Grid>
                                 </StackLayout>

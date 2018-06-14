@@ -2,7 +2,6 @@
 using FilmsManager.ViewModels.Commands;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using Xamarin.Forms;
 
 namespace FilmsManager.ViewModels
 {
