@@ -17,7 +17,7 @@
                    VerticalOptions="CenterAndExpand"
                    HorizontalOptions="CenterAndExpand">
                 
-                 <Grid>
+                 <Grid HeightRequest="30">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="30*"/>
                         <ColumnDefinition Width="35*"/>
@@ -43,7 +43,8 @@
 
             
             <ListView ItemsSource="{Binding MovieList}"
-                      HasUnevenRows="True">
+                      HasUnevenRows="True"
+                      BackgroundColor="Transparent">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell Height="90">
@@ -59,7 +60,7 @@
                                     </OnPlatform>
                                 </Frame.CornerRadius>
                                 <StackLayout>
-                                    <Grid>
+                                    <Grid Height="90">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="30*"/>
                                             <ColumnDefinition Width="35*"/>
@@ -111,7 +112,8 @@
                     HorizontalOptions="Fill"
                     Text="ADD"
                     TextColor="Black"
-                    Command="{Binding NavigateCommand}"/>
+                    Command="{Binding NavigateCommand}"
+                    BackgroundColor="LightGray"/>
 
         </StackLayout>
     </ContentPage.Content>

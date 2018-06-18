@@ -34,7 +34,10 @@
                    CornerRadius="0"
                    BackgroundColor="LightGray"
                    Padding="0"
-                   Margin="0">
+                   Margin="0"
+                   HasShadow="False"
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="CenterAndExpand">
 
                 <Grid HeightRequest="30">
                     <Grid.ColumnDefinitions>
@@ -62,7 +65,8 @@
 
 
             <ListView ItemsSource="{Binding FilteredMovieList}"
-                      HasUnevenRows="True">
+                      HasUnevenRows="True"
+                      BackgroundColor="Transparent">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell Height="90">
@@ -70,7 +74,9 @@
                                    Margin="0,3"
                                    Padding="0"
                                    BackgroundColor="Transparent"
-                                   HasShadow="False">
+                                   HasShadow="False"
+                                   HorizontalOptions="CenterAndExpand"
+                                   VerticalOptions="CenterAndExpand">
                                 <Frame.CornerRadius>
                                     <OnPlatform  x:TypeArguments="x:Single">
                                         <On Platform="Android" Value="12"/>
