@@ -13,6 +13,8 @@ namespace FilmsManager.ViewModels
     {
         private PickImageModel _selectedImage;
 
+		public double ScreenHeight = Application.Current.MainPage.Height;
+
         public ICommand PickImageCommand { get; set; }
 
         public ObservableCollection<PickImageModel> ImageList { get; set; }
@@ -34,6 +36,8 @@ namespace FilmsManager.ViewModels
             }
         }
 
+		public PickImageViewModel(){}
+
         public PickImageViewModel(INavigationService navigationService)
         {
             PickImageCommand = new PickImageCommand(NavigationService);
@@ -45,27 +49,27 @@ namespace FilmsManager.ViewModels
         {
             new PickImageModel()
             {
-                Image = "Shrek.png"
+                ImageName = "Shrek"
             },
             new PickImageModel()
             {
-                Image = "Shrek2.png"
+                ImageName = "Shrek2"
             },
             new PickImageModel()
             {
-                Image = "Shrek3.png"
+                ImageName = "Shrek3"
             },
 			new PickImageModel()
 			{
-				Image = "infinity_war.png"
+				ImageName = "infinity_war"
 			},
 			new PickImageModel()
 			{
-				Image = "HarryPotter.png"
+				ImageName = "HarryPotter"
 			},
 			new PickImageModel()
 			{
-				Image = "LOTR.png"
+				ImageName = "LOTR"
 			}
 		};
 	public virtual async Task<bool> OnBackButtonPressedAsync()

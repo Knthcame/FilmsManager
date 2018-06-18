@@ -17,7 +17,10 @@
         
         
             <StackLayout>
-                <ListView ItemsSource="{Binding ImageList}" HasUnevenRows="True">
+                <ListView RowHeight="{Binding ScreenHeight}" 
+                          ItemsSource="{Binding ImageList}" 
+                          HasUnevenRows="True">
+                    
                     <ListView.Behaviors>
                         <b:ListViewSelectedItemBehavior Command="{Binding PickImageCommand}"
                                                         Converter="{StaticResource SelectedItemConverter}"/>
@@ -25,9 +28,8 @@
                     
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <ViewCell>
-                                <Image Source="{Binding Image}"
-                                       Aspect="AspectFit"
+                        <ViewCell>
+                                <Image Source="{Binding ImageName}"
                                        />
                             </ViewCell>
                         </DataTemplate>

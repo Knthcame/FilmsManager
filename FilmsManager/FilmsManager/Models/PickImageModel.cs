@@ -1,17 +1,28 @@
-﻿namespace FilmsManager.Models
+﻿using Xamarin.Forms;
+
+namespace FilmsManager.Models
 {
     public class PickImageModel : BaseModel
     {
-        private string _image;
+        private string _imageName;
 
-        public string Image
+        public string ImageName
         {
-            get => _image;
+            get => _imageName;
             set
             {
-                _image = value;
-                RaisePropertyChanged();
+                _imageName = value;
+
+				Image image = new Image();
+				image.Source = ImageSource.FromResource(_imageName);
+				double screenWidth = Application.Current.MainPage.Width;
+				double imageWidth = image.Width;
+				double imageHeight = image.Height;
+				CellHeight = screenWidth / imageWidth * imageHeight;
+				RaisePropertyChanged();
             }
         }
-    }
+
+		public double CellHeight;
+	}
 }

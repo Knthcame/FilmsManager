@@ -2,9 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FilmsManager.Views.SearchFilmPage"
-             xmlns:b="clr-namespace:FilmsManager.Behaviors"
              Title="Film Searcher"
-             BackgroundImage="Back6">
+             BackgroundImage="Back6.jpg">
     
     <ContentPage.Content>
         <StackLayout>
@@ -26,7 +25,9 @@
                        IsVisible="{Binding PickerVisible}"
                        BackgroundColor="LightGray"
                        Margin="0"
-                       HeightRequest="50"/>
+                       HeightRequest="50"
+                       HorizontalOptions="CenterAndExpand"
+                       VerticalOptions="CenterAndExpand"/>
 
 
             <Frame BorderColor="Black"

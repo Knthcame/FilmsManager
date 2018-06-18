@@ -4,7 +4,7 @@
              x:Class="FilmsManager.Views.HomePage"
              Icon="icon.png"
              Title="Films Manager"
-             BackgroundImage="Back6">
+             BackgroundImage="Back6.jpg">
     
     <ContentPage.Content>
         <StackLayout>
@@ -12,9 +12,12 @@
                    CornerRadius="0"
                    BackgroundColor="LightGray"
                    Padding="0"
-                   Margin="0">
+                   Margin="0"
+                   HasShadow="False"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand">
                 
-                 <Grid HeightRequest="30">
+                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="30*"/>
                         <ColumnDefinition Width="35*"/>

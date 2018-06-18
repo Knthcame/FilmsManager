@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FilmsManager.Views.AddFilmPage"
              Title="Add film"
-             BackgroundImage="Back3">
+             BackgroundImage="Back3.jpg">
     
     <ContentPage.Content>
         <StackLayout>

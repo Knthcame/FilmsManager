@@ -26,7 +26,7 @@ namespace FilmsManager.ViewModels.Commands
         public void Execute(object parameter)
         {
 			PickImageModel model =(PickImageModel) parameter;
-			_image = model.Image;
+			_image = model.ImageName;
 			MessagingCenter.Send(this, "PickImage", _image);
 			_navigationService.GoBack();
         }
