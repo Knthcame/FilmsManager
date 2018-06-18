@@ -1,6 +1,7 @@
 ﻿using FilmsManager.Models;
 using FilmsManager.ViewModels.Commands;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace FilmsManager.ViewModels
 {
@@ -87,15 +88,18 @@ namespace FilmsManager.ViewModels
 			}
 		}
 
-		public SearchFilmCommand SearchFilmCommand { get; set; }
+		public ICommand SearchFilmCommand { get; set; }
 
-		public SwapSearchCommand SwapSearchCommand { get; set; }
+		public ICommand SwapSearchCommand { get; set; }
+
+		public ICommand FilmDetailsCommand { get; set; }
 
 		public SearchFilmViewModel(ObservableCollection<MovieModel> movieList)
 		{
 			MovieList = movieList;
 			SearchFilmCommand = new SearchFilmCommand(this);
 			SwapSearchCommand = new SwapSearchCommand(this);
+			FilmDetailsCommand = new FilmDetailsCommand(NavigationService);
 		}
 	}
 }

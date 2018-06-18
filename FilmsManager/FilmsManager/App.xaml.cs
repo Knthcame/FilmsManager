@@ -16,6 +16,7 @@ namespace FilmsManager
             NavigationService.Configure("AddFilmPage", typeof(Views.AddFilmPage));
             NavigationService.Configure("PickImagePage", typeof(Views.PickImagePage));
 			NavigationService.Configure("SearchFilmPage", typeof(Views.SearchFilmPage));
+			NavigationService.Configure("FilmDetailsPage", typeof(Views.FilmDetailsPage));
 			var mainPage = ((CustomNavigationService)NavigationService).SetRootPage("HomePage");
 
             MainPage = mainPage;

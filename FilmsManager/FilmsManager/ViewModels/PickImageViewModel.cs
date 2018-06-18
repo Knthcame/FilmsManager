@@ -49,27 +49,27 @@ namespace FilmsManager.ViewModels
         {
             new PickImageModel()
             {
-                ImageName = "Shrek.png"
+                ImageName = "Shrek.jpg"
             },
             new PickImageModel()
             {
-                ImageName = "Shrek2.png"
+                ImageName = "Shrek2.jpg"
 			},
             new PickImageModel()
             {
-                ImageName = "Shrek3.png"
+                ImageName = "Shrek3.jpg"
 			},
 			new PickImageModel()
 			{
-				ImageName = "infinity_war.png"
+				ImageName = "infinity_war.jpg"
 			},
 			new PickImageModel()
 			{
-				ImageName = "HarryPotter.png"
+				ImageName = "HarryPotter.jpg"
 			},
 			new PickImageModel()
 			{
-				ImageName = "LOTR.png"
+				ImageName = "LOTR.jpg"
 			}
 		};
 	public virtual async Task<bool> OnBackButtonPressedAsync()

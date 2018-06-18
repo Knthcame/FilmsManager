@@ -8,9 +8,9 @@ namespace FilmsManager.ViewModels
 	public class HomeViewModel : BaseViewModel
 	{
         public ObservableCollection<MovieModel> MovieList { get; set; } = new ObservableCollection<MovieModel> {
-			new MovieModel("Shrek","Humour", "Shrek.png"),
-			new MovieModel("Shrek 2", "Humour", "Shrek2.png"),
-			new MovieModel("Infinity war", "Super Heroes", "infinity_war.png")
+			new MovieModel("Shrek","Humour", "Shrek.jpg"),
+			new MovieModel("Shrek 2", "Humour", "Shrek2.jpg"),
+			new MovieModel("Infinity war", "Super Heroes", "infinity_war.jpg")
 		};
 
 		public static ObservableCollection<GenreModel> GenreList { get; set; } = new ObservableCollection<GenreModel>()
@@ -27,10 +27,13 @@ namespace FilmsManager.ViewModels
 		public ICommand NavigateCommand { get; set; }
 		public ICommand SearchCommand { get; set; }
 
-        public HomeViewModel ()
+		public ICommand FilmDetailsCommand { get; set; }
+
+		public HomeViewModel ()
 		{
             NavigateCommand = new NavigateCommand(NavigationService, MovieList);
 			SearchCommand = new SearchCommand(NavigationService);
-        }
+			FilmDetailsCommand = new FilmDetailsCommand(NavigationService);
+		}
     }
 }

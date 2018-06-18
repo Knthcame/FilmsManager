@@ -67,7 +67,6 @@ namespace FilmsManager.ViewModels
 			AddCommand = new AddCommand(NavigationService, this, movieList);
 			OpenGalleryCommand = new OpenGalleryCommand(NavigationService);
 			MessagingCenter.Subscribe<PickImageCommand, string>(this, "PickImage", (s, a) => MovieImage = a);
-			//LoadGenreList();
 		}
 
 		public virtual async Task<bool> OnBackButtonPressedAsync()
@@ -76,17 +75,6 @@ namespace FilmsManager.ViewModels
 			if (action) await NavigationService.GoBack();
 			return action;
 		}
-
-		//private void LoadGenreList()
-		//{
-		//	GenreList.Add("Fantasy");
-		//	GenreList.Add("Action");
-		//	GenreList.Add("Drama");
-		//	GenreList.Add("Humour");
-		//	GenreList.Add("Terror");
-		//	GenreList.Add("ScieneFiction");
-		//	GenreList.Add("Super Heroes");
-		//}
 
 	}
 }

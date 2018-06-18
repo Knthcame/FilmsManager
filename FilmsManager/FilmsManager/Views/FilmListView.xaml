@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FilmsManager.Views.FilmListView">
+  <ContentView.Content>
+      <StackLayout>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="90*"/>
+                </Grid.RowDefinitions>
+                
+            
+            <Frame  BorderColor="Black"
+                        CornerRadius="0"
+                        BackgroundColor="LightGray"
+                        Padding="0"
+                        Margin="0"
+                        HasShadow="False"
+                        Grid.Row="0">
+
+                <StackLayout>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30*"/>
+                            <ColumnDefinition Width="35*"/>
+                            <ColumnDefinition Width="35*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Text="Image"
+                                   VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="Center"
+                                   HorizontalOptions="CenterAndExpand"
+                                   VerticalOptions="CenterAndExpand"
+                                   Grid.Column="0"/>
+
+                        <Label Text="Title"
+                                VerticalTextAlignment="Center"
+                                   HorizontalOptions="CenterAndExpand"
+                                   VerticalOptions="CenterAndExpand"
+                                   Grid.Column="1"/>
+
+                        <Label Text="Genre"
+                                VerticalTextAlignment="Center"
+                                   HorizontalOptions="CenterAndExpand"
+                                   VerticalOptions="CenterAndExpand"
+                                   Grid.Column="2"/>
+                    </Grid>
+                </StackLayout>
+            </Frame>
+
+
+            <ListView ItemsSource="{Binding FilteredMovieList}"
+                          HasUnevenRows="True"
+                          BackgroundColor="Transparent"
+                          Grid.Row="1">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell Height="90">
+                            <Frame BorderColor="White"
+                                    Margin="0,3"
+                                    Padding="0"
+                                    BackgroundColor="Transparent"
+                                    HasShadow="False">
+                                <Frame.CornerRadius>
+                                    <OnPlatform  x:TypeArguments="x:Single">
+                                        <On Platform="Android" Value="12"/>
+                                        <On Platform="iOS" Value="2"/>
+                                    </OnPlatform>
+                                </Frame.CornerRadius>
+                                <StackLayout>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="30*"/>
+                                            <ColumnDefinition Width="35*"/>
+                                            <ColumnDefinition Width="35*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Frame  BorderColor="LightGray"
+                                                    CornerRadius="0"
+                                                    Grid.Column="1"
+                                                    BackgroundColor="Transparent"
+                                                    Padding="0"
+                                                    Margin="0">
+
+                                            <Label  Text="{Binding Title}"
+                                                        TextColor="White"
+                                                        FontSize="Large"
+                                                        Grid.Column="1"
+                                                        VerticalOptions="CenterAndExpand"
+                                                        HorizontalOptions="Center"
+                                                    />
+                                        </Frame>
+
+                                        <Label  Text="{Binding Genre}"
+                                                    TextColor="LightGray"
+                                                    FontSize="Medium"
+                                                    Grid.Column="2"
+                                                    VerticalOptions="CenterAndExpand"
+                                                    HorizontalOptions="CenterAndExpand"/>
+
+                                        <Image  Source="{Binding Image}"
+                                                    Grid.Column="0"
+                                                    VerticalOptions="Center"
+                                                    HorizontalOptions="Center"
+                                                    BackgroundColor="White"
+                                                    Margin="5,1,0,1"/>
+                                    </Grid>
+                                </StackLayout>
+
+                            </Frame>
+                        </ViewCell>
+
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            </Grid>
+        </StackLayout>
+  </ContentView.Content>
+</ContentView>

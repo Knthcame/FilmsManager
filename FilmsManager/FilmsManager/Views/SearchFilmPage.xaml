@@ -1,136 +1,190 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:b="clr-namespace:FilmsManager.Behaviors"
+             xmlns:c="clr-namespace:FilmsManager.Converters"
              x:Class="FilmsManager.Views.SearchFilmPage"
              Title="Film Searcher"
              BackgroundImage="Back6.jpg"
              >
-    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <b:ListViewSelectedItemBehavior x:Key="FilmDetailsCommand"/>
+            <c:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+ 
     <ContentPage.Content>
-        <StackLayout>
-            <SearchBar Text="{Binding TextEntry}"
-                       TextColor="Black"
-                       Placeholder="Insert Movie Title to Search for"
-                       PlaceholderColor="DarkGray"
-                       SearchCommand="{Binding SearchFilmCommand}"
-                       SearchCommandParameter="{Binding TextEntry}"
-                       HeightRequest="50"
-                       IsVisible="{Binding SearchBarVisible}"
-                       BackgroundColor="LightGray"/>
+       
 
-            <Picker    Title="Movie Genre"
-                       TextColor="Black"
-                       ItemsSource="{Binding GenreList}"
-                       ItemDisplayBinding="{Binding Name}"
-                       SelectedItem="{Binding SelectedGenre, Mode=TwoWay}"
-                       IsVisible="{Binding PickerVisible}"
-                       BackgroundColor="LightGray"
-                       Margin="0"
-                       HeightRequest="50"/>
+        <StackLayout Padding="0" Margin="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30*"/>
+                    <ColumnDefinition Width="35*"/>
+                    <ColumnDefinition Width="35*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="7.5*"/>
+                    <RowDefinition Height="7.5*"/>
+                    <RowDefinition Height="77.5*"/>
+                    <RowDefinition Height="7.5*"/>
+                </Grid.RowDefinitions>
 
+                <Image Source="Back6.jpg"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="3"
+                       Grid.Row="0"
+                       Grid.RowSpan="4"
+                       Aspect="Fill"
+                       />
 
-            <Frame BorderColor="Black"
-                   CornerRadius="0"
-                   BackgroundColor="LightGray"
-                   Padding="0"
-                   Margin="0"
-                   HasShadow="False">
+                <SearchBar Text="{Binding TextEntry}"
+                           TextColor="Black"
+                           Placeholder="Insert Movie Title to Search for"
+                           PlaceholderColor="DarkGray"
+                           SearchCommand="{Binding SearchFilmCommand}"
+                           SearchCommandParameter="{Binding TextEntry}"
+                           IsVisible="{Binding SearchBarVisible}"
+                           BackgroundColor="LightGray"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="3"
+                           Grid.Row="0"/>
 
-                <Grid HeightRequest="30">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="30*"/>
-                        <ColumnDefinition Width="35*"/>
-                        <ColumnDefinition Width="35*"/>
-                    </Grid.ColumnDefinitions>
+                <Picker    Title="Movie Genre"
+                           TextColor="Black"
+                           ItemsSource="{Binding GenreList}"
+                           ItemDisplayBinding="{Binding Name}"
+                           SelectedItem="{Binding SelectedGenre, Mode=TwoWay}"
+                           IsVisible="{Binding PickerVisible}"
+                           BackgroundColor="LightGray"
+                           Margin="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="3"
+                           Grid.Row="0"/>
 
-                    <Label Text="Image"
-                           HorizontalOptions="CenterAndExpand"
-                           VerticalOptions="CenterAndExpand"
-                           Grid.Column="0"/>
+                <Frame  BorderColor="Black"
+                        CornerRadius="0"
+                        BackgroundColor="LightGray"
+                        Padding="0"
+                        Margin="0"
+                        HasShadow="False"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3"
+                        Grid.Row="1">
 
-                    <Label Text="Title"
-                           HorizontalOptions="CenterAndExpand"
-                           VerticalOptions="CenterAndExpand"
-                           Grid.Column="1"/>
+                    <StackLayout>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30*"/>
+                                <ColumnDefinition Width="35*"/>
+                                <ColumnDefinition Width="35*"/>
+                            </Grid.ColumnDefinitions>
 
-                    <Label Text="Genre"
-                           HorizontalOptions="CenterAndExpand"
-                           VerticalOptions="CenterAndExpand"
-                           Grid.Column="2"/>
-                </Grid>
-            </Frame>
-
-
-            <ListView ItemsSource="{Binding FilteredMovieList}"
-                      HasUnevenRows="True"
-                      BackgroundColor="Transparent">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell Height="90">
-                            <Frame BorderColor="White"
-                                   Margin="0,3"
-                                   Padding="0"
-                                   BackgroundColor="Transparent"
-                                   HasShadow="False"
+                            <Label Text="Image"
+                                   VerticalTextAlignment="Center"
                                    HorizontalOptions="CenterAndExpand"
-                                   VerticalOptions="CenterAndExpand">
-                                <Frame.CornerRadius>
-                                    <OnPlatform  x:TypeArguments="x:Single">
-                                        <On Platform="Android" Value="12"/>
-                                        <On Platform="iOS" Value="2"/>
-                                    </OnPlatform>
-                                </Frame.CornerRadius>
-                                <StackLayout>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="30*"/>
-                                            <ColumnDefinition Width="35*"/>
-                                            <ColumnDefinition Width="35*"/>
-                                        </Grid.ColumnDefinitions>
+                                   VerticalOptions="CenterAndExpand"
+                                   Grid.Column="0"/>
 
-                                        <Frame BorderColor="LightGray"
-                                               CornerRadius="0"
-                                               Grid.Column="1"
-                                               BackgroundColor="Transparent"
-                                               Padding="0"
-                                               Margin="0">
+                            <Label Text="Title"
+                                VerticalTextAlignment="Center"
+                                   HorizontalOptions="CenterAndExpand"
+                                   VerticalOptions="CenterAndExpand"
+                                   Grid.Column="1"/>
 
-                                            <Label  Text="{Binding Title}"
-                                                    TextColor="White"
-                                                    FontSize="Large"
+                            <Label Text="Genre"
+                                VerticalTextAlignment="Center"
+                                   HorizontalOptions="CenterAndExpand"
+                                   VerticalOptions="CenterAndExpand"
+                                   Grid.Column="2"/>
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+
+
+                <ListView ItemsSource="{Binding FilteredMovieList}"
+                          HasUnevenRows="True"
+                          BackgroundColor="Transparent"
+                          Grid.Column="0"
+                          Grid.ColumnSpan="3"
+                          Grid.Row="2">
+
+                    <ListView.Behaviors>
+                        <b:ListViewSelectedItemBehavior Command="{Binding FilmDetailsCommand}"
+                                                        Converter="{StaticResource SelectedItemConverter}"/>
+                    </ListView.Behaviors>
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell Height="90">
+                                <Frame BorderColor="White"
+                                    Margin="0,3"
+                                    Padding="0"
+                                    BackgroundColor="Transparent"
+                                    HasShadow="False">
+                                    <Frame.CornerRadius>
+                                        <OnPlatform  x:TypeArguments="x:Single">
+                                            <On Platform="Android" Value="12"/>
+                                            <On Platform="iOS" Value="2"/>
+                                        </OnPlatform>
+                                    </Frame.CornerRadius>
+                                    <StackLayout>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="30*"/>
+                                                <ColumnDefinition Width="35*"/>
+                                                <ColumnDefinition Width="35*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Frame  BorderColor="LightGray"
+                                                    CornerRadius="0"
                                                     Grid.Column="1"
+                                                    BackgroundColor="Transparent"
+                                                    Padding="0"
+                                                    Margin="0">
+
+                                                <Label  Text="{Binding Title}"
+                                                        TextColor="White"
+                                                        FontSize="Large"
+                                                        Grid.Column="1"
+                                                        VerticalOptions="CenterAndExpand"
+                                                        HorizontalOptions="Center"
+                                                    />
+                                            </Frame>
+
+                                            <Label  Text="{Binding Genre}"
+                                                    TextColor="LightGray"
+                                                    FontSize="Medium"
+                                                    Grid.Column="2"
                                                     VerticalOptions="CenterAndExpand"
+                                                    HorizontalOptions="CenterAndExpand"/>
+
+                                            <Image  Source="{Binding Image}"
+                                                    Grid.Column="0"
+                                                    VerticalOptions="Center"
                                                     HorizontalOptions="Center"
-                                               />
-                                        </Frame>
+                                                    BackgroundColor="White"
+                                                    Margin="5,1,0,1"/>
+                                        </Grid>
+                                    </StackLayout>
 
-                                        <Label Text="{Binding Genre}"
-                                               TextColor="LightGray"
-                                               FontSize="Medium"
-                                               Grid.Column="2"
-                                               VerticalOptions="CenterAndExpand"
-                                               HorizontalOptions="CenterAndExpand"/>
+                                </Frame>
+                            </ViewCell>
 
-                                        <Image Source="{Binding Image}"
-                                               Grid.Column="0"
-                                               VerticalOptions="Center"
-                                               HorizontalOptions="Center"
-                                               BackgroundColor="White"
-                                               Margin="5,1,0,1"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
 
-                                    </Grid>
-                                </StackLayout>
-
-                            </Frame>
-                        </ViewCell>
-
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-
-            <Button Text="{Binding AlternativeType, StringFormat= 'Search by \{0\}'}"
-                    Command="{Binding SwapSearchCommand}"/>
-
+                <Button Text="{Binding AlternativeType, StringFormat= 'Search by \{0\}'}"
+                        Command="{Binding SwapSearchCommand}"
+                        BackgroundColor="LightGray"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3"
+                        Grid.Row="3"/>
+                
+            </Grid>
         </StackLayout>
+
     </ContentPage.Content>
 </ContentPage>
