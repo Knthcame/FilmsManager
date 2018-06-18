@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FilmsManager.Views.SearchFilmPage"
              Title="Film Searcher"
-             BackgroundImage="Back6.jpg">
+             BackgroundImage="Back6.jpg"
+             >
     
     <ContentPage.Content>
         <StackLayout>
@@ -25,9 +26,7 @@
                        IsVisible="{Binding PickerVisible}"
                        BackgroundColor="LightGray"
                        Margin="0"
-                       HeightRequest="50"
-                       HorizontalOptions="CenterAndExpand"
-                       VerticalOptions="CenterAndExpand"/>
+                       HeightRequest="50"/>
 
 
             <Frame BorderColor="Black"
@@ -35,9 +34,7 @@
                    BackgroundColor="LightGray"
                    Padding="0"
                    Margin="0"
-                   HasShadow="False"
-                   HorizontalOptions="CenterAndExpand"
-                   VerticalOptions="CenterAndExpand">
+                   HasShadow="False">
 
                 <Grid HeightRequest="30">
                     <Grid.ColumnDefinitions>
