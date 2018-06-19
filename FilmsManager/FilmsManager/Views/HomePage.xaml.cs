@@ -12,19 +12,13 @@ namespace FilmsManager.Views
 		{
 			InitializeComponent ();
 			BindingContext = new HomeViewModel();
-            
-			//var toolbarItem = new ToolbarItem();
-			//toolbarItem.BindingContext = this.BindingContext;
-			//toolbarItem.SetBinding(MenuItem.CommandProperty, new Binding("SearchCommand"));
-			//toolbarItem.SetBinding(MenuItem.CommandParameterProperty, new Binding("MovieList"));
-			//toolbarItem.Order = ToolbarItemOrder.Primary;
-			//toolbarItem.Text = "Search Film";
-			//toolbarItem.Icon = "search.png";
-			//this.ToolbarItems.Add(toolbarItem);
-
-			//ToolbarItem SearchButton;
-			//SearchButton.BindingContext = this.BindingContext;
 		}
-		
-    }
+
+		protected override void OnAppearing()
+		{
+			var bindingContext = BindingContext as HomeViewModel;
+			bindingContext?.OnAppearing();
+			base.OnAppearing();
+		}
+	}
 }

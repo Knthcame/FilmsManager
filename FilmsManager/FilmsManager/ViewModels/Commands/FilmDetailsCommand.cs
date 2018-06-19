@@ -24,7 +24,7 @@ namespace FilmsManager.ViewModels.Commands
 		public void Execute(object parameter)
 		{
 			MovieModel movie = parameter as MovieModel;
-			_navigationService.NavigateModalAsync("FilmDetailsPage", movie);
+			_navigationService.NavigateAsync("FilmDetailsPage", movie);
 		}
 	}
 }

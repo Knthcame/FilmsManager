@@ -7,7 +7,9 @@ namespace FilmsManager.ViewModels
 {
 	public class HomeViewModel : BaseViewModel
 	{
-        public ObservableCollection<MovieModel> MovieList { get; set; } = new ObservableCollection<MovieModel> {
+		private MovieModel _selectedMovie;
+
+		public ObservableCollection<MovieModel> MovieList { get; set; } = new ObservableCollection<MovieModel> {
 			new MovieModel("Shrek","Humour", "Shrek.jpg"),
 			new MovieModel("Shrek 2", "Humour", "Shrek2.jpg"),
 			new MovieModel("Infinity war", "Super Heroes", "infinity_war.jpg")
@@ -29,11 +31,28 @@ namespace FilmsManager.ViewModels
 
 		public ICommand FilmDetailsCommand { get; set; }
 
-		public HomeViewModel ()
+		public MovieModel SelectedMovie
 		{
-            NavigateCommand = new NavigateCommand(NavigationService, MovieList);
+			get => _selectedMovie;
+			set
+			{
+				_selectedMovie = value;
+				RaisePropertyChanged();
+			}
+		}
+
+		public HomeViewModel()
+		{
+			NavigateCommand = new NavigateCommand(NavigationService, MovieList);
 			SearchCommand = new SearchCommand(NavigationService);
 			FilmDetailsCommand = new FilmDetailsCommand(NavigationService);
 		}
-    }
+
+		public void OnAppearing()
+		{
+			SelectedMovie = null;
+		}
+
+
+	}
 }

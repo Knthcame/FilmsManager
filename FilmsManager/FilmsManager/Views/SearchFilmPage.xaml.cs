@@ -14,5 +14,12 @@ namespace FilmsManager.Views
 			InitializeComponent ();
 			BindingContext = new SearchFilmViewModel(movieList);
 		}
+
+		protected override void OnAppearing()
+		{
+			var bindingContext = BindingContext as SearchFilmViewModel;
+			bindingContext?.OnAppearing();
+			base.OnAppearing();
+		}
 	}
 }

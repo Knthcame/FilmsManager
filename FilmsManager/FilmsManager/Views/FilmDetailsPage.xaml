@@ -1,12 +1,57 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="FilmsManager.Views.FilmDetailsPage">
+             x:Class="FilmsManager.Views.FilmDetailsPage"
+             Title="Film Details">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="{Binding Movie.Title}"/>
-            <Label Text="{Binding Movie.Genre}"/>
-            <Image Source="{Binding Movie.Image}"/>
-        </StackLayout>
+        <Grid Padding="0"
+              Margin="0">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="70*"/>
+            </Grid.RowDefinitions>
+                
+            <Image Source="Back6.jpg" 
+                    Aspect="Fill"
+                    Grid.Row="0"
+                    Grid.RowSpan="3"/>
+
+            <Frame CornerRadius="0"
+                   BorderColor="LightGray"
+                   Padding="0"
+                   Margin="0"
+                   Grid.Row="0"
+                   BackgroundColor="Transparent"
+                   VerticalOptions="Fill">
+                
+                <Label Text="{Binding Movie.Title}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        TextColor="White"/>
+
+            </Frame>
+
+            <Frame CornerRadius="0"
+                   BorderColor="LightGray"
+                   Grid.Row="1"
+                   Padding="0"
+                   Margin="0"
+                   BackgroundColor="Transparent"
+                   VerticalOptions="Fill">
+
+                <Label Text="{Binding Movie.Genre}"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            TextColor="White"/>
+
+            </Frame>
+
+            <Image Source="{Binding Movie.Image}"
+                    Grid.Row="2"/>
+            
+        </Grid>
+            
     </ContentPage.Content>
 </ContentPage>

@@ -108,7 +108,8 @@
                           BackgroundColor="Transparent"
                           Grid.Column="0"
                           Grid.ColumnSpan="3"
-                          Grid.Row="2">
+                          Grid.Row="2"
+                          SelectedItem="{Binding SelectedMovie, Mode=TwoWay}">
 
                     <ListView.Behaviors>
                         <b:ListViewSelectedItemBehavior Command="{Binding FilmDetailsCommand}"

@@ -14,6 +14,7 @@ namespace FilmsManager.ViewModels
 		private bool _searchBarVisible = true;
 		private bool _pickerVisible = false;
 		private object _selectedGenre;
+		private MovieModel _selectedMovie;
 
 		public bool PickerVisible
 		{
@@ -94,12 +95,27 @@ namespace FilmsManager.ViewModels
 
 		public ICommand FilmDetailsCommand { get; set; }
 
+		public MovieModel SelectedMovie
+		{
+			get => _selectedMovie;
+			set
+			{
+				_selectedMovie = value;
+				RaisePropertyChanged();
+			}
+		}
+
 		public SearchFilmViewModel(ObservableCollection<MovieModel> movieList)
 		{
 			MovieList = movieList;
 			SearchFilmCommand = new SearchFilmCommand(this);
 			SwapSearchCommand = new SwapSearchCommand(this);
 			FilmDetailsCommand = new FilmDetailsCommand(NavigationService);
+		}
+
+		public void OnAppearing()
+		{
+			SelectedMovie = null;
 		}
 	}
 }
