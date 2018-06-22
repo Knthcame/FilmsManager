@@ -23,7 +23,7 @@ namespace FilmsManager.ViewModels.Commands
 			return true;
 		}
 
-		public async void Execute(object parameter)
+		public  void Execute(object parameter)
 		{
 			switch (parameter)
 			{
@@ -33,12 +33,12 @@ namespace FilmsManager.ViewModels.Commands
 					break;
 
 				case "Gallery":
-					await PickGalleryPhotoAsync();
+					PickGalleryPhotoAsync();
 					break;
 			}
 		}
 
-		private async Task PickGalleryPhotoAsync()
+		private async void PickGalleryPhotoAsync()
 		{
 			var photo = await CrossMedia.Current.PickPhotoAsync();
 			PickImageModel model = new PickImageModel

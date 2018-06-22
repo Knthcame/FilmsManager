@@ -1,6 +1,7 @@
 ﻿using Acr.UserDialogs;
 using FilmsManager.Services;
 using FilmsManager.Services.Interfaces;
+using Plugin.Media;
 using Xamarin.Forms;
 
 namespace FilmsManager
@@ -20,6 +21,8 @@ namespace FilmsManager
 			var mainPage = ((CustomNavigationService)NavigationService).SetRootPage("HomePage");
 
             MainPage = mainPage;
+
+			CrossMedia.Current.Initialize();
 		}
 
 		protected override void OnStart ()
