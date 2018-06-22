@@ -6,9 +6,9 @@ namespace FilmsManager.Models
     {
         private string _title;
         private string _genre;
-        private string _image;
+        private object _image;
 
-        public MovieModel(string title, string genre, string image)
+        public MovieModel(string title, string genre, object image)
         {
             _title = title;
             _genre = genre;
@@ -34,7 +34,7 @@ namespace FilmsManager.Models
                 RaisePropertyChanged();
             }
         }
-        public string Image
+        public object Image
         {
             get => _image;
             set

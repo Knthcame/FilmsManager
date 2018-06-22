@@ -11,7 +11,7 @@ namespace FilmsManager.ViewModels.Commands
         public event EventHandler CanExecuteChanged;
 
         private readonly INavigationService _navigationService;
-        private string _image;
+        private object _image;
 
         public PickImageCommand(INavigationService navigationService)
         {

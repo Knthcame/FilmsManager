@@ -27,9 +27,10 @@
                    VerticalOptions="Fill">
                 
                 <Label Text="{Binding Movie.Title}"
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"
-                        TextColor="White"/>
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       TextColor="White"
+                       FontSize="Large"/>
 
             </Frame>
 
@@ -42,9 +43,10 @@
                    VerticalOptions="Fill">
 
                 <Label Text="{Binding Movie.Genre}"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center"
-                            TextColor="White"/>
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       TextColor="White"
+                       FontSize="Large"/>
 
             </Frame>
 

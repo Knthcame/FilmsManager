@@ -1,28 +1,26 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using System.Threading.Tasks;
+using Plugin.Media.Abstractions;
+using Xamarin.Forms;
 
 namespace FilmsManager.Models
 {
-    public class PickImageModel : BaseModel
-    {
-        private string _imageName;
+	public class PickImageModel : BaseModel
+	{
+		private object _imageName;
 
-        public string ImageName
-        {
-            get => _imageName;
-            set
-            {
-                _imageName = value;
-
-				Image image = new Image();
-				image.Source = ImageSource.FromResource(_imageName);
-				double screenWidth = Application.Current.MainPage.Width;
-				double imageWidth = image.Width;
-				double imageHeight = image.Height;
-				CellHeight = screenWidth / imageWidth * imageHeight;
+		public object ImageName
+		{
+			get => _imageName;
+			set
+			{
+				_imageName = value;
 				RaisePropertyChanged();
-            }
-        }
+			}
+		}
 
-		public double CellHeight;
+		public double ScreenHeight { get; set; } = Application.Current.MainPage.Height;
+
+		public double ScreenWidth { get; set; } = Application.Current.MainPage.Width;
 	}
 }

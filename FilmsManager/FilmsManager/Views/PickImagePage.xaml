@@ -7,34 +7,90 @@
              Title="Pick an Image">
 
     <ContentPage.Resources>
+        
         <ResourceDictionary>
+            
             <b:ListViewSelectedItemBehavior x:Key="PickImageCommand"/>
             <c:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter"/>
+            
         </ResourceDictionary>
+        
     </ContentPage.Resources>
-    
+
     <ContentPage.Content>
-        
-        
-            <StackLayout>
-                <ListView RowHeight="{Binding ScreenHeight}" 
-                          ItemsSource="{Binding ImageList}" 
-                          HasUnevenRows="True">
+
+        <StackLayout>
+
+            <Button Text="Go back"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Start"
+                    Command="{Binding GoBackCommand}"
+                    BackgroundColor="Transparent"/>
+
+            <Grid IsVisible="{Binding ButtonsVisible}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="50*"/>
+                </Grid.RowDefinitions>
+
+                <Image Source="Shrek.jpg"
+                       Aspect="AspectFill"
+                       Grid.Row="0"/>
+                
+                <Button Text="Preloaded photos"
+                        TextColor="White"
+                        Command="{Binding PhotoModeCommand}"
+                        CommandParameter="Preloaded"
+                        Grid.Row="0"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        BackgroundColor="Black"/>
+
+                <Image Source="icon.png"
+                       Aspect="AspectFill"
+                       Grid.Row="1"/>
+
+                <Button Text="Choose from gallery"
+                        TextColor="White"
+                        Command="{Binding PhotoModeCommand}"
+                        CommandParameter="Gallery"
+                        Grid.Row="1"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        BackgroundColor="Black"/>
+
+            </Grid>
+
+            <ListView HasUnevenRows="True"
+                        IsVisible="{Binding ListViewVisible}"
+                        ItemsSource="{Binding ImageList}">
+
+
+                <ListView.Behaviors>
+                    <b:ListViewSelectedItemBehavior Command="{Binding PickImageCommand}"
+                                                    Converter="{StaticResource SelectedItemConverter}"/>
+                </ListView.Behaviors>
                     
-                    <ListView.Behaviors>
-                        <b:ListViewSelectedItemBehavior Command="{Binding PickImageCommand}"
-                                                        Converter="{StaticResource SelectedItemConverter}"/>
-                    </ListView.Behaviors>
-                    
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
+                <ListView.ItemTemplate>
+                        
+                    <DataTemplate>
+                            
                         <ViewCell>
-                                <Image Source="{Binding ImageName}"
-                                       />
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>    
-            </StackLayout>
+                                
+                            <Image Source="{Binding ImageName}"
+                                    Aspect="AspectFit"
+                                    HeightRequest="{Binding ScreenHeight}"/>
+                                
+                        </ViewCell>
+                            
+                    </DataTemplate>
+                        
+                </ListView.ItemTemplate>
+                    
+            </ListView>  
+                
+        </StackLayout>
+        
     </ContentPage.Content>
+    
 </ContentPage>

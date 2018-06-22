@@ -13,19 +13,10 @@
                     VerticalOptions="Start"
                     Text="{Binding MovieTitle}"/>
 
-            <!--<Entry  x:Name="Genre"
-                    Placeholder="Insert Movie Genre" 
-                    HorizontalOptions="FillAndExpand"
-                    VerticalOptions="Start"
-                    Text="{Binding MovieGenre}"/>-->
-
             <Picker Title="Movie Genre"
                     ItemsSource="{Binding GenreList}"
                     ItemDisplayBinding="{Binding Name}"
                     SelectedItem="{Binding SelectedGenre, Mode=TwoWay}">
-                <!--<Picker.Items>
-                    
-                </Picker.Items>-->
             </Picker>
 
 

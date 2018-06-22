@@ -11,7 +11,7 @@ namespace FilmsManager.ViewModels
 {
 	public class AddFilmViewModel : BaseViewModel
 	{
-		private string _movieImage = "icon.png";
+		private object _movieImage = "icon.png";
 		private string _movieGenre;
 		private string _movieTitle;
 		private GenreModel _selectedGenre;
@@ -51,7 +51,7 @@ namespace FilmsManager.ViewModels
 			}
 		}
 
-		public string MovieImage
+		public object MovieImage
 		{
 			get => _movieImage;
 			set
@@ -66,7 +66,7 @@ namespace FilmsManager.ViewModels
 		{
 			AddCommand = new AddCommand(NavigationService, this, movieList);
 			OpenGalleryCommand = new OpenGalleryCommand(NavigationService);
-			MessagingCenter.Subscribe<PickImageCommand, string>(this, "PickImage", (s, a) => MovieImage = a);
+			MessagingCenter.Subscribe<PickImageCommand, object>(this, "PickImage", (s, a) => MovieImage = a);
 		}
 
 		public virtual async Task<bool> OnBackButtonPressedAsync()
