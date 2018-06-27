@@ -1,5 +1,6 @@
 ﻿using FilmsManager.Models;
 using FilmsManager.Services.Interfaces;
+using Prism.Navigation;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -25,7 +26,7 @@ namespace FilmsManager.ViewModels.Commands
 
         public void Execute(object parameter)
         {
-            _navigationService.NavigateAsync("AddFilmPage", _movieList);
+            _navigationService.NavigateAsync("AddFilmPage");
         }
     }
 }

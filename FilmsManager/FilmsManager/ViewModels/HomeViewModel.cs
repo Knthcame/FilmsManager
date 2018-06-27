@@ -1,5 +1,8 @@
 ﻿using FilmsManager.Models;
 using FilmsManager.ViewModels.Commands;
+using Prism.Commands;
+using Prism.Navigation;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -27,6 +30,7 @@ namespace FilmsManager.ViewModels
 		};
 
 		public ICommand NavigateCommand { get; set; }
+
 		public ICommand SearchCommand { get; set; }
 
 		public ICommand FilmDetailsCommand { get; set; }
@@ -41,11 +45,29 @@ namespace FilmsManager.ViewModels
 			}
 		}
 
-		public HomeViewModel()
+		public HomeViewModel(INavigationService navigationService) : base(navigationService)
 		{
-			NavigateCommand = new NavigateCommand(NavigationService, MovieList);
-			SearchCommand = new SearchCommand(NavigationService);
-			FilmDetailsCommand = new FilmDetailsCommand(NavigationService);
+			NavigateCommand = new DelegateCommand(OnNavigate);
+			SearchCommand = new DelegateCommand(OnSearch);
+			FilmDetailsCommand = new DelegateCommand<MovieModel>(OnFilmDetail);
+		}
+
+		private void OnFilmDetail(MovieModel movie)
+		{
+			if (movie != null)
+			{
+				NavigationService.NavigateAsync("FilmDetailsPage");
+			}
+		}
+
+		private void OnSearch()
+		{
+			throw new NotImplementedException();
+		}
+
+		private void OnNavigate()
+		{
+			NavigationService.NavigateAsync("AddFilmPage");
 		}
 
 		public void OnAppearing()

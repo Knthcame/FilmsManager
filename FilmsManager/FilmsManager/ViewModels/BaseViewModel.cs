@@ -1,9 +1,43 @@
-﻿using FilmsManager.Services.Interfaces;
+﻿using Prism.Mvvm;
+using Prism.Navigation;
 
 namespace FilmsManager.ViewModels
 {
-    public class BaseViewModel : PropertyChangedImpl
-    {
-        protected INavigationService NavigationService = App.NavigationService;
-    }
+	public class BaseViewModel : BindableBase, INavigationAware, IDestructible
+	{
+		protected INavigationService NavigationService { get; private set; }
+
+		private string _title;
+		public string Title
+		{
+			get { return _title; }
+			set { SetProperty(ref _title, value); }
+		}
+
+
+		public BaseViewModel(INavigationService navigationService)
+		{
+			NavigationService = navigationService;
+		}
+
+		public virtual void OnNavigatedFrom(NavigationParameters parameters)
+		{
+
+		}
+
+		public virtual void OnNavigatedTo(NavigationParameters parameters)
+		{
+
+		}
+
+		public virtual void OnNavigatingTo(NavigationParameters parameters)
+		{
+
+		}
+
+		public virtual void Destroy()
+		{
+
+		}
+	}
 }

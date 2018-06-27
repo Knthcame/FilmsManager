@@ -11,7 +11,6 @@ namespace FilmsManager.Views
         public HomePage ()
 		{
 			InitializeComponent ();
-			BindingContext = new HomeViewModel();
 		}
 
 		protected override void OnAppearing()

@@ -1,4 +1,5 @@
 ﻿using FilmsManager.Services.Interfaces;
+using Prism.Navigation;
 using System;
 using System.Windows.Input;
 
@@ -21,7 +22,7 @@ namespace FilmsManager.ViewModels.Commands
 
         public void Execute(object parameter)
         {
-            _navigationService.NavigateModalAsync("PickImagePage");
+            _navigationService.NavigateAsync("PickImagePage");
         }
     }
 }

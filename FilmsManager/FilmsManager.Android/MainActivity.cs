@@ -3,9 +3,8 @@ using Android.Content.PM;
 using Android.Views;
 using Android.OS;
 using Xamarin.Forms;
-using FilmsManager.Services.Interfaces;
-using FilmsManager.Droid.Helpers;
-using Acr.UserDialogs;
+using Prism;
+using Prism.Ioc;
 
 namespace FilmsManager.Droid
 {
@@ -27,16 +26,7 @@ namespace FilmsManager.Droid
 
 			Forms.Init(this, bundle);
 
-			UserDialogs.Init(this);
-
-			RegisterHelpers();
-
-            LoadApplication(new App());
-        }
-
-		private void RegisterHelpers()
-		{
-			DependencyService.Register<INotificationHelper, NotificationHelper>();
+			LoadApplication(new App(new AndroidInitializer()));
 		}
 
 		public override bool OnOptionsItemSelected(IMenuItem item)
@@ -48,6 +38,14 @@ namespace FilmsManager.Droid
 			}
 			else return base.OnOptionsItemSelected(item);
 				
+		}
+	}
+
+	public class AndroidInitializer : IPlatformInitializer
+	{
+		public void RegisterTypes(IContainerRegistry container)
+		{
+			// Register any platform specific implementations
 		}
 	}
 }

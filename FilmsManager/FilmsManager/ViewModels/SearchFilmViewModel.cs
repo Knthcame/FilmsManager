@@ -1,6 +1,8 @@
 ﻿using FilmsManager.Models;
-using FilmsManager.ViewModels.Commands;
+using Prism.Commands;
+using Prism.Navigation;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace FilmsManager.ViewModels
@@ -105,12 +107,51 @@ namespace FilmsManager.ViewModels
 			}
 		}
 
-		public SearchFilmViewModel(ObservableCollection<MovieModel> movieList)
+		public SearchFilmViewModel(INavigationService navigationService, ObservableCollection<MovieModel> movieList) : base(navigationService)
 		{
 			MovieList = movieList;
-			SearchFilmCommand = new SearchFilmCommand(this);
-			SwapSearchCommand = new SwapSearchCommand(this);
-			FilmDetailsCommand = new FilmDetailsCommand(NavigationService);
+			SearchFilmCommand = new DelegateCommand<string>(OnSearchFilm);
+			SwapSearchCommand = new DelegateCommand(OnSwapSearch);
+			FilmDetailsCommand = new DelegateCommand<MovieModel>(OnFilmDetail);
+		}
+
+		private void OnFilmDetail(MovieModel movieModel)
+		{
+			NavigationService.NavigateAsync("FilmDetailsPage");
+		}
+
+		private void OnSwapSearch()
+		{
+			switch (SearchType)
+			{
+				case "Title":
+					SearchType = "Genre";
+					AlternativeType = "Title";
+					PickerVisible = true;
+					SearchBarVisible = false;
+					break;
+
+				case "Genre":
+					SearchType = "Title";
+					AlternativeType = "Genre";
+					PickerVisible = false;
+					SearchBarVisible = true;
+					break;
+			}
+			FilteredMovieList.Clear();
+		}
+
+		private void OnSearchFilm(string text)
+		{
+			switch (SearchType)
+			{
+				case "Title":
+					FilteredMovieList = new ObservableCollection<MovieModel>(MovieList.Where(m => m.Title.Contains(text)));
+					break;
+				case "Genre":
+					FilteredMovieList = new ObservableCollection<MovieModel>(MovieList.Where(m => m.Genre.Equals(text)));
+					break;
+			}
 		}
 
 		public void OnAppearing()

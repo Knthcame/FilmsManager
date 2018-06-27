@@ -1,4 +1,5 @@
 ﻿using FilmsManager.Services.Interfaces;
+using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,7 +24,7 @@ namespace FilmsManager.ViewModels.Commands
 
 		public void Execute(object parameter)
 		{
-			_navigationService.GoBack();
+			_navigationService.GoBackAsync();
 		}
 	}
 }

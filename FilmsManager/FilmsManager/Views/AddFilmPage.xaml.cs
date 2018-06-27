@@ -18,7 +18,6 @@ namespace FilmsManager.Views
 		public AddFilmPage(ObservableCollection<MovieModel> MovieList)
 		{
 			InitializeComponent();
-			BindingContext = new AddFilmViewModel(MovieList);
         }
 
 		protected override bool OnBackButtonPressed()

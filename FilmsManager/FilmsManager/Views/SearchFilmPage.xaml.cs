@@ -12,7 +12,6 @@ namespace FilmsManager.Views
 		public SearchFilmPage (ObservableCollection<MovieModel> movieList)
 		{
 			InitializeComponent ();
-			BindingContext = new SearchFilmViewModel(movieList);
 		}
 
 		protected override void OnAppearing()

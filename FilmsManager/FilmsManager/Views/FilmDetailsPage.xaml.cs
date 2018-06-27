@@ -11,7 +11,6 @@ namespace FilmsManager.Views
 		public FilmDetailsPage (MovieModel movie)
 		{
 			InitializeComponent ();
-			BindingContext = new FilmDetailsViewModel(movie);
 		}
 
 		protected override bool OnBackButtonPressed()

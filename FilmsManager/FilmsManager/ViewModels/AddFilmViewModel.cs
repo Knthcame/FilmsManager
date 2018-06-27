@@ -1,6 +1,12 @@
-﻿using FilmsManager.Models;
+﻿using FilmsManager.Events;
+using FilmsManager.Models;
 using FilmsManager.Services.Interfaces;
 using FilmsManager.ViewModels.Commands;
+using Prism.Commands;
+using Prism.Events;
+using Prism.Navigation;
+using Prism.Services;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -21,6 +27,12 @@ namespace FilmsManager.ViewModels
 
 		public IList<GenreModel> GenreList { get; set; } = HomeViewModel.GenreList;
 
+		public IList<MovieModel> MovieList { get; set; }
+
+		IPageDialogService _pageDialogService;
+
+		IEventAggregator _ea;
+
 		public GenreModel SelectedGenre
 		{
 			get => _selectedGenre;
@@ -34,45 +46,68 @@ namespace FilmsManager.ViewModels
 		public string MovieTitle
 		{
 			get => _movieTitle;
-			set
-			{
-				_movieTitle = value;
-				RaisePropertyChanged();
-			}
+			set { SetProperty(ref _movieTitle, value); }
 		}
 
 		public string MovieGenre
 		{
 			get => _movieGenre;
-			set
-			{
-				_movieGenre = value;
-				RaisePropertyChanged();
-			}
+			set { SetProperty(ref _movieGenre, value); }
 		}
 
 		public object MovieImage
 		{
 			get => _movieImage;
-			set
-			{
-				_movieImage = value;
-				RaisePropertyChanged();
-			}
+			set { SetProperty(ref _movieImage, value); }
 		}
 
 
-		public AddFilmViewModel(ObservableCollection<MovieModel> movieList)
+		public AddFilmViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ObservableCollection<MovieModel> movieList) : base(navigationService)
 		{
-			AddCommand = new AddCommand(NavigationService, this, movieList);
-			OpenGalleryCommand = new OpenGalleryCommand(NavigationService);
-			MessagingCenter.Subscribe<PickImageCommand, object>(this, "PickImage", (s, a) => MovieImage = a);
+			AddCommand = new DelegateCommand(OnAddAsync);
+			OpenGalleryCommand = new DelegateCommand(OnOpenGallery);
+			_ea.GetEvent<PickImageEvent>().Subscribe(OnPickImage);
+			_pageDialogService = pageDialogService;
+		}
+
+		private void OnPickImage(PickImageModel imageModel)
+		{
+			_movieImage = imageModel.ImageName;
+		}
+
+		private void OnOpenGallery()
+		{
+			NavigationService.NavigateAsync("PickImagePage");
+		}
+
+		private async void OnAddAsync()
+		{
+			if (MovieTitle == null | MovieGenre == null)
+			{
+				bool action = await _pageDialogService.DisplayAlertAsync("Missing entries", " Not all values have been inserted. Abort adding film?", "Yes, abort", "No,stay");
+				if (action) await NavigationService.GoBackAsync();
+			}
+			else if (MovieImage as string == "icon.png")
+			{
+				bool action = await _pageDialogService.DisplayAlertAsync("Default image", "Are you sure you want to go with the default image?", "Yes", "No, i want to choose one");
+				if (action)
+				{
+					MovieList.Add(new MovieModel(MovieTitle, MovieGenre, MovieImage));
+					await NavigationService.GoBackAsync();
+				}
+			}
+			else
+			{
+				MovieList.Add(new MovieModel(MovieTitle, MovieGenre, MovieImage));
+				await NavigationService.GoBackAsync();
+			}
+
 		}
 
 		public virtual async Task<bool> OnBackButtonPressedAsync()
 		{
-			bool action = await DependencyService.Get<INotificationHelper>().ShowDialog("Abort addition?", "Are you sure you want to cancel adding a movie?", "Yes, abort", "No, stay");
-			if (action) await NavigationService.GoBack();
+			bool action = await _pageDialogService.DisplayAlertAsync("Abort addition?", "Are you sure you want to cancel adding a movie?", "Yes, abort", "No, stay");
+			if (action) await NavigationService.GoBackAsync();
 			return action;
 		}
 

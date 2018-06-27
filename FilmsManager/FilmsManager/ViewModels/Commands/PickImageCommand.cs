@@ -1,5 +1,6 @@
 ﻿using FilmsManager.Models;
 using FilmsManager.Services.Interfaces;
+using Prism.Navigation;
 using System;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -28,7 +29,7 @@ namespace FilmsManager.ViewModels.Commands
 			PickImageModel model =(PickImageModel) parameter;
 			_image = model.ImageName;
 			MessagingCenter.Send(this, "PickImage", _image);
-			_navigationService.GoBack();
+			_navigationService.GoBackAsync();
         }
     }
 }

@@ -1,43 +1,39 @@
-﻿using Acr.UserDialogs;
-using FilmsManager.Services;
-using FilmsManager.Services.Interfaces;
-using Plugin.Media;
+﻿using Prism;
+using Prism.Ioc;
+using FilmsManager.Views;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+using Prism.Unity;
 
+[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace FilmsManager
 {
-    public partial class App : Application
-	{
-        public static INavigationService NavigationService = new CustomNavigationService();
+	public partial class App : PrismApplication
+    {
+        /* 
+         * The Xamarin Forms XAML Previewer in Visual Studio uses System.Activator.CreateInstance.
+         * This imposes a limitation in which the App class must have a default constructor. 
+         * App(IPlatformInitializer initializer = null) cannot be handled by the Activator.
+         */
+        public App() : this(null) { }
 
-        public App ()
-		{
-			InitializeComponent();
-            NavigationService.Configure("HomePage", typeof(Views.HomePage));
-            NavigationService.Configure("AddFilmPage", typeof(Views.AddFilmPage));
-            NavigationService.Configure("PickImagePage", typeof(Views.PickImagePage));
-			NavigationService.Configure("SearchFilmPage", typeof(Views.SearchFilmPage));
-			NavigationService.Configure("FilmDetailsPage", typeof(Views.FilmDetailsPage));
-			var mainPage = ((CustomNavigationService)NavigationService).SetRootPage("HomePage");
+        public App(IPlatformInitializer initializer) : base(initializer) { }
 
-            MainPage = mainPage;
+        protected override async void OnInitialized()
+        {
+            InitializeComponent();
 
-			CrossMedia.Current.Initialize();
+            await NavigationService.NavigateAsync("NavigationPage/MainPage");
+        }
+
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+			containerRegistry.RegisterForNavigation<NavigationPage>();
+			containerRegistry.RegisterForNavigation<HomePage>();
+			containerRegistry.RegisterForNavigation<AddFilmPage>();
+			containerRegistry.RegisterForNavigation<SearchFilmPage>();
+			containerRegistry.RegisterForNavigation<PickImagePage>();
+			containerRegistry.RegisterForNavigation<FilmDetailsPage>();
 		}
-
-		protected override void OnStart ()
-		{
-			// Handle when your app starts
-		}
-
-		protected override void OnSleep ()
-		{
-			// Handle when your app sleeps
-		}
-
-		protected override void OnResume ()
-		{
-			// Handle when your app resumes
-		}
-	}
+    }
 }
