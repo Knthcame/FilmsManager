@@ -16,7 +16,7 @@ namespace FilmsManager.Views
 
 		protected override void OnAppearing()
 		{
-			var bindingContext = BindingContext as SearchFilmViewModel;
+			var bindingContext = BindingContext as SearchFilmPageViewModel;
 			bindingContext?.OnAppearing();
 			base.OnAppearing();
 		}

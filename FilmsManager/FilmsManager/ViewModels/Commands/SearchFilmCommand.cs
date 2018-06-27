@@ -9,9 +9,9 @@ namespace FilmsManager.ViewModels.Commands
 	public class SearchFilmCommand : ICommand
 	{
 		public event EventHandler CanExecuteChanged;
-		private readonly SearchFilmViewModel _viewModel;
+		private readonly SearchFilmPageViewModel _viewModel;
 
-		public SearchFilmCommand(SearchFilmViewModel viewModel)
+		public SearchFilmCommand(SearchFilmPageViewModel viewModel)
 		{
 			_viewModel = viewModel;
 		}

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Foundation;
+﻿using Foundation;
 using Prism;
 using Prism.Ioc;
 using UIKit;
+
 
 namespace FilmsManager.iOS
 {
@@ -31,11 +28,11 @@ namespace FilmsManager.iOS
         }
     }
 
-	public class iOSInitializer : IPlatformInitializer
-	{
-		public void RegisterTypes(IContainerRegistry container)
-		{
+    public class iOSInitializer : IPlatformInitializer
+    {
+        public void RegisterTypes(IContainerRegistry container)
+        {
 
-		}
-	}
+        }
+    }
 }

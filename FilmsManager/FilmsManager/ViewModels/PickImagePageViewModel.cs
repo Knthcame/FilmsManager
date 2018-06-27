@@ -14,7 +14,7 @@ using Xamarin.Forms;
 
 namespace FilmsManager.ViewModels
 {
-	public class PickImageViewModel : BaseViewModel
+	public class PickImagePageViewModel : BaseViewModel
 	{
 
 		public double ScreenHeight = Application.Current.MainPage.Height;
@@ -34,25 +34,18 @@ namespace FilmsManager.ViewModels
 		public bool ListViewVisible
 		{
 			get => _listViewVisible;
-			set
-			{
-				_listViewVisible = value;
-				RaisePropertyChanged();
-			}
+			set { SetProperty(ref _listViewVisible, value); }
 		}
 
 		public bool ButtonsVisible
 		{
 			get => _buttonsVisible;
-			set
-			{
-				_buttonsVisible = value;
-				RaisePropertyChanged();
-			}
+			set { SetProperty(ref _buttonsVisible, value); }
 		}
 
-		public PickImageViewModel(INavigationService navigationService):base(navigationService)
+		public PickImagePageViewModel(INavigationService navigationService, IEventAggregator ea):base(navigationService)
 		{
+			_ea = ea;
 			PickImageCommand = new DelegateCommand<PickImageModel>(OnPickImage);
 			PhotoModeCommand = new DelegateCommand<string>(OnPhotoMode);
 			GoBackCommand = new DelegateCommand(OnGoBack);

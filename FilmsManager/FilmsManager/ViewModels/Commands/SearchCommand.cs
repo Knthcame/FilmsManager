@@ -35,7 +35,7 @@ namespace FilmsManager.ViewModels.Commands
 
 		public void Execute(object parameter)
 		{
-			var viewModel = parameter as HomeViewModel;
+			var viewModel = parameter as HomePageViewModel;
 			_navigationService.NavigateAsync("SearchFilmPage");
 		}
 	}

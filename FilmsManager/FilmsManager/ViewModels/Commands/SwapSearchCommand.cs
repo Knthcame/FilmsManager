@@ -8,9 +8,9 @@ namespace FilmsManager.ViewModels.Commands
 {
 	public class SwapSearchCommand : ICommand
 	{
-		private SearchFilmViewModel _viewModel { get; set; }
+		private SearchFilmPageViewModel _viewModel { get; set; }
 
-		public SwapSearchCommand(SearchFilmViewModel viewModel)
+		public SwapSearchCommand(SearchFilmPageViewModel viewModel)
 		{
 			_viewModel = viewModel;
 		}

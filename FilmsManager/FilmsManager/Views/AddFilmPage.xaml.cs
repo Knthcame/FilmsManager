@@ -1,16 +1,13 @@
 ﻿using FilmsManager.Models;
-using FilmsManager.Services.Interfaces;
 using FilmsManager.ViewModels;
-using FilmsManager.ViewModels.Commands;
 using System;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace FilmsManager.Views
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
+	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class AddFilmPage : ContentPage
 	{
 		public static Action AndroidAction { get; set; }
@@ -22,7 +19,7 @@ namespace FilmsManager.Views
 
 		protected override bool OnBackButtonPressed()
 		{
-			var bindingContext = BindingContext as AddFilmViewModel;
+			var bindingContext = BindingContext as AddFilmPageViewModel;
 			bindingContext?.OnBackButtonPressedAsync();
 			return true;
 		}

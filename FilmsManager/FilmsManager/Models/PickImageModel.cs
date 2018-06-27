@@ -10,11 +10,7 @@ namespace FilmsManager.Models
 		public object ImageName
 		{
 			get => _imageName;
-			set
-			{
-				_imageName = value;
-				RaisePropertyChanged();
-			}
+			set { SetProperty(ref _imageName, value); }
 		}
 
 		public double ScreenHeight { get; set; } = Application.Current.MainPage.Height;

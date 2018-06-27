@@ -11,9 +11,9 @@ namespace FilmsManager.ViewModels.Commands
 	{
 		public event EventHandler CanExecuteChanged;
 
-		private PickImageViewModel _viewModel;
+		private PickImagePageViewModel _viewModel;
 
-		public PhotoModeCommand(PickImageViewModel viewModel)
+		public PhotoModeCommand(PickImagePageViewModel viewModel)
 		{
 			_viewModel = viewModel;
 		}

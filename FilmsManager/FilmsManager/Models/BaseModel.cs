@@ -1,8 +1,9 @@
 ﻿using FilmsManager.ViewModels;
+using Prism.Mvvm;
 
 namespace FilmsManager.Models
 {
-    public class BaseModel : PropertyChangedImpl
+    public class BaseModel : BindableBase
     {
 
     }

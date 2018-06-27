@@ -15,7 +15,7 @@ namespace FilmsManager.Views
 
 		protected override bool OnBackButtonPressed()
 		{
-			var bindingContext = BindingContext as FilmDetailsViewModel;
+			var bindingContext = BindingContext as FilmDetailsPageViewModel;
 			bindingContext?.OnBackButtonPressedAsync();
 			return true;
 		}

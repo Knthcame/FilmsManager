@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace FilmsManager.ViewModels
 {
-	public class HomeViewModel : BaseViewModel
+	public class HomePageViewModel : BaseViewModel
 	{
 		private MovieModel _selectedMovie;
 
@@ -38,36 +38,32 @@ namespace FilmsManager.ViewModels
 		public MovieModel SelectedMovie
 		{
 			get => _selectedMovie;
-			set
-			{
-				_selectedMovie = value;
-				RaisePropertyChanged();
-			}
+			set { SetProperty(ref _selectedMovie, value); }
 		}
 
-		public HomeViewModel(INavigationService navigationService) : base(navigationService)
+		public HomePageViewModel(INavigationService navigationService) : base(navigationService)
 		{
-			NavigateCommand = new DelegateCommand(OnNavigate);
-			SearchCommand = new DelegateCommand(OnSearch);
-			FilmDetailsCommand = new DelegateCommand<MovieModel>(OnFilmDetail);
+			NavigateCommand = new DelegateCommand(OnNavigateAsync);
+			SearchCommand = new DelegateCommand(OnSearchAsync);
+			FilmDetailsCommand = new DelegateCommand<MovieModel>(OnFilmDetailAsync);
 		}
 
-		private void OnFilmDetail(MovieModel movie)
+		private async void OnFilmDetailAsync(MovieModel movie)
 		{
 			if (movie != null)
 			{
-				NavigationService.NavigateAsync("FilmDetailsPage");
+				await NavigationService.NavigateAsync("FilmDetailsPage");
 			}
 		}
 
-		private void OnSearch()
+		private async void OnSearchAsync()
 		{
-			throw new NotImplementedException();
+			await NavigationService.NavigateAsync("SearchFilmPage");
 		}
 
-		private void OnNavigate()
+		private async void OnNavigateAsync()
 		{
-			NavigationService.NavigateAsync("AddFilmPage");
+			await NavigationService.NavigateAsync("AddFilmPage");
 		}
 
 		public void OnAppearing()

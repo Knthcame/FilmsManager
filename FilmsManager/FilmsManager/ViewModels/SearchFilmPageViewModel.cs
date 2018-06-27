@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace FilmsManager.ViewModels
 {
-	public class SearchFilmViewModel : BaseViewModel
+	public class SearchFilmPageViewModel : BaseViewModel
 	{
 		private string _textEntry;
 		private ObservableCollection<MovieModel> _filteredMovieList = new ObservableCollection<MovieModel>();
@@ -21,63 +21,40 @@ namespace FilmsManager.ViewModels
 		public bool PickerVisible
 		{
 			get => _pickerVisible;
-			set
-			{
-				_pickerVisible = value;
-				RaisePropertyChanged();
-			}
+			set { SetProperty(ref _pickerVisible, value); }
 		}
 
 		public bool SearchBarVisible
 		{
 			get => _searchBarVisible;
-			set
-			{
-				_searchBarVisible = value;
-				RaisePropertyChanged();
-			}
+			set { SetProperty(ref _searchBarVisible, value); }
 		}
 
 		public string AlternativeType
 		{
 			get => _alternativeType;
-			set
-			{
-				_alternativeType = value;
-				RaisePropertyChanged();
-			}
+			set { SetProperty(ref _alternativeType, value); }
 		}
 
 		public string SearchType
 		{
 			get => _searchType;
-			set
-			{
-				_searchType = value;
-				RaisePropertyChanged();
-			}
+			set { SetProperty(ref _searchType, value); }
 		}
 
 		public string TextEntry
 		{
 			get => _textEntry;
-			set
-			{
-				_textEntry = value;
-				RaisePropertyChanged();
-			}
+			set { SetProperty(ref _textEntry, value); }
 		}
 
-		public ObservableCollection<GenreModel> GenreList { get; set; } = HomeViewModel.GenreList;
+		public ObservableCollection<GenreModel> GenreList { get; set; } = HomePageViewModel.GenreList;
 		public ObservableCollection<MovieModel> MovieList { get; set; }
 
 		public ObservableCollection<MovieModel> FilteredMovieList
 		{
-			get => _filteredMovieList; set
-			{
-				_filteredMovieList = value;
-				RaisePropertyChanged();
-			}
+			get => _filteredMovieList;
+			set { SetProperty(ref _filteredMovieList, value); }
 		}
 
 		public object SelectedGenre
@@ -100,14 +77,10 @@ namespace FilmsManager.ViewModels
 		public MovieModel SelectedMovie
 		{
 			get => _selectedMovie;
-			set
-			{
-				_selectedMovie = value;
-				RaisePropertyChanged();
-			}
+			set { SetProperty(ref _selectedMovie, value); }
 		}
 
-		public SearchFilmViewModel(INavigationService navigationService, ObservableCollection<MovieModel> movieList) : base(navigationService)
+		public SearchFilmPageViewModel(INavigationService navigationService, ObservableCollection<MovieModel> movieList) : base(navigationService)
 		{
 			MovieList = movieList;
 			SearchFilmCommand = new DelegateCommand<string>(OnSearchFilm);

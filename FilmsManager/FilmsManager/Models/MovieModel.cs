@@ -18,30 +18,18 @@ namespace FilmsManager.Models
         public string Title
         {
             get => _title;
-            set
-            {
-                _title = value;
-                RaisePropertyChanged();
-            }
+            set { SetProperty(ref _title, value); }
         }
 
         public string Genre
         {
             get => _genre;
-            set
-            {
-                _genre = value;
-                RaisePropertyChanged();
-            }
+            set { SetProperty(ref _genre, value); }
         }
         public object Image
         {
             get => _image;
-            set
-            {
-                _image = value;
-                RaisePropertyChanged();
-            }
+            set { SetProperty(ref _image, value); }
         }
     }
 }

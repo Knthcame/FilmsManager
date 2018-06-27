@@ -12,10 +12,10 @@ namespace FilmsManager.ViewModels.Commands
     {
         public event EventHandler CanExecuteChanged;
         private readonly INavigationService _navigationService;
-        private readonly AddFilmViewModel _viewModel;
+        private readonly AddFilmPageViewModel _viewModel;
         private ObservableCollection<MovieModel> _movieList;
 
-        public AddCommand(INavigationService navigationService, AddFilmViewModel viewModel, ObservableCollection<MovieModel> MovieList)
+        public AddCommand(INavigationService navigationService, AddFilmPageViewModel viewModel, ObservableCollection<MovieModel> MovieList)
         {
             _navigationService = navigationService;
             _viewModel = viewModel;

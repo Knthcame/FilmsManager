@@ -15,7 +15,7 @@ namespace FilmsManager.Views
 
 		protected override void OnAppearing()
 		{
-			var bindingContext = BindingContext as HomeViewModel;
+			var bindingContext = BindingContext as HomePageViewModel;
 			bindingContext?.OnAppearing();
 			base.OnAppearing();
 		}

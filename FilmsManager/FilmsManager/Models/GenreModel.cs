@@ -11,11 +11,7 @@ namespace FilmsManager.Models
 		public string Name
 		{
 			get => _name;
-			set
-			{
-				_name = value;
-				RaisePropertyChanged();
-			}
+			set { SetProperty(ref _name, value); }
 		}
 
 			public GenreModel(string name)

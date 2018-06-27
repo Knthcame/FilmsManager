@@ -23,17 +23,17 @@ namespace FilmsManager
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            await NavigationService.NavigateAsync("NavigationPage/HomePage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-			containerRegistry.RegisterForNavigation<NavigationPage>();
-			containerRegistry.RegisterForNavigation<HomePage>();
-			containerRegistry.RegisterForNavigation<AddFilmPage>();
-			containerRegistry.RegisterForNavigation<SearchFilmPage>();
+            containerRegistry.RegisterForNavigation<NavigationPage>();
+            containerRegistry.RegisterForNavigation<AddFilmPage>();
 			containerRegistry.RegisterForNavigation<PickImagePage>();
+			containerRegistry.RegisterForNavigation<SearchFilmPage>();
 			containerRegistry.RegisterForNavigation<FilmDetailsPage>();
+			containerRegistry.RegisterForNavigation<HomePage>();
 		}
     }
 }

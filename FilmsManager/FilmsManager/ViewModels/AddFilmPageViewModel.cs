@@ -1,21 +1,17 @@
 ﻿using FilmsManager.Events;
 using FilmsManager.Models;
-using FilmsManager.Services.Interfaces;
-using FilmsManager.ViewModels.Commands;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Navigation;
 using Prism.Services;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Forms;
 
 namespace FilmsManager.ViewModels
 {
-	public class AddFilmViewModel : BaseViewModel
+	public class AddFilmPageViewModel : BaseViewModel
 	{
 		private object _movieImage = "icon.png";
 		private string _movieGenre;
@@ -25,7 +21,7 @@ namespace FilmsManager.ViewModels
 		public ICommand AddCommand { get; set; }
 		public ICommand OpenGalleryCommand { get; set; }
 
-		public IList<GenreModel> GenreList { get; set; } = HomeViewModel.GenreList;
+		public IList<GenreModel> GenreList { get; set; } = HomePageViewModel.GenreList;
 
 		public IList<MovieModel> MovieList { get; set; }
 
@@ -62,8 +58,9 @@ namespace FilmsManager.ViewModels
 		}
 
 
-		public AddFilmViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ObservableCollection<MovieModel> movieList) : base(navigationService)
+		public AddFilmPageViewModel(INavigationService navigationService, IEventAggregator ea, IPageDialogService pageDialogService, ObservableCollection<MovieModel> movieList) : base(navigationService)
 		{
+			_ea = ea;
 			AddCommand = new DelegateCommand(OnAddAsync);
 			OpenGalleryCommand = new DelegateCommand(OnOpenGallery);
 			_ea.GetEvent<PickImageEvent>().Subscribe(OnPickImage);

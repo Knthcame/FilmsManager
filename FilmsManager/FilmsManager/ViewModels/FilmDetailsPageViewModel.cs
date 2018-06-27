@@ -6,21 +6,17 @@ using System.Text;
 
 namespace FilmsManager.ViewModels
 {
-	public class FilmDetailsViewModel : BaseViewModel
+	public class FilmDetailsPageViewModel : BaseViewModel
 	{
 		private MovieModel _movie;
 
 		public MovieModel Movie
 		{
 			get => _movie;
-			set
-			{
-				_movie = value;
-				RaisePropertyChanged();
-			}
+			set { SetProperty(ref _movie, value); }
 		}
 
-		public FilmDetailsViewModel(INavigationService navigationService, MovieModel movie):base(navigationService)
+		public FilmDetailsPageViewModel(INavigationService navigationService, MovieModel movie):base(navigationService)
 		{
 			Movie = movie;
 		}
