@@ -347,15 +347,6 @@
     <BundleResource Include="Resources\Check2%403x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\Check3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Check3%402x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Check3%403x.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\HarryPotter.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -447,6 +438,9 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\movie%403x.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Check3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

@@ -1,12 +1,10 @@
 ﻿using FilmsManager.Events;
 using FilmsManager.Models;
 using FilmsManager.Services.Interfaces;
-using FilmsManager.ViewModels.Commands;
 using Plugin.Media;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Navigation;
-using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -22,6 +20,7 @@ namespace FilmsManager.ViewModels
 		private bool _buttonsVisible = true;
 
 		IEventAggregator _eventAggregator;
+		private PickImageModel _selectedImage;
 
 		public ICommand PickImageCommand { get; set; }
 
@@ -30,6 +29,12 @@ namespace FilmsManager.ViewModels
 		public ICommand GoBackCommand { get; set; }
 
 		public ObservableCollection<PickImageModel> ImageList { get; set; }
+
+		public PickImageModel SelectedImage
+		{
+			get => _selectedImage;
+			set { SetProperty(ref _selectedImage, value); }
+		}
 
 		public bool ListViewVisible
 		{
@@ -43,10 +48,10 @@ namespace FilmsManager.ViewModels
 			set { SetProperty(ref _buttonsVisible, value); }
 		}
 
-		public PickImagePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator):base(navigationService)
+		public PickImagePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator) : base(navigationService)
 		{
 			_eventAggregator = eventAggregator;
-			PickImageCommand = new DelegateCommand<PickImageModel>(OnPickImage);
+			PickImageCommand = new DelegateCommand(OnPickImageAsync);
 			PhotoModeCommand = new DelegateCommand<string>(OnPhotoMode);
 			GoBackCommand = new DelegateCommand(OnGoBack);
 			LoadImages();
@@ -86,10 +91,13 @@ namespace FilmsManager.ViewModels
 			PickImageCommand.Execute(model);
 		}
 
-		private void OnPickImage(PickImageModel imageModel)
+		private async void OnPickImageAsync()
 		{
-			_eventAggregator.GetEvent<PickImageEvent>().Publish(imageModel);
-			NavigationService.GoBackAsync();
+			if (SelectedImage == null)
+				return;
+
+			_eventAggregator.GetEvent<PickImageEvent>().Publish(SelectedImage);
+			await NavigationService.GoBackAsync();
 		}
 
 		private void LoadImages() => ImageList = new ObservableCollection<PickImageModel>()

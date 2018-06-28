@@ -1,21 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:b="clr-namespace:FilmsManager.Behaviors"
-             xmlns:c="clr-namespace:FilmsManager.Converters"
+             xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="FilmsManager.Views.HomePage"
              Icon="icon.png"
              Title="Films Manager">
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <b:ListViewSelectedItemBehavior x:Key="FilmDetailsCommand"/>
-            <c:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter"/>
-        </ResourceDictionary>
-    </ContentPage.Resources>
-    
     <ContentPage.Content>
 
         <StackLayout Padding="0" Margin="0">
@@ -88,8 +80,8 @@
                           SelectedItem="{Binding SelectedMovie, Mode=TwoWay}">
 
                     <ListView.Behaviors>
-                        <b:ListViewSelectedItemBehavior Command="{Binding FilmDetailsCommand}"
-                                                        Converter="{StaticResource SelectedItemConverter}"/>
+                        <b:EventToCommandBehavior EventName="ItemSelected" 
+                                                  Command="{Binding FilmDetailsCommand}"/>
                     </ListView.Behaviors>
 
                     <ListView.ItemTemplate>

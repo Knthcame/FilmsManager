@@ -18,7 +18,7 @@ namespace FilmsManager.ViewModels
 			new MovieModel("Infinity war", "Super Heroes", "infinity_war.jpg")
 		};
 
-		public static ObservableCollection<GenreModel> GenreList { get; set; } = new ObservableCollection<GenreModel>()
+		public ObservableCollection<GenreModel> GenreList { get; set; } = new ObservableCollection<GenreModel>()
 		{
 			new GenreModel("Fantasy"),
 			new GenreModel("Action"),
@@ -45,16 +45,16 @@ namespace FilmsManager.ViewModels
 		{
 			NavigateCommand = new DelegateCommand(OnNavigateAsync);
 			SearchCommand = new DelegateCommand(OnSearchAsync);
-			FilmDetailsCommand = new DelegateCommand<MovieModel>(OnFilmDetailAsync);
+			FilmDetailsCommand = new DelegateCommand(OnFilmDetailAsync);
 		}
 
-		private async void OnFilmDetailAsync(MovieModel movie)
+		private async void OnFilmDetailAsync()
 		{
-			if (movie == null)
+			if (SelectedMovie == null)
 				return;
 			var parameters = new NavigationParameters
 			{
-				{ "movie", movie }
+				{ "movie", SelectedMovie }
 			};
 			await NavigationService.NavigateAsync("FilmDetailsPage", parameters);
 		}
@@ -63,7 +63,8 @@ namespace FilmsManager.ViewModels
 		{
 			var parameters = new NavigationParameters
 			{
-				{ "movieList", MovieList }
+				{ "movieList", MovieList },
+				{ "genreList", GenreList }
 			};
 			await NavigationService.NavigateAsync("SearchFilmPage", parameters);
 		}
@@ -72,7 +73,8 @@ namespace FilmsManager.ViewModels
 		{
 			var parameters = new NavigationParameters
 			{
-				{ "movieList", MovieList }
+				{ "movieList", MovieList },
+				{ "genreList", GenreList }
 			};
 			await NavigationService.NavigateAsync("AddFilmPage", parameters);
 		}

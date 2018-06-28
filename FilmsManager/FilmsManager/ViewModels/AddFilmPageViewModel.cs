@@ -13,6 +13,7 @@ namespace FilmsManager.ViewModels
 {
 	public class AddFilmPageViewModel : BaseViewModel
 	{
+		private IList<GenreModel> _genreList;
 		private string _defaultMovieImage = "movie.jpg";
 		private object _movieImage;
 		private string _movieGenre;
@@ -24,7 +25,11 @@ namespace FilmsManager.ViewModels
 		public ICommand AddCommand { get; set; }
 		public ICommand OpenGalleryCommand { get; set; }
 
-		public IList<GenreModel> GenreList { get; set; } = HomePageViewModel.GenreList;
+		public IList<GenreModel> GenreList
+		{
+			get => _genreList;
+			set { SetProperty(ref _genreList, value); }
+		}
 
 		public IList<MovieModel> MovieList { get; set; }
 
@@ -38,7 +43,7 @@ namespace FilmsManager.ViewModels
 			set
 			{
 				_selectedGenre = value;
-				_movieGenre = _selectedGenre.Name;
+				_movieGenre = _selectedGenre?.Name;
 			}
 		}
 
@@ -66,7 +71,7 @@ namespace FilmsManager.ViewModels
 			_movieImage = _defaultMovieImage;
 			_eventAggregator = eventAggregator;
 			AddCommand = new DelegateCommand(OnAddAsync);
-			OpenGalleryCommand = new DelegateCommand(OnOpenGallery);
+			OpenGalleryCommand = new DelegateCommand(OnOpenGalleryAsync);
 			_eventAggregator.GetEvent<PickImageEvent>().Subscribe(OnPickImage);
 			_pageDialogService = pageDialogService;
 		}
@@ -76,9 +81,13 @@ namespace FilmsManager.ViewModels
 			if (parameters == null)
 				return;
 
-			ObservableCollection<MovieModel> movieList;
+			var movieList = new ObservableCollection<MovieModel>();
 			parameters.TryGetValue("movieList", out movieList);
 			MovieList = movieList;
+
+			var genreList = new ObservableCollection<GenreModel>();
+			parameters.TryGetValue("genreList", out genreList);
+			GenreList = genreList;
 		}
 
 		private void OnPickImage(PickImageModel imageModel)
@@ -86,9 +95,9 @@ namespace FilmsManager.ViewModels
 			MovieImage = imageModel.ImageName;
 		}
 
-		private void OnOpenGallery()
+		private async void OnOpenGalleryAsync()
 		{
-			NavigationService.NavigateAsync("PickImagePage");
+			await NavigationService.NavigateAsync("PickImagePage", useModalNavigation: true);
 		}
 
 		private async void OnAddAsync()

@@ -15,8 +15,10 @@ namespace FilmsManager.ViewModels
 		private string _searchType = "Title";
 		private bool _searchBarVisible = true;
 		private bool _pickerVisible = false;
-		private object _selectedGenre;
+		private GenreModel _selectedGenre;
 		private MovieModel _selectedMovie;
+		private ObservableCollection<GenreModel> _genreList;
+		private ObservableCollection<MovieModel> _movieList;
 
 		public string BackgroundImage { get; set; } = "back6.jpg";
 
@@ -50,8 +52,16 @@ namespace FilmsManager.ViewModels
 			set { SetProperty(ref _textEntry, value); }
 		}
 
-		public ObservableCollection<GenreModel> GenreList { get; set; } = HomePageViewModel.GenreList;
-		public ObservableCollection<MovieModel> MovieList { get; set; }
+		public ObservableCollection<GenreModel> GenreList
+		{
+			get => _genreList;
+			set { SetProperty(ref _genreList, value); }
+		}
+		public ObservableCollection<MovieModel> MovieList
+		{
+			get => _movieList;
+			set { SetProperty(ref _movieList, value); }
+		}
 
 		public ObservableCollection<MovieModel> FilteredMovieList
 		{
@@ -59,15 +69,21 @@ namespace FilmsManager.ViewModels
 			set { SetProperty(ref _filteredMovieList, value); }
 		}
 
-		public object SelectedGenre
+		public GenreModel SelectedGenre
 		{
 			get => _selectedGenre;
 			set
 			{
-				GenreModel aux = value as GenreModel;
-				_selectedGenre = aux.Name;
-				SearchFilmCommand.Execute(_selectedGenre);
+				SetProperty(ref _selectedGenre, value);
+				if (_selectedGenre == null)
+					return;
+				SearchFilmCommand.Execute(_selectedGenre.Name);
 			}
+		}
+		public MovieModel SelectedMovie
+		{
+			get => _selectedMovie;
+			set { SetProperty(ref _selectedMovie, value); }
 		}
 
 		public ICommand SearchFilmCommand { get; set; }
@@ -76,32 +92,44 @@ namespace FilmsManager.ViewModels
 
 		public ICommand FilmDetailsCommand { get; set; }
 
-		public MovieModel SelectedMovie
-		{
-			get => _selectedMovie;
-			set { SetProperty(ref _selectedMovie, value); }
-		}
-
 		public SearchFilmPageViewModel(INavigationService navigationService) : base(navigationService)
 		{
-			SearchFilmCommand = new DelegateCommand<string>(OnSearchFilm);
+			SearchFilmCommand = new DelegateCommand(OnSearchFilm);
 			SwapSearchCommand = new DelegateCommand(OnSwapSearch);
-			FilmDetailsCommand = new DelegateCommand<MovieModel>(OnFilmDetail);
+			FilmDetailsCommand = new DelegateCommand(OnFilmDetailAsync);
 		}
 
 		public override void OnNavigatedTo(NavigationParameters parameters)
 		{
-			if (parameters == null)
+			if (parameters == null || parameters.Count == 0)
 				return;
 
-			ObservableCollection<MovieModel> movieList;
-			parameters.TryGetValue("movieList",out movieList);
+			var movieList = new ObservableCollection<MovieModel>();
+			parameters.TryGetValue("movieList", out movieList);
 			MovieList = movieList;
+
+			var movieModels = new MovieModel[3];
+			movieList.CopyTo(movieModels, 0);
+			FilteredMovieList = new ObservableCollection<MovieModel>(movieModels);
+
+			var genreList = new ObservableCollection<GenreModel>();
+			parameters.TryGetValue("genreList", out genreList);
+			var genreModels = new GenreModel[genreList.Count + 1];
+			genreModels[0] = new GenreModel("All");
+			genreList.CopyTo(genreModels, 1);
+			GenreList = new ObservableCollection<GenreModel>(genreModels);
 		}
 
-		private void OnFilmDetail(MovieModel movieModel)
+		private async void OnFilmDetailAsync()
 		{
-			NavigationService.NavigateAsync("FilmDetailsPage");
+			if (SelectedMovie == null)
+				return;
+
+			var parameters = new NavigationParameters
+			{
+				{ "movie", SelectedMovie }
+			};
+			await NavigationService.NavigateAsync("FilmDetailsPage", parameters);
 		}
 
 		private void OnSwapSearch()
@@ -113,6 +141,7 @@ namespace FilmsManager.ViewModels
 					AlternativeType = "Title";
 					PickerVisible = true;
 					SearchBarVisible = false;
+					SelectedGenre = null;
 					break;
 
 				case "Genre":
@@ -120,20 +149,28 @@ namespace FilmsManager.ViewModels
 					AlternativeType = "Genre";
 					PickerVisible = false;
 					SearchBarVisible = true;
+					TextEntry = null;
 					break;
 			}
-			FilteredMovieList.Clear();
+			FilteredMovieList = MovieList;
 		}
 
-		private void OnSearchFilm(string text)
+		private void OnSearchFilm()
 		{
 			switch (SearchType)
 			{
 				case "Title":
-					FilteredMovieList = new ObservableCollection<MovieModel>(MovieList.Where(m => m.Title.Contains(text)));
+					if (TextEntry == null)
+						return;
+					FilteredMovieList = new ObservableCollection<MovieModel>(MovieList.Where(m => m.Title.Contains(TextEntry)));
 					break;
 				case "Genre":
-					FilteredMovieList = new ObservableCollection<MovieModel>(MovieList.Where(m => m.Genre.Equals(text)));
+					if (SelectedGenre == null)
+						return;
+					if ( SelectedGenre.Name == "All")
+						FilteredMovieList = MovieList;
+					else
+						FilteredMovieList = new ObservableCollection<MovieModel>(MovieList.Where(m => m.Genre.Equals(SelectedGenre.Name)));
 					break;
 			}
 		}
