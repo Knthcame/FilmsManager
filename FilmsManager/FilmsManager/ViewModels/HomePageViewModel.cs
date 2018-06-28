@@ -1,8 +1,6 @@
 ﻿using FilmsManager.Models;
-using FilmsManager.ViewModels.Commands;
 using Prism.Commands;
 using Prism.Navigation;
-using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -50,20 +48,31 @@ namespace FilmsManager.ViewModels
 
 		private async void OnFilmDetailAsync(MovieModel movie)
 		{
-			if (movie != null)
+			if (movie == null)
+				return;
+			var parameters = new NavigationParameters
 			{
-				await NavigationService.NavigateAsync("FilmDetailsPage");
-			}
+				{ "movie", movie }
+			};
+			await NavigationService.NavigateAsync("FilmDetailsPage", parameters);
 		}
 
 		private async void OnSearchAsync()
 		{
-			await NavigationService.NavigateAsync("SearchFilmPage");
+			var parameters = new NavigationParameters
+			{
+				{ "movieList", MovieList }
+			};
+			await NavigationService.NavigateAsync("SearchFilmPage", parameters);
 		}
 
 		private async void OnNavigateAsync()
 		{
-			await NavigationService.NavigateAsync("AddFilmPage");
+			var parameters = new NavigationParameters
+			{
+				{ "movieList", MovieList }
+			};
+			await NavigationService.NavigateAsync("AddFilmPage", parameters);
 		}
 
 		public void OnAppearing()

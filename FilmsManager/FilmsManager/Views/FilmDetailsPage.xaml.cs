@@ -8,7 +8,7 @@ namespace FilmsManager.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class FilmDetailsPage : ContentPage
 	{
-		public FilmDetailsPage (MovieModel movie)
+		public FilmDetailsPage ()
 		{
 			InitializeComponent ();
 		}

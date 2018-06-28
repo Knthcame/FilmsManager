@@ -9,7 +9,7 @@ namespace FilmsManager.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class SearchFilmPage : ContentPage
 	{
-		public SearchFilmPage (ObservableCollection<MovieModel> movieList)
+		public SearchFilmPage ()
 		{
 			InitializeComponent ();
 		}

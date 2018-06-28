@@ -114,6 +114,10 @@
                                                 <ColumnDefinition Width="35*"/>
                                             </Grid.ColumnDefinitions>
 
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="100*"/>
+                                            </Grid.RowDefinitions>
+
                                             <Frame  BorderColor="LightGray"
                                                     CornerRadius="0"
                                                     Grid.Column="1"
@@ -142,7 +146,8 @@
                                                     VerticalOptions="Center"
                                                     HorizontalOptions="Center"
                                                     BackgroundColor="White"
-                                                    Margin="5,1,0,1"/>
+                                                    Margin="5,1,0,1"
+                                                    Aspect="AspectFit"/>
                                         </Grid>
                                     </StackLayout>
 

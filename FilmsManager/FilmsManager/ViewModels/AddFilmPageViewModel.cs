@@ -13,7 +13,7 @@ namespace FilmsManager.ViewModels
 {
 	public class AddFilmPageViewModel : BaseViewModel
 	{
-		private object _movieImage = "icon.png";
+		private object _movieImage = "movie.jpg";
 		private string _movieGenre;
 		private string _movieTitle;
 		private GenreModel _selectedGenre;
@@ -58,7 +58,7 @@ namespace FilmsManager.ViewModels
 		}
 
 
-		public AddFilmPageViewModel(INavigationService navigationService, IEventAggregator ea, IPageDialogService pageDialogService, ObservableCollection<MovieModel> movieList) : base(navigationService)
+		public AddFilmPageViewModel(INavigationService navigationService, IEventAggregator ea, IPageDialogService pageDialogService) : base(navigationService)
 		{
 			_ea = ea;
 			AddCommand = new DelegateCommand(OnAddAsync);
@@ -67,9 +67,14 @@ namespace FilmsManager.ViewModels
 			_pageDialogService = pageDialogService;
 		}
 
+		public override void OnNavigatedTo(NavigationParameters parameters)
+		{
+			MovieList = parameters["movieList"] as ObservableCollection<MovieModel>;
+		}
+
 		private void OnPickImage(PickImageModel imageModel)
 		{
-			_movieImage = imageModel.ImageName;
+			MovieImage = imageModel.ImageName;
 		}
 
 		private void OnOpenGallery()

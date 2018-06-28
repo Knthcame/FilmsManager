@@ -1,8 +1,5 @@
 ﻿using FilmsManager.Models;
 using Prism.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FilmsManager.ViewModels
 {
@@ -16,14 +13,16 @@ namespace FilmsManager.ViewModels
 			set { SetProperty(ref _movie, value); }
 		}
 
-		public FilmDetailsPageViewModel(INavigationService navigationService, MovieModel movie):base(navigationService)
-		{
-			Movie = movie;
-		}
+		public FilmDetailsPageViewModel(INavigationService navigationService) : base(navigationService) { }
 
 		public virtual async void OnBackButtonPressedAsync()
 		{
 			await NavigationService.GoBackAsync();
+		}
+
+		public override void OnNavigatedTo(NavigationParameters parameters)
+		{
+			Movie= parameters["movie"] as MovieModel;
 		}
 	}
 }

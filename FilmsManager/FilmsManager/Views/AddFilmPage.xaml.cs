@@ -12,7 +12,7 @@ namespace FilmsManager.Views
 	{
 		public static Action AndroidAction { get; set; }
 
-		public AddFilmPage(ObservableCollection<MovieModel> MovieList)
+		public AddFilmPage()
 		{
 			InitializeComponent();
         }

@@ -80,12 +80,16 @@ namespace FilmsManager.ViewModels
 			set { SetProperty(ref _selectedMovie, value); }
 		}
 
-		public SearchFilmPageViewModel(INavigationService navigationService, ObservableCollection<MovieModel> movieList) : base(navigationService)
+		public SearchFilmPageViewModel(INavigationService navigationService) : base(navigationService)
 		{
-			MovieList = movieList;
 			SearchFilmCommand = new DelegateCommand<string>(OnSearchFilm);
 			SwapSearchCommand = new DelegateCommand(OnSwapSearch);
 			FilmDetailsCommand = new DelegateCommand<MovieModel>(OnFilmDetail);
+		}
+
+		public override void OnNavigatedTo(NavigationParameters parameters)
+		{
+			MovieList = parameters["movieList"] as ObservableCollection<MovieModel>;
 		}
 
 		private void OnFilmDetail(MovieModel movieModel)
