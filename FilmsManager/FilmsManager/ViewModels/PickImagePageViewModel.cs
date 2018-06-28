@@ -88,7 +88,8 @@ namespace FilmsManager.ViewModels
 					return stream;
 				})
 			};
-			PickImageCommand.Execute(model);
+			_eventAggregator.GetEvent<PickImageEvent>().Publish(model);
+			await NavigationService.GoBackAsync();
 		}
 
 		private async void OnPickImageAsync()
