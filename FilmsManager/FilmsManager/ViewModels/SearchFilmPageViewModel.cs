@@ -1,6 +1,7 @@
 ﻿using FilmsManager.Models;
 using Prism.Commands;
 using Prism.Navigation;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -18,7 +19,7 @@ namespace FilmsManager.ViewModels
 		private GenreModel _selectedGenre;
 		private MovieModel _selectedMovie;
 		private ObservableCollection<GenreModel> _genreList;
-		private ObservableCollection<MovieModel> _movieList;
+		private IList<MovieModel> _movieList;
 
 		public string BackgroundImage { get; set; } = "back6.jpg";
 
@@ -56,11 +57,6 @@ namespace FilmsManager.ViewModels
 		{
 			get => _genreList;
 			set { SetProperty(ref _genreList, value); }
-		}
-		public ObservableCollection<MovieModel> MovieList
-		{
-			get => _movieList;
-			set { SetProperty(ref _movieList, value); }
 		}
 
 		public ObservableCollection<MovieModel> FilteredMovieList
@@ -106,18 +102,14 @@ namespace FilmsManager.ViewModels
 
 			var movieList = new ObservableCollection<MovieModel>();
 			parameters.TryGetValue("movieList", out movieList);
-			MovieList = movieList;
+			_movieList = movieList;
+			
+			FilteredMovieList = new ObservableCollection<MovieModel>(movieList);
 
-			var movieModels = new MovieModel[3];
-			movieList.CopyTo(movieModels, 0);
-			FilteredMovieList = new ObservableCollection<MovieModel>(movieModels);
-
-			var genreList = new ObservableCollection<GenreModel>();
+			IList<GenreModel> genreList;
 			parameters.TryGetValue("genreList", out genreList);
-			var genreModels = new GenreModel[genreList.Count + 1];
-			genreModels[0] = new GenreModel("All");
-			genreList.CopyTo(genreModels, 1);
-			GenreList = new ObservableCollection<GenreModel>(genreModels);
+			genreList.Insert(0, new GenreModel("All"));
+			GenreList = new ObservableCollection<GenreModel>(genreList);
 		}
 
 		private async void OnFilmDetailAsync()
@@ -136,7 +128,7 @@ namespace FilmsManager.ViewModels
 		{
 			switch (SearchType)
 			{
-				case "Title":
+				case "Title": //Title to Genre
 					SearchType = "Genre";
 					AlternativeType = "Title";
 					PickerVisible = true;
@@ -144,7 +136,7 @@ namespace FilmsManager.ViewModels
 					SelectedGenre = null;
 					break;
 
-				case "Genre":
+				case "Genre": //Genre to Title
 					SearchType = "Title";
 					AlternativeType = "Genre";
 					PickerVisible = false;
@@ -152,7 +144,7 @@ namespace FilmsManager.ViewModels
 					TextEntry = null;
 					break;
 			}
-			FilteredMovieList = MovieList;
+			FilteredMovieList = new ObservableCollection<MovieModel>(_movieList);
 		}
 
 		private void OnSearchFilm()
@@ -162,15 +154,15 @@ namespace FilmsManager.ViewModels
 				case "Title":
 					if (TextEntry == null)
 						return;
-					FilteredMovieList = new ObservableCollection<MovieModel>(MovieList.Where(m => m.Title.Contains(TextEntry)));
+					FilteredMovieList = new ObservableCollection<MovieModel>(_movieList.Where(m => m.Title.Contains(TextEntry)));
 					break;
 				case "Genre":
 					if (SelectedGenre == null)
 						return;
 					if ( SelectedGenre.Name == "All")
-						FilteredMovieList = MovieList;
+						FilteredMovieList = new ObservableCollection<MovieModel>(_movieList);
 					else
-						FilteredMovieList = new ObservableCollection<MovieModel>(MovieList.Where(m => m.Genre.Equals(SelectedGenre.Name)));
+						FilteredMovieList = new ObservableCollection<MovieModel>(_movieList.Where(m => m.Genre.Equals(SelectedGenre.Name)));
 					break;
 			}
 		}
