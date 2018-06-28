@@ -78,16 +78,18 @@ namespace FilmsManager.ViewModels
 
 		public override void OnNavigatedTo(NavigationParameters parameters)
 		{
-			if (parameters == null)
+			if (parameters == null || parameters.Count==0)
 				return;
 
-			var movieList = new ObservableCollection<MovieModel>();
+			ObservableCollection<MovieModel> movieList;
 			parameters.TryGetValue("movieList", out movieList);
-			MovieList = movieList;
+			if ( movieList != null )
+				MovieList = movieList;
 
-			var genreList = new ObservableCollection<GenreModel>();
+			ObservableCollection<GenreModel> genreList;
 			parameters.TryGetValue("genreList", out genreList);
-			GenreList = genreList;
+			if ( genreList != null )
+				GenreList = genreList;
 		}
 
 		private void OnPickImage(PickImageModel imageModel)

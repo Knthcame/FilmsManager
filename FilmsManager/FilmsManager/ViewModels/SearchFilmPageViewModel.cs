@@ -100,16 +100,21 @@ namespace FilmsManager.ViewModels
 			if (parameters == null || parameters.Count == 0)
 				return;
 
-			var movieList = new ObservableCollection<MovieModel>();
+			ObservableCollection<MovieModel> movieList;
 			parameters.TryGetValue("movieList", out movieList);
-			_movieList = movieList;
+			if ( movieList != null )
+				_movieList = movieList;
 			
 			FilteredMovieList = new ObservableCollection<MovieModel>(movieList);
 
 			IList<GenreModel> genreList;
 			parameters.TryGetValue("genreList", out genreList);
-			genreList.Insert(0, new GenreModel("All"));
-			GenreList = new ObservableCollection<GenreModel>(genreList);
+			if ( genreList != null )
+			{
+				genreList.Insert(0, new GenreModel("All"));
+				GenreList = new ObservableCollection<GenreModel>(genreList);
+			}
+			
 		}
 
 		private async void OnFilmDetailAsync()
