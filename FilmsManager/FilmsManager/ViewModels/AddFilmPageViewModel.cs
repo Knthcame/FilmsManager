@@ -13,10 +13,13 @@ namespace FilmsManager.ViewModels
 {
 	public class AddFilmPageViewModel : BaseViewModel
 	{
-		private object _movieImage = "movie.jpg";
+		private string _defaultMovieImage = "movie.jpg";
+		private object _movieImage;
 		private string _movieGenre;
 		private string _movieTitle;
 		private GenreModel _selectedGenre;
+
+		public string BackgroundImage { get; set; } = "Back3.jpg";
 
 		public ICommand AddCommand { get; set; }
 		public ICommand OpenGalleryCommand { get; set; }
@@ -27,7 +30,7 @@ namespace FilmsManager.ViewModels
 
 		IPageDialogService _pageDialogService;
 
-		IEventAggregator _ea;
+		IEventAggregator _eventAggregator;
 
 		public GenreModel SelectedGenre
 		{
@@ -58,18 +61,24 @@ namespace FilmsManager.ViewModels
 		}
 
 
-		public AddFilmPageViewModel(INavigationService navigationService, IEventAggregator ea, IPageDialogService pageDialogService) : base(navigationService)
+		public AddFilmPageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IPageDialogService pageDialogService) : base(navigationService)
 		{
-			_ea = ea;
+			_movieImage = _defaultMovieImage;
+			_eventAggregator = eventAggregator;
 			AddCommand = new DelegateCommand(OnAddAsync);
 			OpenGalleryCommand = new DelegateCommand(OnOpenGallery);
-			_ea.GetEvent<PickImageEvent>().Subscribe(OnPickImage);
+			_eventAggregator.GetEvent<PickImageEvent>().Subscribe(OnPickImage);
 			_pageDialogService = pageDialogService;
 		}
 
 		public override void OnNavigatedTo(NavigationParameters parameters)
 		{
-			MovieList = parameters["movieList"] as ObservableCollection<MovieModel>;
+			if (parameters == null)
+				return;
+
+			ObservableCollection<MovieModel> movieList;
+			parameters.TryGetValue("movieList", out movieList);
+			MovieList = movieList;
 		}
 
 		private void OnPickImage(PickImageModel imageModel)
@@ -89,7 +98,7 @@ namespace FilmsManager.ViewModels
 				bool action = await _pageDialogService.DisplayAlertAsync("Missing entries", " Not all values have been inserted. Abort adding film?", "Yes, abort", "No,stay");
 				if (action) await NavigationService.GoBackAsync();
 			}
-			else if (MovieImage as string == "icon.png")
+			else if (MovieImage as string == _defaultMovieImage)
 			{
 				bool action = await _pageDialogService.DisplayAlertAsync("Default image", "Are you sure you want to go with the default image?", "Yes", "No, i want to choose one");
 				if (action)

@@ -22,7 +22,12 @@ namespace FilmsManager.ViewModels
 
 		public override void OnNavigatedTo(NavigationParameters parameters)
 		{
-			Movie= parameters["movie"] as MovieModel;
+			if (parameters == null)
+				return;
+
+			MovieModel movie;
+			parameters.TryGetValue("movie", out movie);
+			Movie = movie;
 		}
 	}
 }

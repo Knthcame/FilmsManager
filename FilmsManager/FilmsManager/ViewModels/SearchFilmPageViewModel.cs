@@ -18,6 +18,8 @@ namespace FilmsManager.ViewModels
 		private object _selectedGenre;
 		private MovieModel _selectedMovie;
 
+		public string BackgroundImage { get; set; } = "back6.jpg";
+
 		public bool PickerVisible
 		{
 			get => _pickerVisible;
@@ -89,7 +91,12 @@ namespace FilmsManager.ViewModels
 
 		public override void OnNavigatedTo(NavigationParameters parameters)
 		{
-			MovieList = parameters["movieList"] as ObservableCollection<MovieModel>;
+			if (parameters == null)
+				return;
+
+			ObservableCollection<MovieModel> movieList;
+			parameters.TryGetValue("movieList",out movieList);
+			MovieList = movieList;
 		}
 
 		private void OnFilmDetail(MovieModel movieModel)

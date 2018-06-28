@@ -4,11 +4,27 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="FilmsManager.Views.AddFilmPage"
-             Title="Add film"
-             BackgroundImage="Back3.jpg">
+             Title="Add film">
     
     <ContentPage.Content>
-        <StackLayout>
+
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100*"/>
+            </Grid.ColumnDefinitions>
+
+            <Image Source ="{Binding BackgroundImage}"
+                   Aspect="AspectFill"
+                   Grid.Column="0"
+                   Grid.Row="0"/>
+
+            <StackLayout Grid.Row="0"
+                         Grid.Column="0">
             
             <Entry  Placeholder="Insert Movie Title" 
                     HorizontalOptions="FillAndExpand"
@@ -46,5 +62,9 @@
                     HeightRequest="50"/>
             
         </StackLayout>
+            
+        </Grid>
+        
+        
     </ContentPage.Content>
 </ContentPage>

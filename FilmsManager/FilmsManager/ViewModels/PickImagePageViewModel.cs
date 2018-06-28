@@ -21,7 +21,7 @@ namespace FilmsManager.ViewModels
 		private bool _listViewVisible = false;
 		private bool _buttonsVisible = true;
 
-		IEventAggregator _ea;
+		IEventAggregator _eventAggregator;
 
 		public ICommand PickImageCommand { get; set; }
 
@@ -43,9 +43,9 @@ namespace FilmsManager.ViewModels
 			set { SetProperty(ref _buttonsVisible, value); }
 		}
 
-		public PickImagePageViewModel(INavigationService navigationService, IEventAggregator ea):base(navigationService)
+		public PickImagePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator):base(navigationService)
 		{
-			_ea = ea;
+			_eventAggregator = eventAggregator;
 			PickImageCommand = new DelegateCommand<PickImageModel>(OnPickImage);
 			PhotoModeCommand = new DelegateCommand<string>(OnPhotoMode);
 			GoBackCommand = new DelegateCommand(OnGoBack);
@@ -88,7 +88,7 @@ namespace FilmsManager.ViewModels
 
 		private void OnPickImage(PickImageModel imageModel)
 		{
-			_ea.GetEvent<PickImageEvent>().Publish(imageModel);
+			_eventAggregator.GetEvent<PickImageEvent>().Publish(imageModel);
 			NavigationService.GoBackAsync();
 		}
 

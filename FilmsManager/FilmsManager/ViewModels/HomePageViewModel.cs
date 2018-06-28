@@ -10,6 +10,8 @@ namespace FilmsManager.ViewModels
 	{
 		private MovieModel _selectedMovie;
 
+		public string BackgroundImage { get; set; } = "Back6.jpg";
+
 		public ObservableCollection<MovieModel> MovieList { get; set; } = new ObservableCollection<MovieModel> {
 			new MovieModel("Shrek","Humour", "Shrek.jpg"),
 			new MovieModel("Shrek 2", "Humour", "Shrek2.jpg"),

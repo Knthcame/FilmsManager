@@ -33,7 +33,7 @@
                     <RowDefinition Height="7.5*"/>
                 </Grid.RowDefinitions>
 
-                <Image Source="Back6.jpg"
+                <Image Source="{Binding BackgroundImage}"
                        Grid.Column="0"
                        Grid.ColumnSpan="3"
                        Grid.Row="0"
