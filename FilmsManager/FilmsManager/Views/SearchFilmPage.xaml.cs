@@ -1,20 +1,14 @@
-﻿using FilmsManager.Models;
-using FilmsManager.ViewModels;
-using System.Collections.ObjectModel;
-using Xamarin.Forms;
+﻿using FilmsManager.ViewModels;
 using Xamarin.Forms.Xaml;
-using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 namespace FilmsManager.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class SearchFilmPage : ContentPage
+	public partial class SearchFilmPage : BasePage
 	{
-		public SearchFilmPage ()
+		public SearchFilmPage () : base()
 		{
 			InitializeComponent ();
-
-			On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
 		}
 
 		protected override void OnAppearing()

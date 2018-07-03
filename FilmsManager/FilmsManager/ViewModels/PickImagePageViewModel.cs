@@ -79,6 +79,8 @@ namespace FilmsManager.ViewModels
 
 		private async void PickGalleryPhotoAsync()
 		{
+			if (!CrossMedia.Current.IsPickPhotoSupported)
+				return;
 			var photo = await CrossMedia.Current.PickPhotoAsync();
 			PickImageModel model = new PickImageModel
 			{

@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
-             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-             prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="FilmsManager.Views.SearchFilmPage"
-             Title="Film Searcher"
-             BackgroundImage="Back6.jpg">
+<views:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+                xmlns:views="clr-namespace:FilmsManager.Views"
+                xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+                prism:ViewModelLocator.AutowireViewModel="True"
+                x:Class="FilmsManager.Views.SearchFilmPage"
+                Title="Film Searcher"
+                BackgroundImage="Back6.jpg">
 
     <ContentPage.Content>
        
@@ -190,4 +191,4 @@
         </StackLayout>
 
     </ContentPage.Content>
-</ContentPage>
+</views:BasePage>

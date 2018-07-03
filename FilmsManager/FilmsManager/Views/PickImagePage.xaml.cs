@@ -1,18 +1,14 @@
 ﻿using FilmsManager.ViewModels;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 namespace FilmsManager.Views
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class PickImagePage : ContentPage
+	[XamlCompilation(XamlCompilationOptions.Compile)]
+	public partial class PickImagePage : BasePage
 	{
-		public PickImagePage ()
+		public PickImagePage () : base()
 		{
 			InitializeComponent ();
-
-			On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
 		}
 
 		protected override bool OnBackButtonPressed()

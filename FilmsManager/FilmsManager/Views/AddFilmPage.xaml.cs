@@ -1,23 +1,18 @@
-﻿using FilmsManager.Models;
-using FilmsManager.ViewModels;
+﻿using FilmsManager.ViewModels;
 using System;
-using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 namespace FilmsManager.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class AddFilmPage : ContentPage
+	public partial class AddFilmPage : BasePage
 	{
 		public static Action AndroidAction { get; set; }
 
-		public AddFilmPage()
+		public AddFilmPage() : base()
 		{
 			InitializeComponent();
-
-			On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
 		}
 
 		protected override bool OnBackButtonPressed()
