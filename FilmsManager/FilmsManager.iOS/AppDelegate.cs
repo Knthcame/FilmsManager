@@ -1,8 +1,10 @@
-﻿using Foundation;
+﻿using FilmsManager.iOS.ResxLocalization;
+using FilmsManager.ResxLocalization;
+using Foundation;
 using Prism;
 using Prism.Ioc;
 using UIKit;
-
+using Xamarin.Forms;
 
 namespace FilmsManager.iOS
 {
@@ -21,8 +23,14 @@ namespace FilmsManager.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App(new iOSInitializer()));
+			Forms.Init();
+
+			DependencyService.Register<Localize_iOS>();
+
+			//var container
+			var application = new App(new iOSInitializer());
+
+            LoadApplication(application);
 
             return base.FinishedLaunching(app, options);
         }
@@ -32,7 +40,7 @@ namespace FilmsManager.iOS
     {
         public void RegisterTypes(IContainerRegistry container)
         {
-
+			container.Register<ILocalize, Localize_iOS>();
         }
     }
 }

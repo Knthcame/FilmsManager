@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <views:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:Localization="clr-namespace:FilmsManager.ResxLocalization"
                 xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
                 xmlns:views="clr-namespace:FilmsManager.Views"
                 prism:ViewModelLocator.AutowireViewModel="True"
                 x:Class="FilmsManager.Views.AddFilmPage"
-                Title="Add film">
+                Title="{Binding Title}">
     
     <ContentPage.Content>
 
@@ -27,12 +28,12 @@
             <StackLayout Grid.Row="0"
                          Grid.Column="0">
             
-            <Entry  Placeholder="Insert Movie Title" 
+            <Entry  Placeholder="{Localization:Translate AddFilmPageEntryPlaceholder}" 
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="Start"
                     Text="{Binding MovieTitle}"/>
 
-            <Picker Title="Movie Genre"
+            <Picker Title="{Localization:Translate AddFilmPagePickerPlaceholder}"
                     ItemsSource="{Binding GenreList}"
                     ItemDisplayBinding="{Binding Name}"
                     SelectedItem="{Binding SelectedGenre, Mode=TwoWay}">
@@ -44,9 +45,9 @@
                    HeightRequest="200"/>
 
 
-            <Button Text="Choose film image"
+            <Button Text="{Localization:Translate OpenGalleryButton}"
                     HeightRequest="80"
-                    WidthRequest="100"
+                    WidthRequest="150"
                     Command="{Binding OpenGalleryCommand}"
                     HorizontalOptions="CenterAndExpand"
                     VerticalOptions="StartAndExpand"
@@ -54,8 +55,7 @@
                     BorderColor="Black"
                     BackgroundColor="White"/>
 
-            <Button x:Name="CheckButton"
-                    Command="{Binding AddCommand}"
+            <Button Command="{Binding AddCommand}"
                     HorizontalOptions="End"
                     VerticalOptions="EndAndExpand"
                     Image="Check3.png"

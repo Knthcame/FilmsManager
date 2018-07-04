@@ -3,173 +3,189 @@
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
                 xmlns:views="clr-namespace:FilmsManager.Views"
+                xmlns:Localization="clr-namespace:FilmsManager.ResxLocalization"
                 xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
                 prism:ViewModelLocator.AutowireViewModel="True"
                 x:Class="FilmsManager.Views.HomePage"
                 Icon="icon.png"
-                Title="Films Manager">
+                Title="{Localization:Translate HomePageTitle}">
 
     <ContentPage.Content>
 
-        <StackLayout Padding="0" Margin="0">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30*"/>
-                    <ColumnDefinition Width="35*"/>
-                    <ColumnDefinition Width="35*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="7.5*"/>
-                    <RowDefinition Height="85*"/>
-                    <RowDefinition Height="7.5*"/>
-                </Grid.RowDefinitions>
+        <Grid>
 
-                <Image Source="{Binding BackgroundImage}"
-                       Grid.Column="0"
-                       Grid.ColumnSpan="3"
-                       Grid.Row="0"
-                       Grid.RowSpan="3"
-                       Aspect="Fill"
-                       />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30*"/>
+                <ColumnDefinition Width="35*"/>
+                <ColumnDefinition Width="35*"/>
+            </Grid.ColumnDefinitions>
 
-                <Frame  BorderColor="Black"
-                        CornerRadius="0"
-                        BackgroundColor="LightGray"
-                        Padding="0"
-                        Margin="0"
-                        HasShadow="False"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="3"
-                        Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="7.5*"/>
+                <RowDefinition Height="80*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="7.5*"/>
+            </Grid.RowDefinitions>
 
-                    <StackLayout>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="30*"/>
-                                <ColumnDefinition Width="35*"/>
-                                <ColumnDefinition Width="35*"/>
-                            </Grid.ColumnDefinitions>
+            <Image Source="{Binding BackgroundImage}"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Grid.Row="0"
+                    Grid.RowSpan="3"
+                    Aspect="Fill"
+                    />
 
-                            <Label Text="Image"
-                                   VerticalTextAlignment="Center"
-                                   HorizontalOptions="CenterAndExpand"
-                                   VerticalOptions="CenterAndExpand"
-                                   Grid.Column="0"/>
+            <Frame  BorderColor="Black"
+                    CornerRadius="0"
+                    BackgroundColor="LightGray"
+                    Padding="0"
+                    Margin="0"
+                    HasShadow="False"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Grid.Row="0">
 
-                            <Label Text="Title"
+                <StackLayout>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30*"/>
+                            <ColumnDefinition Width="35*"/>
+                            <ColumnDefinition Width="35*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Text="{Localization:Translate ImageColumn}"
                                 VerticalTextAlignment="Center"
-                                   HorizontalOptions="CenterAndExpand"
-                                   VerticalOptions="CenterAndExpand"
-                                   Grid.Column="1"/>
+                                HorizontalOptions="CenterAndExpand"
+                                VerticalOptions="CenterAndExpand"
+                                Grid.Column="0"/>
 
-                            <Label Text="Genre"
-                                VerticalTextAlignment="Center"
-                                   HorizontalOptions="CenterAndExpand"
-                                   VerticalOptions="CenterAndExpand"
-                                   Grid.Column="2"/>
-                        </Grid>
-                    </StackLayout>
-                </Frame>
+                        <Label Text="{Localization:Translate TitleColumn}"
+                            VerticalTextAlignment="Center"
+                                HorizontalOptions="CenterAndExpand"
+                                VerticalOptions="CenterAndExpand"
+                                Grid.Column="1"/>
+
+                        <Label Text="{Localization:Translate GenreColumn}"
+                            VerticalTextAlignment="Center"
+                                HorizontalOptions="CenterAndExpand"
+                                VerticalOptions="CenterAndExpand"
+                                Grid.Column="2"/>
+                    </Grid>
+                </StackLayout>
+            </Frame>
 
 
-                <ListView ItemsSource="{Binding MovieList}"
-                          HasUnevenRows="True"
-                          BackgroundColor="Transparent"
-                          Grid.Column="0"
-                          Grid.ColumnSpan="3"
-                          Grid.Row="1"
-                          SelectedItem="{Binding SelectedMovie, Mode=TwoWay}">
+            <ListView ItemsSource="{Binding MovieList}"
+                      HasUnevenRows="True"
+                      BackgroundColor="Transparent"
+                      Grid.Column="0"
+                      Grid.ColumnSpan="3"
+                      Grid.Row="1"
+                      SelectedItem="{Binding SelectedMovie, Mode=TwoWay}">
 
-                    <ListView.Behaviors>
-                        <b:EventToCommandBehavior EventName="ItemSelected" 
-                                                  Command="{Binding FilmDetailsCommand}"/>
-                    </ListView.Behaviors>
+                <ListView.Behaviors>
+                    <b:EventToCommandBehavior EventName="ItemSelected" 
+                                                Command="{Binding FilmDetailsCommand}"/>
+                </ListView.Behaviors>
 
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell Height="90">
-                                <Frame BorderColor="White"
-                                    Margin="0,3"
-                                    Padding="0"
-                                    BackgroundColor="Transparent"
-                                    HasShadow="False">
-                                    <Frame.CornerRadius>
-                                        <OnPlatform  x:TypeArguments="x:Single">
-                                            <On Platform="Android" Value="12"/>
-                                            <On Platform="iOS" Value="2"/>
-                                        </OnPlatform>
-                                    </Frame.CornerRadius>
-                                    <StackLayout>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="30*"/>
-                                                <ColumnDefinition Width="35*"/>
-                                                <ColumnDefinition Width="35*"/>
-                                            </Grid.ColumnDefinitions>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell Height="90">
+                            <Frame BorderColor="White"
+                                Margin="0,3"
+                                Padding="0"
+                                BackgroundColor="Transparent"
+                                HasShadow="False">
+                                <Frame.CornerRadius>
+                                    <OnPlatform  x:TypeArguments="x:Single">
+                                        <On Platform="Android" Value="12"/>
+                                        <On Platform="iOS" Value="2"/>
+                                    </OnPlatform>
+                                </Frame.CornerRadius>
+                                <StackLayout>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="30*"/>
+                                            <ColumnDefinition Width="35*"/>
+                                            <ColumnDefinition Width="35*"/>
+                                        </Grid.ColumnDefinitions>
 
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="100*"/>
-                                            </Grid.RowDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="100*"/>
+                                        </Grid.RowDefinitions>
 
-                                            <Frame  BorderColor="LightGray"
-                                                    CornerRadius="0"
+                                        <Frame  BorderColor="LightGray"
+                                                CornerRadius="0"
+                                                Grid.Column="1"
+                                                BackgroundColor="Transparent"
+                                                Padding="0"
+                                                Margin="0">
+
+                                            <Label  Text="{Binding Title}"
+                                                    TextColor="White"
+                                                    FontSize="Large"
                                                     Grid.Column="1"
-                                                    BackgroundColor="Transparent"
-                                                    Padding="0"
-                                                    Margin="0">
-
-                                                <Label  Text="{Binding Title}"
-                                                        TextColor="White"
-                                                        FontSize="Large"
-                                                        Grid.Column="1"
-                                                        VerticalOptions="CenterAndExpand"
-                                                        HorizontalOptions="Center"
-                                                    />
-                                            </Frame>
-
-                                            <Label  Text="{Binding Genre}"
-                                                    TextColor="LightGray"
-                                                    FontSize="Medium"
-                                                    Grid.Column="2"
                                                     VerticalOptions="CenterAndExpand"
-                                                    HorizontalOptions="CenterAndExpand"/>
-
-                                            <Image  Source="{Binding Image}"
-                                                    Grid.Column="0"
-                                                    VerticalOptions="Center"
                                                     HorizontalOptions="Center"
-                                                    BackgroundColor="White"
-                                                    Margin="5,1,0,1"
-                                                    Aspect="AspectFit"/>
-                                        </Grid>
-                                    </StackLayout>
+                                                />
+                                        </Frame>
 
-                                </Frame>
-                            </ViewCell>
-                            
-                        </DataTemplate>
-                        
-                    </ListView.ItemTemplate>
-                </ListView>
+                                        <Label  Text="{Binding Genre}"
+                                                TextColor="LightGray"
+                                                FontSize="Medium"
+                                                Grid.Column="2"
+                                                VerticalOptions="CenterAndExpand"
+                                                HorizontalOptions="CenterAndExpand"/>
 
-                <Button x:Name="AddButton"
-                        VerticalOptions="End"
-                        HorizontalOptions="Fill"
-                        Text="ADD"
-                        TextColor="Black"
-                        Command="{Binding NavigateCommand}"
-                        BackgroundColor="LightGray"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="3"
-                        Grid.Row="2"/>
-            </Grid>
-        </StackLayout>
-        
+                                        <Image  Source="{Binding Image}"
+                                                Grid.Column="0"
+                                                VerticalOptions="Center"
+                                                HorizontalOptions="Center"
+                                                BackgroundColor="White"
+                                                Margin="5,1,0,1"
+                                                Aspect="AspectFit"/>
+                                    </Grid>
+                                </StackLayout>
+
+                            </Frame>
+                        </ViewCell>
+
+                    </DataTemplate>
+
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Picker BackgroundColor="Black"
+                    TextColor="White"
+                    ItemsSource="{Binding LanguageList}"
+                    ItemDisplayBinding="{Binding Language}"
+                    SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}"
+                    Grid.Column="2"
+                    Grid.Row="2">
+                
+                <Picker.Behaviors>
+
+                    <b:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                              Command="{Binding SelectLanguageCommand}"/>
+                </Picker.Behaviors>
+                
+            </Picker>
+
+            <Button VerticalOptions="End"
+                    HorizontalOptions="Fill"
+                    Text="{Localization:Translate HomePageAddButton}"
+                    TextColor="Black"
+                    Command="{Binding NavigateCommand}"
+                    BackgroundColor="LightGray"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Grid.Row="3"/>
+        </Grid>
+
     </ContentPage.Content>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="SearchButton" 
-                     Order="Primary" 
+        <ToolbarItem Order="Primary" 
                      Icon="search.png"
                      Command="{Binding SearchCommand}"
                      CommandParameter="{Binding .}">

@@ -2,11 +2,12 @@
 <views:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+                xmlns:Localization="clr-namespace:FilmsManager.ResxLocalization"
                 xmlns:views="clr-namespace:FilmsManager.Views"
                 xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
                 prism:ViewModelLocator.AutowireViewModel="True"
                 x:Class="FilmsManager.Views.SearchFilmPage"
-                Title="Film Searcher"
+                Title="{Binding Title}"
                 BackgroundImage="Back6.jpg">
 
     <ContentPage.Content>
@@ -14,11 +15,13 @@
 
         <StackLayout Padding="0" Margin="0">
             <Grid>
+                
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="30*"/>
                     <ColumnDefinition Width="35*"/>
                     <ColumnDefinition Width="35*"/>
                 </Grid.ColumnDefinitions>
+                
                 <Grid.RowDefinitions>
                     <RowDefinition Height="10*"/>
                     <RowDefinition Height="5*"/>
@@ -36,7 +39,7 @@
 
                 <SearchBar Text="{Binding TextEntry}"
                            TextColor="Black"
-                           Placeholder="Insert Movie Title to Search for"
+                           Placeholder="{Localization:Translate SearchFilmPageSearchBarPlaceholder}"
                            PlaceholderColor="DarkGray"
                            SearchCommand="{Binding SearchFilmCommand}"
                            SearchCommandParameter="{Binding TextEntry}"
@@ -54,17 +57,17 @@
                     </SearchBar.Behaviors>
                 </SearchBar>
 
-                <Picker    Title="Movie Genre"
-                           TextColor="Black"
-                           ItemsSource="{Binding GenreList}"
-                           ItemDisplayBinding="{Binding Name}"
-                           SelectedItem="{Binding SelectedGenre, Mode=TwoWay}"
-                           IsVisible="{Binding PickerVisible}"
-                           BackgroundColor="LightGray"
-                           Margin="0"
-                           Grid.Column="0"
-                           Grid.ColumnSpan="3"
-                           Grid.Row="0"/>
+                <Picker Title="{Localization:Translate SearchFilmPagePickerPlaceholder}"
+                        TextColor="Black"
+                        ItemsSource="{Binding GenreList}"
+                        ItemDisplayBinding="{Binding Name}"
+                        SelectedItem="{Binding SelectedGenre, Mode=TwoWay}"
+                        IsVisible="{Binding PickerVisible}"
+                        BackgroundColor="LightGray"
+                        Margin="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3"
+                        Grid.Row="0"/>
 
                 <Frame  BorderColor="Black"
                         CornerRadius="0"
@@ -84,19 +87,19 @@
                                 <ColumnDefinition Width="35*"/>
                             </Grid.ColumnDefinitions>
 
-                            <Label Text="Image"
+                            <Label Text="{Localization:Translate ImageColumn}"
                                    VerticalTextAlignment="Center"
                                    HorizontalOptions="CenterAndExpand"
                                    VerticalOptions="CenterAndExpand"
                                    Grid.Column="0"/>
 
-                            <Label Text="Title"
+                            <Label Text="{Localization:Translate TitleColumn}"
                                 VerticalTextAlignment="Center"
                                    HorizontalOptions="CenterAndExpand"
                                    VerticalOptions="CenterAndExpand"
                                    Grid.Column="1"/>
 
-                            <Label Text="Genre"
+                            <Label Text="{Localization:Translate GenreColumn}"
                                 VerticalTextAlignment="Center"
                                    HorizontalOptions="CenterAndExpand"
                                    VerticalOptions="CenterAndExpand"

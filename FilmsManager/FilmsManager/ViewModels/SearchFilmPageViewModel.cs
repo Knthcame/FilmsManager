@@ -1,9 +1,11 @@
 ﻿using FilmsManager.Models;
+using FilmsManager.Resources;
 using Prism.Commands;
 using Prism.Navigation;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace FilmsManager.ViewModels
@@ -90,9 +92,10 @@ namespace FilmsManager.ViewModels
 
 		public SearchFilmPageViewModel(INavigationService navigationService) : base(navigationService)
 		{
+			Title = AppResources.SearchFilmPageTitle;
 			SearchFilmCommand = new DelegateCommand(OnSearchFilm);
 			SwapSearchCommand = new DelegateCommand(OnSwapSearch);
-			FilmDetailsCommand = new DelegateCommand(OnFilmDetailAsync);
+			FilmDetailsCommand = new DelegateCommand(async () => await OnFilmDetailAsync());
 		}
 
 		public override void OnNavigatedTo(NavigationParameters parameters)
@@ -117,7 +120,7 @@ namespace FilmsManager.ViewModels
 			
 		}
 
-		private async void OnFilmDetailAsync()
+		private async Task OnFilmDetailAsync()
 		{
 			if (SelectedMovie == null)
 				return;
@@ -172,7 +175,7 @@ namespace FilmsManager.ViewModels
 			}
 		}
 
-		public void OnAppearing()
+		public override void OnAppearing()
 		{
 			SelectedMovie = null;
 		}

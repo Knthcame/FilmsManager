@@ -4,29 +4,50 @@ using FilmsManager.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Prism.Unity;
+using FilmsManager.Resources;
+using FilmsManager.ResxLocalization;
+using System.Globalization;
+using Unity;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace FilmsManager
 {
 	public partial class App : PrismApplication
     {
-        /* 
-         * The Xamarin Forms XAML Previewer in Visual Studio uses System.Activator.CreateInstance.
-         * This imposes a limitation in which the App class must have a default constructor. 
-         * App(IPlatformInitializer initializer = null) cannot be handled by the Activator.
-         */
+		/// <summary>
+		/// The Xamarin Forms XAML Previewer in Visual Studio uses System.Activator.CreateInstance.
+		/// This imposes a limitation in which the App class must have a default constructor. 
+		/// App(IPlatformInitializer initializer = null) cannot be handled by the Activator.
+		/// </summary>
         public App() : this(null) { }
 
-        public App(IPlatformInitializer initializer) : base(initializer) { }
+		public App(IPlatformInitializer initializer) : base(initializer) { }
 
         protected override async void OnInitialized()
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("NavigationPage/HomePage");
+			if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
+			{
+				var ci = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
+				ci = new CultureInfo("es");
+				DependencyService.Get<ILocalize>().SetCurrentCultureInfo(ci);
+				AppResources.Culture = ci; // set the RESX for resource localization
+				
+
+				DependencyService.Get<ILocalize>().SetLocale(ci); // set the Thread for locale-aware methods
+			}
+
+			await NavigationService.NavigateAsync("NavigationPage/HomePage");
         }
 
-        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+		public static void CreateNewMainPage()
+		{
+			var homePage = new HomePage();
+			Current.MainPage = new NavigationPage(homePage);
+		}
+
+		protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<AddFilmPage>();

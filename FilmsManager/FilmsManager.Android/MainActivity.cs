@@ -5,6 +5,8 @@ using Android.OS;
 using Xamarin.Forms;
 using Prism;
 using Prism.Ioc;
+using FilmsManager.Droid.ResxLocalization;
+using FilmsManager.ResxLocalization;
 
 namespace FilmsManager.Droid
 {
@@ -26,6 +28,8 @@ namespace FilmsManager.Droid
 
 			Forms.Init(this, bundle);
 
+			DependencyService.Register<Localize_Android>();
+
 			LoadApplication(new App(new AndroidInitializer()));
 		}
 
@@ -45,7 +49,7 @@ namespace FilmsManager.Droid
 	{
 		public void RegisterTypes(IContainerRegistry container)
 		{
-			// Register any platform specific implementations
+			container.Register<ILocalize, Localize_Android>();
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using FilmsManager.Models;
+using FilmsManager.Resources;
 using Prism.Navigation;
 
 namespace FilmsManager.ViewModels
@@ -13,11 +14,9 @@ namespace FilmsManager.ViewModels
 			set { SetProperty(ref _movie, value); }
 		}
 
-		public FilmDetailsPageViewModel(INavigationService navigationService) : base(navigationService) { }
-
-		public virtual async void OnBackButtonPressedAsync()
+		public FilmDetailsPageViewModel(INavigationService navigationService) : base(navigationService)
 		{
-			await NavigationService.GoBackAsync();
+			Title = AppResources.FilmDetailsPageTitle;
 		}
 
 		public override void OnNavigatedTo(NavigationParameters parameters)
@@ -25,8 +24,7 @@ namespace FilmsManager.ViewModels
 			if (parameters == null)
 				return;
 
-			MovieModel movie;
-			parameters.TryGetValue("movie", out movie);
+			parameters.TryGetValue("movie", out MovieModel movie);
 			Movie = movie;
 		}
 	}

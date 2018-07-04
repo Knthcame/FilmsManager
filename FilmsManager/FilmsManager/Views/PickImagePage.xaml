@@ -2,17 +2,18 @@
 <views:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+                xmlns:Localization="clr-namespace:FilmsManager.ResxLocalization"
                 xmlns:views="clr-namespace:FilmsManager.Views"
                 xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
                 prism:ViewModelLocator.AutowireViewModel="True"
                 x:Class="FilmsManager.Views.PickImagePage"
-                Title="Pick an Image">
+                Title="{Binding Title}">
 
     <ContentPage.Content>
 
         <StackLayout>
 
-            <Button Text="Go back"
+            <Button Text="{Localization:Translate GoBackButtonText}"
                     HorizontalOptions="Start"
                     VerticalOptions="Start"
                     Command="{Binding GoBackCommand}"
@@ -27,11 +28,10 @@
                 <Image Source="Shrek.jpg"
                        Aspect="AspectFill"
                        Grid.Row="0"/>
-                
-                <Button Text="Preloaded photos"
+
+                <Button Text="{Localization:Translate PreloadedImagesText}"
                         TextColor="White"
-                        Command="{Binding PhotoModeCommand}"
-                        CommandParameter="Preloaded"
+                        Command="{Binding PreloadedPhotoCommand}"
                         Grid.Row="0"
                         HorizontalOptions="Center"
                         VerticalOptions="Center"
@@ -41,10 +41,9 @@
                        Aspect="AspectFill"
                        Grid.Row="1"/>
 
-                <Button Text="Choose from gallery"
+                <Button Text="{Localization:Translate OpenMobileGalleryText}"
                         TextColor="White"
-                        Command="{Binding PhotoModeCommand}"
-                        CommandParameter="Gallery"
+                        Command="{Binding MobileGalleryCommand}"
                         Grid.Row="1"
                         HorizontalOptions="Center"
                         VerticalOptions="Center"

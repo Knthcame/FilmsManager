@@ -2,13 +2,20 @@
 using Prism.Commands;
 using Prism.Navigation;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using FilmsManager.Resources;
+using System.Globalization;
+using Xamarin.Forms;
+using FilmsManager.ResxLocalization;
+using Prism.Ioc;
 
 namespace FilmsManager.ViewModels
 {
 	public class HomePageViewModel : BaseViewModel
 	{
 		private MovieModel _selectedMovie;
+		private LanguageModel _selectedLanguage = new LanguageModel("English", "en");
 
 		public string BackgroundImage { get; set; } = "Back6.jpg";
 
@@ -24,9 +31,15 @@ namespace FilmsManager.ViewModels
 			new GenreModel("Action"),
 			new GenreModel("Drama"),
 			new GenreModel("Humour"),
-			new GenreModel("Terror"),
 			new GenreModel("ScieneFiction"),
+			new GenreModel("Terror"),
 			new GenreModel("Super Heroes")
+		};
+
+		public ObservableCollection<LanguageModel> LanguageList { get; set; } = new ObservableCollection<LanguageModel>()
+		{
+			new LanguageModel("English", "en"),
+			new LanguageModel("Spanish", "es")
 		};
 
 		public ICommand NavigateCommand { get; set; }
@@ -35,20 +48,39 @@ namespace FilmsManager.ViewModels
 
 		public ICommand FilmDetailsCommand { get; set; }
 
+		public ICommand SelectLanguageCommand { get; set; }
+
 		public MovieModel SelectedMovie
 		{
 			get => _selectedMovie;
 			set { SetProperty(ref _selectedMovie, value); }
 		}
 
+		public LanguageModel SelectedLanguage
+		{
+			get => _selectedLanguage;
+			set { SetProperty(ref _selectedLanguage, value); }
+		}
 		public HomePageViewModel(INavigationService navigationService) : base(navigationService)
 		{
-			NavigateCommand = new DelegateCommand(OnNavigateAsync);
-			SearchCommand = new DelegateCommand(OnSearchAsync);
-			FilmDetailsCommand = new DelegateCommand(OnFilmDetailAsync);
+			Title = AppResources.HomePageTitle;
+			NavigateCommand = new DelegateCommand(async () => await OnNavigateAsync());
+			SearchCommand = new DelegateCommand(async () => await OnSearchAsync());
+			FilmDetailsCommand = new DelegateCommand(async () => await OnFilmDetailAsync());
+			SelectLanguageCommand = new DelegateCommand(OnSelectLanguage);
 		}
 
-		private async void OnFilmDetailAsync()
+		private void OnSelectLanguage()
+		{
+			if (_selectedLanguage == null)
+				return;
+			var ci = new CultureInfo(_selectedLanguage.Abreviation);
+			AppResources.Culture = ci;
+			DependencyService.Get<ILocalize>().SetCurrentCultureInfo(ci);
+			App.CreateNewMainPage();
+		}
+
+		private async Task OnFilmDetailAsync()
 		{
 			if (SelectedMovie == null)
 				return;
@@ -59,7 +91,7 @@ namespace FilmsManager.ViewModels
 			await NavigationService.NavigateAsync("FilmDetailsPage", parameters);
 		}
 
-		private async void OnSearchAsync()
+		private async Task OnSearchAsync()
 		{
 			var parameters = new NavigationParameters
 			{
@@ -69,7 +101,7 @@ namespace FilmsManager.ViewModels
 			await NavigationService.NavigateAsync("SearchFilmPage", parameters);
 		}
 
-		private async void OnNavigateAsync()
+		private async Task OnNavigateAsync()
 		{
 			var parameters = new NavigationParameters
 			{
@@ -79,7 +111,7 @@ namespace FilmsManager.ViewModels
 			await NavigationService.NavigateAsync("AddFilmPage", parameters);
 		}
 
-		public void OnAppearing()
+		public override void OnAppearing()
 		{
 			SelectedMovie = null;
 		}

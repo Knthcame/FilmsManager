@@ -39,5 +39,13 @@ namespace FilmsManager.ViewModels
 		{
 
 		}
+
+		public virtual void OnAppearing() { }
+
+		public virtual async System.Threading.Tasks.Task<bool> OnBackButtonPressedAsync()
+		{
+			await NavigationService.GoBackAsync();
+			return true;
+		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using FilmsManager.Events;
 using FilmsManager.Models;
+using FilmsManager.Resources;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Navigation;
@@ -68,10 +69,11 @@ namespace FilmsManager.ViewModels
 
 		public AddFilmPageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IPageDialogService pageDialogService) : base(navigationService)
 		{
+			Title = AppResources.AddFilmPageTitle;
 			_movieImage = _defaultMovieImage;
 			_eventAggregator = eventAggregator;
-			AddCommand = new DelegateCommand(OnAddAsync);
-			OpenGalleryCommand = new DelegateCommand(OnOpenGalleryAsync);
+			AddCommand = new DelegateCommand(async () => await OnAddAsync());
+			OpenGalleryCommand = new DelegateCommand(async () => await OnOpenGalleryAsync());
 			_eventAggregator.GetEvent<PickImageEvent>().Subscribe(OnPickImage);
 			_pageDialogService = pageDialogService;
 		}
@@ -97,21 +99,21 @@ namespace FilmsManager.ViewModels
 			MovieImage = imageModel.ImageName;
 		}
 
-		private async void OnOpenGalleryAsync()
+		private async Task OnOpenGalleryAsync()
 		{
 			await NavigationService.NavigateAsync("PickImagePage", useModalNavigation: true);
 		}
 
-		private async void OnAddAsync()
+		private async Task OnAddAsync()
 		{
 			if (MovieTitle == null | MovieGenre == null)
 			{
-				bool action = await _pageDialogService.DisplayAlertAsync("Missing entries", " Not all values have been inserted. Abort adding film?", "Yes, abort", "No,stay");
+				bool action = await _pageDialogService.DisplayAlertAsync(AppResources.AddFilmAbortTitle, AppResources.AddFilmAbortMessage, AppResources.AddFilmAbortOkButton, AppResources.AddFilmAbortCancelButton)	;
 				if (action) await NavigationService.GoBackAsync();
 			}
 			else if (MovieImage as string == _defaultMovieImage)
 			{
-				bool action = await _pageDialogService.DisplayAlertAsync("Default image", "Are you sure you want to go with the default image?", "Yes", "No, i want to choose one");
+				bool action = await _pageDialogService.DisplayAlertAsync(AppResources.AddFilmDefaultImageTitle, AppResources.AddFilmDefaultImageMessage, AppResources.AddFilmDefaultImageOkButton, AppResources.AddFilmDefaultImageCancelButton);
 				if (action)
 				{
 					MovieList.Add(new MovieModel(MovieTitle, MovieGenre, MovieImage));
@@ -126,7 +128,7 @@ namespace FilmsManager.ViewModels
 
 		}
 
-		public virtual async Task<bool> OnBackButtonPressedAsync()
+		public override async Task<bool> OnBackButtonPressedAsync()
 		{
 			bool action = await _pageDialogService.DisplayAlertAsync("Abort addition?", "Are you sure you want to cancel adding a movie?", "Yes, abort", "No, stay");
 			if (action) await NavigationService.GoBackAsync();

@@ -1,10 +1,11 @@
 ﻿using FilmsManager.Events;
 using FilmsManager.Models;
-using FilmsManager.Services.Interfaces;
+using FilmsManager.Resources;
 using Plugin.Media;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Navigation;
+using Prism.Services;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -20,13 +21,18 @@ namespace FilmsManager.ViewModels
 		private bool _buttonsVisible = true;
 
 		IEventAggregator _eventAggregator;
+
+		IPageDialogService _pageDialogService;
+
 		private PickImageModel _selectedImage;
 
 		public ICommand PickImageCommand { get; set; }
 
-		public ICommand PhotoModeCommand { get; set; }
+		public ICommand PreloadedPhotoCommand { get; set; }
 
 		public ICommand GoBackCommand { get; set; }
+
+		public ICommand MobileGalleryCommand { get; set; }
 
 		public ObservableCollection<PickImageModel> ImageList { get; set; }
 
@@ -48,39 +54,34 @@ namespace FilmsManager.ViewModels
 			set { SetProperty(ref _buttonsVisible, value); }
 		}
 
-		public PickImagePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator) : base(navigationService)
+		public PickImagePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IPageDialogService pageDialogService) : base(navigationService)
 		{
+			Title = AppResources.PickImagePageTitle;
 			_eventAggregator = eventAggregator;
-			PickImageCommand = new DelegateCommand(OnPickImageAsync);
-			PhotoModeCommand = new DelegateCommand<string>(OnPhotoMode);
-			GoBackCommand = new DelegateCommand(OnGoBack);
+			_pageDialogService = pageDialogService;
+			PickImageCommand = new DelegateCommand(async () => await OnPickImageAsync());
+			PreloadedPhotoCommand = new DelegateCommand(OnPreloadedPhoto);
+			MobileGalleryCommand = new DelegateCommand(async () => await PickGalleryPhotoAsync());
+			GoBackCommand = new DelegateCommand(async () => await OnGoBackAsync());
 			LoadImages();
 		}
 
-		private void OnGoBack()
+		private async Task OnGoBackAsync()
 		{
-			NavigationService.GoBackAsync();
+			await OnBackButtonPressedAsync();
 		}
 
-		private void OnPhotoMode(string mode)
+		private void OnPreloadedPhoto()
 		{
-			switch (mode)
-			{
-				case "Preloaded":
-					ListViewVisible = true;
-					ButtonsVisible = false;
-					break;
-
-				case "Gallery":
-					PickGalleryPhotoAsync();
-					break;
-			}
+			ListViewVisible = true;
+			ButtonsVisible = false;
 		}
 
-		private async void PickGalleryPhotoAsync()
+		private async Task PickGalleryPhotoAsync()
 		{
 			if (!CrossMedia.Current.IsPickPhotoSupported)
 				return;
+
 			var photo = await CrossMedia.Current.PickPhotoAsync();
 			PickImageModel model = new PickImageModel
 			{
@@ -94,7 +95,7 @@ namespace FilmsManager.ViewModels
 			await NavigationService.GoBackAsync();
 		}
 
-		private async void OnPickImageAsync()
+		private async Task OnPickImageAsync()
 		{
 			if (SelectedImage == null)
 				return;
@@ -130,9 +131,9 @@ namespace FilmsManager.ViewModels
 				ImageName = "LOTR.jpg"
 			}
 		};
-		public virtual async Task<bool> OnBackButtonPressedAsync()
+		public override async Task<bool> OnBackButtonPressedAsync()
 		{
-			bool action = await DependencyService.Get<INotificationHelper>().ShowDialog("Abort image selection?", "Are you sure you want to cancel selecting a picture?", "Yes, abort", "No, stay");
+			bool action = await _pageDialogService.DisplayAlertAsync(AppResources.AbortPickImageTitle, AppResources.AbortPickImageMessage, AppResources.AbortPickImageOkText, AppResources.AbortPickImageCancelText);
 			if (action) await NavigationService.GoBackAsync();
 			return action;
 		}
