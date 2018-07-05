@@ -29,22 +29,17 @@ namespace FilmsManager
 
 			if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
 			{
-				var ci = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
-				ci = new CultureInfo("es");
-				DependencyService.Get<ILocalize>().SetCurrentCultureInfo(ci);
+				var ci = DependencyService.Get<ILocalize>().GetMobileCultureInfo();
+				DependencyService.Get<ILocalize>().SetCurrentCultureInfo(ci); // set the Thread for locale-aware methods
 				AppResources.Culture = ci; // set the RESX for resource localization
-				
-
-				DependencyService.Get<ILocalize>().SetLocale(ci); // set the Thread for locale-aware methods
 			}
 
 			await NavigationService.NavigateAsync("NavigationPage/HomePage");
         }
 
-		public static void CreateNewMainPage()
+		public static void RefreshMainPage()
 		{
-			var homePage = new HomePage();
-			Current.MainPage = new NavigationPage(homePage);
+			Current.MainPage = new NavigationPage(new HomePage());
 		}
 
 		protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -55,6 +50,7 @@ namespace FilmsManager
 			containerRegistry.RegisterForNavigation<SearchFilmPage>();
 			containerRegistry.RegisterForNavigation<FilmDetailsPage>();
 			containerRegistry.RegisterForNavigation<HomePage>();
+			containerRegistry.RegisterForNavigation<LanguageSelectionPage>();
 		}
     }
 }

@@ -5,41 +5,35 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using FilmsManager.Resources;
-using System.Globalization;
-using Xamarin.Forms;
-using FilmsManager.ResxLocalization;
-using Prism.Ioc;
+using Prism.Services;
+using System.Collections.Generic;
+using Prism.Events;
+using FilmsManager.Events;
 
 namespace FilmsManager.ViewModels
 {
 	public class HomePageViewModel : BaseViewModel
 	{
 		private MovieModel _selectedMovie;
-		private LanguageModel _selectedLanguage = new LanguageModel("English", "en");
+		private LanguageModel _selectedLanguage = new LanguageModel("English", "en", "uk.png");
 
 		public string BackgroundImage { get; set; } = "Back6.jpg";
 
-		public ObservableCollection<MovieModel> MovieList { get; set; } = new ObservableCollection<MovieModel> {
-			new MovieModel("Shrek","Humour", "Shrek.jpg"),
-			new MovieModel("Shrek 2", "Humour", "Shrek2.jpg"),
-			new MovieModel("Infinity war", "Super Heroes", "infinity_war.jpg")
+		public IList<MovieModel> MovieList { get; set; } = new ObservableCollection<MovieModel> {
+			new MovieModel("Shrek",AppResources.HumourGenre, "Shrek.jpg"),
+			new MovieModel("Shrek 2", AppResources.HumourGenre, "Shrek2.jpg"),
+			new MovieModel("Infinity war", AppResources.SuperHeroesGenre, "infinity_war.jpg")
 		};
 
-		public ObservableCollection<GenreModel> GenreList { get; set; } = new ObservableCollection<GenreModel>()
+		public IList<GenreModel> GenreList { get; set; } = new ObservableCollection<GenreModel>()
 		{
-			new GenreModel("Fantasy"),
-			new GenreModel("Action"),
-			new GenreModel("Drama"),
-			new GenreModel("Humour"),
-			new GenreModel("ScieneFiction"),
-			new GenreModel("Terror"),
-			new GenreModel("Super Heroes")
-		};
-
-		public ObservableCollection<LanguageModel> LanguageList { get; set; } = new ObservableCollection<LanguageModel>()
-		{
-			new LanguageModel("English", "en"),
-			new LanguageModel("Spanish", "es")
+			new GenreModel(AppResources.FantasyGenre),
+			new GenreModel(AppResources.TerrorGenre),
+			new GenreModel(AppResources.DramaGenre),
+			new GenreModel(AppResources.HumourGenre),
+			new GenreModel(AppResources.ScienceFictionGenre),
+			new GenreModel(AppResources.TerrorGenre),
+			new GenreModel(AppResources.SuperHeroesGenre)
 		};
 
 		public ICommand NavigateCommand { get; set; }
@@ -48,7 +42,11 @@ namespace FilmsManager.ViewModels
 
 		public ICommand FilmDetailsCommand { get; set; }
 
-		public ICommand SelectLanguageCommand { get; set; }
+		public ICommand LanguageOptionsCommand { get; set; }
+
+		IPageDialogService _pageDialogService;
+
+		IEventAggregator _eventAggregator;
 
 		public MovieModel SelectedMovie
 		{
@@ -61,23 +59,27 @@ namespace FilmsManager.ViewModels
 			get => _selectedLanguage;
 			set { SetProperty(ref _selectedLanguage, value); }
 		}
-		public HomePageViewModel(INavigationService navigationService) : base(navigationService)
+
+		public HomePageViewModel(INavigationService navigationService, IPageDialogService pageDialogService, IEventAggregator eventAggregator) : base(navigationService)
 		{
+			_pageDialogService = pageDialogService;
+			_eventAggregator = eventAggregator;
+			_eventAggregator.GetEvent<SelectLanguageEvent>().Subscribe(OnSelectedLanguage);
 			Title = AppResources.HomePageTitle;
 			NavigateCommand = new DelegateCommand(async () => await OnNavigateAsync());
 			SearchCommand = new DelegateCommand(async () => await OnSearchAsync());
 			FilmDetailsCommand = new DelegateCommand(async () => await OnFilmDetailAsync());
-			SelectLanguageCommand = new DelegateCommand(OnSelectLanguage);
+			LanguageOptionsCommand = new DelegateCommand(async () => await OnLanguageOptionsAsync());
 		}
 
-		private void OnSelectLanguage()
+		private async Task OnLanguageOptionsAsync()
 		{
-			if (_selectedLanguage == null)
-				return;
-			var ci = new CultureInfo(_selectedLanguage.Abreviation);
-			AppResources.Culture = ci;
-			DependencyService.Get<ILocalize>().SetCurrentCultureInfo(ci);
-			App.CreateNewMainPage();
+			await NavigationService.NavigateAsync("LanguageSelectionPage", useModalNavigation: true);
+		}
+
+		private void OnSelectedLanguage(LanguageModel language)
+		{
+			SelectedLanguage = language;
 		}
 
 		private async Task OnFilmDetailAsync()

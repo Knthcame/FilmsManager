@@ -66,7 +66,6 @@ namespace FilmsManager.ViewModels
 			set { SetProperty(ref _movieImage, value); }
 		}
 
-
 		public AddFilmPageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IPageDialogService pageDialogService) : base(navigationService)
 		{
 			Title = AppResources.AddFilmPageTitle;
@@ -108,7 +107,7 @@ namespace FilmsManager.ViewModels
 		{
 			if (MovieTitle == null | MovieGenre == null)
 			{
-				bool action = await _pageDialogService.DisplayAlertAsync(AppResources.AddFilmAbortTitle, AppResources.AddFilmAbortMessage, AppResources.AddFilmAbortOkButton, AppResources.AddFilmAbortCancelButton)	;
+				bool action = await _pageDialogService.DisplayAlertAsync(AppResources.MissingEntriesTitle, AppResources.MissingEntriesMessage, AppResources.MissingEntriesOkButton, AppResources.MissingEntriesCancelButton)	;
 				if (action) await NavigationService.GoBackAsync();
 			}
 			else if (MovieImage as string == _defaultMovieImage)
@@ -130,7 +129,7 @@ namespace FilmsManager.ViewModels
 
 		public override async Task<bool> OnBackButtonPressedAsync()
 		{
-			bool action = await _pageDialogService.DisplayAlertAsync("Abort addition?", "Are you sure you want to cancel adding a movie?", "Yes, abort", "No, stay");
+			bool action = await _pageDialogService.DisplayAlertAsync(AppResources.AddFilmAbortTitle, AppResources.AddFilmAbortMessage, AppResources.AddFilmAbortOkButton, AppResources.AddFilmAbortCancelButton);
 			if (action) await NavigationService.GoBackAsync();
 			return action;
 		}

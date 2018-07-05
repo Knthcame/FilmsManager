@@ -85,7 +85,7 @@
 
                 <ListView.Behaviors>
                     <b:EventToCommandBehavior EventName="ItemSelected" 
-                                                Command="{Binding FilmDetailsCommand}"/>
+                                              Command="{Binding FilmDetailsCommand}"/>
                 </ListView.Behaviors>
 
                 <ListView.ItemTemplate>
@@ -155,8 +155,7 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <Picker BackgroundColor="Black"
-                    TextColor="White"
+            <!--<Picker BackgroundColor="Transparent"
                     ItemsSource="{Binding LanguageList}"
                     ItemDisplayBinding="{Binding Language}"
                     SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}"
@@ -169,7 +168,7 @@
                                               Command="{Binding SelectLanguageCommand}"/>
                 </Picker.Behaviors>
                 
-            </Picker>
+            </Picker>-->
 
             <Button VerticalOptions="End"
                     HorizontalOptions="Fill"
@@ -186,9 +185,17 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Order="Primary" 
+                     Priority="0"
                      Icon="search.png"
                      Command="{Binding SearchCommand}"
                      CommandParameter="{Binding .}">
+        </ToolbarItem>
+
+        <ToolbarItem Icon="{Binding SelectedLanguage.Flag}"
+                     Order="Primary"
+                     Priority="1"
+                     Command="{Binding LanguageOptionsCommand}">
+            
         </ToolbarItem>
     </ContentPage.ToolbarItems>
 </views:BasePage>

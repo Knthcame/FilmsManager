@@ -129,6 +129,9 @@
   <data name="AbortPickImageTitle" xml:space="preserve">
     <value>Cancelar selección de imagen</value>
   </data>
+  <data name="ActionGenre" xml:space="preserve">
+    <value>Acción</value>
+  </data>
   <data name="AddFilmAbortCancelButton" xml:space="preserve">
     <value>No, seguir añadiendo</value>
   </data>
@@ -162,6 +165,12 @@
   <data name="AddFilmPageTitle" xml:space="preserve">
     <value>Añadir película</value>
   </data>
+  <data name="DramaGenre" xml:space="preserve">
+    <value>Drama</value>
+  </data>
+  <data name="FantasyGenre" xml:space="preserve">
+    <value>Fantasia</value>
+  </data>
   <data name="FilmDetailsPageTitle" xml:space="preserve">
     <value>Detalles de la película</value>
   </data>
@@ -177,8 +186,14 @@
   <data name="HomePageTitle" xml:space="preserve">
     <value>Gestor de películas</value>
   </data>
+  <data name="HumourGenre" xml:space="preserve">
+    <value>Humor</value>
+  </data>
   <data name="ImageColumn" xml:space="preserve">
     <value>Imagen</value>
+  </data>
+  <data name="LanguageSelectionPageTitle" xml:space="preserve">
+    <value>Selección de idioma</value>
   </data>
   <data name="MissingEntriesCancelButton" xml:space="preserve">
     <value>No, seguir añadiendo</value>
@@ -204,6 +219,9 @@
   <data name="PreloadedImagesText" xml:space="preserve">
     <value>Imagenes precargadas</value>
   </data>
+  <data name="ScienceFictionGenre" xml:space="preserve">
+    <value>Ciencia ficción</value>
+  </data>
   <data name="SearchFilmPagePickerPlaceholder" xml:space="preserve">
     <value>Selecciona el género de película que filtrar</value>
   </data>
@@ -212,6 +230,12 @@
   </data>
   <data name="SearchFilmPageTitle" xml:space="preserve">
     <value>Busca una película</value>
+  </data>
+  <data name="SuperHeroesGenre" xml:space="preserve">
+    <value>Super Héroes</value>
+  </data>
+  <data name="TerrorGenre" xml:space="preserve">
+    <value>Miedo</value>
   </data>
   <data name="TitleColumn" xml:space="preserve">
     <value>Título</value>

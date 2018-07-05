@@ -97,6 +97,15 @@ namespace FilmsManager.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Action.
+        /// </summary>
+        internal static string ActionGenre {
+            get {
+                return ResourceManager.GetString("ActionGenre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No, stay.
         /// </summary>
         internal static string AddFilmAbortCancelButton {
@@ -196,6 +205,24 @@ namespace FilmsManager.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Drama.
+        /// </summary>
+        internal static string DramaGenre {
+            get {
+                return ResourceManager.GetString("DramaGenre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fantasy.
+        /// </summary>
+        internal static string FantasyGenre {
+            get {
+                return ResourceManager.GetString("FantasyGenre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Film details.
         /// </summary>
         internal static string FilmDetailsPageTitle {
@@ -241,11 +268,29 @@ namespace FilmsManager.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Humour.
+        /// </summary>
+        internal static string HumourGenre {
+            get {
+                return ResourceManager.GetString("HumourGenre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Image.
         /// </summary>
         internal static string ImageColumn {
             get {
                 return ResourceManager.GetString("ImageColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language selection.
+        /// </summary>
+        internal static string LanguageSelectionPageTitle {
+            get {
+                return ResourceManager.GetString("LanguageSelectionPageTitle", resourceCulture);
             }
         }
         
@@ -322,6 +367,15 @@ namespace FilmsManager.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ScienceFiction.
+        /// </summary>
+        internal static string ScienceFictionGenre {
+            get {
+                return ResourceManager.GetString("ScienceFictionGenre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select movie genre to filter by.
         /// </summary>
         internal static string SearchFilmPagePickerPlaceholder {
@@ -345,6 +399,24 @@ namespace FilmsManager.Resources {
         internal static string SearchFilmPageTitle {
             get {
                 return ResourceManager.GetString("SearchFilmPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super heroes.
+        /// </summary>
+        internal static string SuperHeroesGenre {
+            get {
+                return ResourceManager.GetString("SuperHeroesGenre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terror.
+        /// </summary>
+        internal static string TerrorGenre {
+            get {
+                return ResourceManager.GetString("TerrorGenre", resourceCulture);
             }
         }
         

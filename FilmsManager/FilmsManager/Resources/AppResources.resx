@@ -133,6 +133,9 @@
     <value>Abort image selection?</value>
     <comment>Title for the dialog message when pressing the back button in PIckImagePage</comment>
   </data>
+  <data name="ActionGenre" xml:space="preserve">
+    <value>Action</value>
+  </data>
   <data name="AddFilmAbortCancelButton" xml:space="preserve">
     <value>No, stay</value>
   </data>
@@ -166,6 +169,12 @@
   <data name="AddFilmPageTitle" xml:space="preserve">
     <value>Add a film</value>
   </data>
+  <data name="DramaGenre" xml:space="preserve">
+    <value>Drama</value>
+  </data>
+  <data name="FantasyGenre" xml:space="preserve">
+    <value>Fantasy</value>
+  </data>
   <data name="FilmDetailsPageTitle" xml:space="preserve">
     <value>Film details</value>
   </data>
@@ -182,9 +191,15 @@
   <data name="HomePageTitle" xml:space="preserve">
     <value>Films Manager</value>
   </data>
+  <data name="HumourGenre" xml:space="preserve">
+    <value>Humour</value>
+  </data>
   <data name="ImageColumn" xml:space="preserve">
     <value>Image</value>
     <comment>Header for the image column of MovieList</comment>
+  </data>
+  <data name="LanguageSelectionPageTitle" xml:space="preserve">
+    <value>Language selection</value>
   </data>
   <data name="MissingEntriesCancelButton" xml:space="preserve">
     <value>No, stay</value>
@@ -211,6 +226,9 @@
   <data name="PreloadedImagesText" xml:space="preserve">
     <value>Preloaded images</value>
   </data>
+  <data name="ScienceFictionGenre" xml:space="preserve">
+    <value>ScienceFiction</value>
+  </data>
   <data name="SearchFilmPagePickerPlaceholder" xml:space="preserve">
     <value>Select movie genre to filter by</value>
   </data>
@@ -219,6 +237,12 @@
   </data>
   <data name="SearchFilmPageTitle" xml:space="preserve">
     <value>Search film</value>
+  </data>
+  <data name="SuperHeroesGenre" xml:space="preserve">
+    <value>Super heroes</value>
+  </data>
+  <data name="TerrorGenre" xml:space="preserve">
+    <value>Terror</value>
   </data>
   <data name="TitleColumn" xml:space="preserve">
     <value>Title</value>

@@ -11,12 +11,25 @@ namespace FilmsManager.iOS.ResxLocalization
 {
 	public class Localize_iOS : ILocalize
 	{
+		private CultureInfo _cultureInfo = new CultureInfo("en");
+		
+		public void SetCurrentCultureInfo(CultureInfo ci)
+		{
+			_cultureInfo = ci;
+			SetLocale(ci);
+		}
+
+		public CultureInfo GetCurrentCultureInfo()
+		{
+			return _cultureInfo;
+		}
+
 		public void SetLocale(CultureInfo ci)
 		{
 			Thread.CurrentThread.CurrentCulture = ci;
 			Thread.CurrentThread.CurrentUICulture = ci;
 		}
-		public CultureInfo GetCurrentCultureInfo()
+		public CultureInfo GetMobileCultureInfo()
 		{
 			var netLanguage = "en";
 			if (NSLocale.PreferredLanguages.Length > 0)
