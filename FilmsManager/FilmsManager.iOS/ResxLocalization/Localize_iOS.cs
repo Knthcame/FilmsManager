@@ -11,8 +11,13 @@ namespace FilmsManager.iOS.ResxLocalization
 {
 	public class Localize_iOS : ILocalize
 	{
-		private CultureInfo _cultureInfo = new CultureInfo("en");
+		private CultureInfo _cultureInfo;
 		
+		public Localize_iOS()
+		{
+			_cultureInfo = GetMobileCultureInfo();
+		}
+
 		public void SetCurrentCultureInfo(CultureInfo ci)
 		{
 			_cultureInfo = ci;

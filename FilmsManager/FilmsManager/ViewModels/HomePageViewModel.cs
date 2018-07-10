@@ -15,7 +15,6 @@ namespace FilmsManager.ViewModels
 	public class HomePageViewModel : BaseViewModel
 	{
 		private MovieModel _selectedMovie;
-		private LanguageModel _selectedLanguage = new LanguageModel("English", "en", "uk.png");
 
 		public string BackgroundImage { get; set; } = "Back6.jpg";
 
@@ -44,28 +43,14 @@ namespace FilmsManager.ViewModels
 
 		public ICommand LanguageOptionsCommand { get; set; }
 
-		private readonly IPageDialogService _pageDialogService;
-
-		private readonly IEventAggregator _eventAggregator;
-
 		public MovieModel SelectedMovie
 		{
 			get => _selectedMovie;
 			set { SetProperty(ref _selectedMovie, value); }
 		}
 
-		public LanguageModel SelectedLanguage
+		public HomePageViewModel(INavigationService navigationService) : base(navigationService)
 		{
-			get => _selectedLanguage;
-			set { SetProperty(ref _selectedLanguage, value); }
-		}
-
-		public HomePageViewModel(INavigationService navigationService, IPageDialogService pageDialogService, IEventAggregator eventAggregator) : base(navigationService)
-		{
-			_pageDialogService = pageDialogService;
-			_eventAggregator = eventAggregator;
-			_eventAggregator.GetEvent<SelectLanguageEvent>().Subscribe(OnSelectedLanguage);
-			Title = AppResources.HomePageTitle;
 			NavigateCommand = new DelegateCommand(async () => await OnNavigateAsync());
 			SearchCommand = new DelegateCommand(async () => await OnSearchAsync());
 			FilmDetailsCommand = new DelegateCommand(async () => await OnFilmDetailAsync());
@@ -75,11 +60,6 @@ namespace FilmsManager.ViewModels
 		private async Task OnLanguageOptionsAsync()
 		{
 			await NavigationService.NavigateAsync("LanguageSelectionPage", useModalNavigation: true);
-		}
-
-		private void OnSelectedLanguage(LanguageModel language)
-		{
-			SelectedLanguage = language;
 		}
 
 		private async Task OnFilmDetailAsync()

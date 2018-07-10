@@ -11,7 +11,12 @@ namespace FilmsManager.Droid.ResxLocalization
 {
 	public class Localize_Android : ILocalize
 	{
-		private CultureInfo _cultureInfo = new CultureInfo("en");
+		private CultureInfo _cultureInfo;
+
+		public Localize_Android()
+		{
+			_cultureInfo = GetMobileCultureInfo();
+		}
 
 		public void SetCurrentCultureInfo(CultureInfo ci)
 		{

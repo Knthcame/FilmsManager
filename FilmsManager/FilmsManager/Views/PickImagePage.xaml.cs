@@ -3,7 +3,6 @@ using Xamarin.Forms.Xaml;
 
 namespace FilmsManager.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class PickImagePage : BasePage
 	{
 		public PickImagePage () : base()

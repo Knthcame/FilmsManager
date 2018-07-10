@@ -178,6 +178,9 @@
   <data name="FilmDetailsPageTitle" xml:space="preserve">
     <value>Film details</value>
   </data>
+  <data name="Flag" xml:space="preserve">
+    <value>uk.png</value>
+  </data>
   <data name="GenreColumn" xml:space="preserve">
     <value>Genre</value>
     <comment>Header for the genre column of MovieList</comment>

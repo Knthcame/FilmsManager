@@ -12,7 +12,8 @@
     <ContentPage.Content>
         <StackLayout>
             <ListView ItemsSource="{Binding LanguageList}"
-                      SelectedItem="{Binding SelectedLanguage}">
+                      SelectedItem="{Binding SelectedLanguage}"
+                      CachingStrategy="RecycleElement">
 
                 <ListView.Behaviors>
                     <b:EventToCommandBehavior EventName="ItemSelected"

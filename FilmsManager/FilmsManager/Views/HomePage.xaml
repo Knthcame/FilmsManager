@@ -81,7 +81,8 @@
                       Grid.Column="0"
                       Grid.ColumnSpan="3"
                       Grid.Row="1"
-                      SelectedItem="{Binding SelectedMovie, Mode=TwoWay}">
+                      SelectedItem="{Binding SelectedMovie, Mode=TwoWay}"
+                      CachingStrategy="RecycleElement">
 
                 <ListView.Behaviors>
                     <b:EventToCommandBehavior EventName="ItemSelected" 
@@ -191,7 +192,7 @@
                      CommandParameter="{Binding .}">
         </ToolbarItem>
 
-        <ToolbarItem Icon="{Binding SelectedLanguage.Flag}"
+        <ToolbarItem Icon="{Localization:Translate Flag}"
                      Order="Primary"
                      Priority="1"
                      Command="{Binding LanguageOptionsCommand}">
