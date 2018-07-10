@@ -195,6 +195,9 @@
   <data name="ImageColumn" xml:space="preserve">
     <value>Imagen</value>
   </data>
+  <data name="LanguageAbreviation" xml:space="preserve">
+    <value>ES</value>
+  </data>
   <data name="LanguageSelectionPageTitle" xml:space="preserve">
     <value>Selección de idioma</value>
   </data>

@@ -295,6 +295,15 @@ namespace FilmsManager.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to EN.
+        /// </summary>
+        internal static string LanguageAbreviation {
+            get {
+                return ResourceManager.GetString("LanguageAbreviation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language selection.
         /// </summary>
         internal static string LanguageSelectionPageTitle {

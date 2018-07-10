@@ -5,10 +5,8 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using FilmsManager.Resources;
-using Prism.Services;
 using System.Collections.Generic;
-using Prism.Events;
-using FilmsManager.Events;
+using Xamarin.Forms;
 
 namespace FilmsManager.ViewModels
 {
@@ -49,8 +47,14 @@ namespace FilmsManager.ViewModels
 			set { SetProperty(ref _selectedMovie, value); }
 		}
 
+		public string Flag { get; set; } = null;
+
 		public HomePageViewModel(INavigationService navigationService) : base(navigationService)
 		{
+			if(Device.RuntimePlatform == Device.Android)
+			{
+				Flag = AppResources.Flag;
+			}
 			NavigateCommand = new DelegateCommand(async () => await OnNavigateAsync());
 			SearchCommand = new DelegateCommand(async () => await OnSearchAsync());
 			FilmDetailsCommand = new DelegateCommand(async () => await OnFilmDetailAsync());
