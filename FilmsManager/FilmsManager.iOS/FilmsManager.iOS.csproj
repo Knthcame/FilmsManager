@@ -101,9 +101,6 @@
       <SubType>Designer</SubType>
     </None>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <ITunesArtwork Include="iTunesArtwork@1x.png" />
-    <ITunesArtwork Include="iTunesArtwork@2x.png" />
-    <ITunesArtwork Include="iTunesArtwork@3x.png" />
     <ImageAsset Include="Assets.xcassets\AppIcons.appiconset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
@@ -417,6 +414,24 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Check3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\spain.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\spain%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\spain%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\uk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\uk%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\uk%403x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

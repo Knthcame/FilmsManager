@@ -34,9 +34,9 @@ namespace FilmsManager.ViewModels
 
 		public IList<MovieModel> MovieList { get; set; }
 
-		IPageDialogService _pageDialogService;
+		private readonly IPageDialogService _pageDialogService;
 
-		IEventAggregator _eventAggregator;
+		private readonly IEventAggregator _eventAggregator;
 
 		public GenreModel SelectedGenre
 		{
@@ -82,15 +82,19 @@ namespace FilmsManager.ViewModels
 			if (parameters == null || parameters.Count==0)
 				return;
 
-			ObservableCollection<MovieModel> movieList;
-			parameters.TryGetValue("movieList", out movieList);
-			if ( movieList != null )
-				MovieList = movieList;
+			MovieList = GetNavigationParameter(parameters, "movieList", MovieList) as ObservableCollection<MovieModel>;
 
-			ObservableCollection<GenreModel> genreList;
-			parameters.TryGetValue("genreList", out genreList);
-			if ( genreList != null )
-				GenreList = genreList;
+			GenreList = GetNavigationParameter(parameters, "genreList", GenreList) as ObservableCollection<GenreModel>;
+
+			//ObservableCollection<MovieModel> movieList;
+			//parameters.TryGetValue("movieList", out movieList);
+			//if ( movieList != null )
+			//	MovieList = movieList;
+
+			//ObservableCollection<GenreModel> genreList;
+			//parameters.TryGetValue("genreList", out genreList);
+			//if (genreList != null)
+			//	GenreList = genreList;
 		}
 
 		private void OnPickImage(PickImageModel imageModel)

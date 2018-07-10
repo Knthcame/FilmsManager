@@ -20,9 +20,9 @@ namespace FilmsManager.ViewModels
 		private bool _listViewVisible = false;
 		private bool _buttonsVisible = true;
 
-		IEventAggregator _eventAggregator;
+		private readonly IEventAggregator _eventAggregator;
 
-		IPageDialogService _pageDialogService;
+		private readonly IPageDialogService _pageDialogService;
 
 		private PickImageModel _selectedImage;
 

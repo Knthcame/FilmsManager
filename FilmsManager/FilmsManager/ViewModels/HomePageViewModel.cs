@@ -44,9 +44,9 @@ namespace FilmsManager.ViewModels
 
 		public ICommand LanguageOptionsCommand { get; set; }
 
-		IPageDialogService _pageDialogService;
+		private readonly IPageDialogService _pageDialogService;
 
-		IEventAggregator _eventAggregator;
+		private readonly IEventAggregator _eventAggregator;
 
 		public MovieModel SelectedMovie
 		{
