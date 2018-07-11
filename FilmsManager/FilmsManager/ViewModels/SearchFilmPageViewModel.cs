@@ -112,11 +112,12 @@ namespace FilmsManager.ViewModels
 			FilteredMovieList = new ObservableCollection<MovieModel>(movieList);
 
 			IList<GenreModel> genreList;
-			parameters.TryGetValue("genreList", out genreList);
-			if ( genreList != null )
+			if(parameters.TryGetValue("genreList", out genreList))
 			{
-				genreList.Insert(0, new GenreModel(GenreKeys.AllGenres));
-				GenreList = new ObservableCollection<GenreModel>(genreList);
+				GenreModel[] genres = new GenreModel[genreList.Count];
+				genreList.CopyTo(genres, 0);
+				GenreList = new ObservableCollection<GenreModel>(genres);
+				GenreList.Insert(0, new GenreModel(GenreKeys.AllGenres));
 			}
 			
 		}
