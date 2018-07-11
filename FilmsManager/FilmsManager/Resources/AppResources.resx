@@ -201,9 +201,6 @@
     <value>Image</value>
     <comment>Header for the image column of MovieList</comment>
   </data>
-  <data name="LanguageAbreviation" xml:space="preserve">
-    <value>EN</value>
-  </data>
   <data name="LanguageSelectionPageTitle" xml:space="preserve">
     <value>Language selection</value>
   </data>

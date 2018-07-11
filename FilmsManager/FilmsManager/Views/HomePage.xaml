@@ -192,8 +192,7 @@
                      CommandParameter="{Binding .}">
         </ToolbarItem>
 
-        <ToolbarItem Icon="{Binding Flag}"
-                     Text="{Localization:Translate LanguageAbreviation}"
+        <ToolbarItem Icon="{Localization:Translate Flag}"
                      Order="Primary"
                      Priority="1"
                      Command="{Binding LanguageOptionsCommand}">
