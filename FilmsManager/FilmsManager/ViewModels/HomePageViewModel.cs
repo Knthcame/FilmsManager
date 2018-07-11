@@ -9,6 +9,8 @@ using Prism.Services;
 using System.Collections.Generic;
 using Prism.Events;
 using FilmsManager.Events;
+using Xamarin.Forms;
+using FilmsManager.Constants;
 
 namespace FilmsManager.ViewModels
 {
@@ -18,22 +20,12 @@ namespace FilmsManager.ViewModels
 
 		public string BackgroundImage { get; set; } = "Back6.jpg";
 
-		public IList<MovieModel> MovieList { get; set; } = new ObservableCollection<MovieModel> {
-			new MovieModel("Shrek",AppResources.HumourGenre, "Shrek.jpg"),
-			new MovieModel("Shrek 2", AppResources.HumourGenre, "Shrek2.jpg"),
-			new MovieModel("Infinity war", AppResources.SuperHeroesGenre, "infinity_war.jpg")
-		};
-
-		public IList<GenreModel> GenreList { get; set; } = new ObservableCollection<GenreModel>()
+		public IList<MovieModel> MovieList
 		{
-			new GenreModel(AppResources.FantasyGenre),
-			new GenreModel(AppResources.TerrorGenre),
-			new GenreModel(AppResources.DramaGenre),
-			new GenreModel(AppResources.HumourGenre),
-			new GenreModel(AppResources.ScienceFictionGenre),
-			new GenreModel(AppResources.TerrorGenre),
-			new GenreModel(AppResources.SuperHeroesGenre)
-		};
+			get => _movieList;
+			set { SetProperty(ref _movieList, value); }
+		}
+		public IList<GenreModel> GenreList { get; set; }
 
 		public ICommand NavigateCommand { get; set; }
 
@@ -43,18 +35,119 @@ namespace FilmsManager.ViewModels
 
 		public ICommand LanguageOptionsCommand { get; set; }
 
+		private readonly IEventAggregator _eventAggregator;
+
 		public MovieModel SelectedMovie
 		{
 			get => _selectedMovie;
 			set { SetProperty(ref _selectedMovie, value); }
 		}
 
-		public HomePageViewModel(INavigationService navigationService) : base(navigationService)
+		private string _languageAbreviation;
+
+		public string LanguageAbreviation
 		{
+			get { return _languageAbreviation; }
+			set { SetProperty(ref _languageAbreviation, value); }
+		}
+
+		private FileImageSource _flag;
+
+		public FileImageSource Flag
+		{
+			get { return _flag; }
+			set { SetProperty(ref _flag, value); }
+		}
+
+		private string _addText;
+		public string AddText
+		{
+			get { return _addText; }
+			set { SetProperty(ref _addText, value); }
+		}
+
+		private string _imageColumn;
+
+		public string ImageColumn
+		{
+			get { return _imageColumn; }
+			set { SetProperty(ref _imageColumn, value); }
+		}
+
+		private string _titleColumn;
+
+		public string TitleColumn
+		{
+			get { return _titleColumn; }
+			set { SetProperty(ref _titleColumn, value); }
+		}
+
+		private string _genreColumn;
+
+		private IList<MovieModel> _movieList;
+
+		public string GenreColumn
+		{
+			get { return _genreColumn; }
+			set { SetProperty(ref _genreColumn, value); }
+		}
+
+		public HomePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator) : base(navigationService)
+		{
+			_eventAggregator = eventAggregator;
+			_eventAggregator.GetEvent<SelectLanguageEvent>().Subscribe(LoadResources);
 			NavigateCommand = new DelegateCommand(async () => await OnNavigateAsync());
 			SearchCommand = new DelegateCommand(async () => await OnSearchAsync());
 			FilmDetailsCommand = new DelegateCommand(async () => await OnFilmDetailAsync());
 			LanguageOptionsCommand = new DelegateCommand(async () => await OnLanguageOptionsAsync());
+			MovieList = new ObservableCollection<MovieModel> {
+				new MovieModel("Shrek", new GenreModel(GenreKeys.HumourGenre), "Shrek.jpg"),
+				new MovieModel("Shrek 2", new GenreModel(GenreKeys.HumourGenre), "Shrek2.jpg"),
+				new MovieModel("Infinity war", new GenreModel(GenreKeys.SuperHeroesGenre), "infinity_war.jpg")
+			};
+			LoadResources();
+		}
+
+		public void LoadResources()
+		{
+			Title = AppResources.HomePageTitle;
+			ImageColumn = AppResources.ImageColumn;
+			GenreColumn = AppResources.GenreColumn;
+			TitleColumn = AppResources.TitleColumn;
+			AddText = AppResources.HomePageAddButton;
+			switch (Device.RuntimePlatform)
+			{
+				case Device.Android:
+					Flag = ImageSource.FromFile(AppResources.Flag) as FileImageSource;
+					break;
+				case Device.iOS:
+					LanguageAbreviation = AppResources.LanguageAbreviation;
+					break;
+			}
+			GenreList = GenerateGenreList();
+			RefreshMovieList();
+		}
+
+		public ObservableCollection<GenreModel> GenerateGenreList()
+		{
+			return new ObservableCollection<GenreModel>()
+			{
+				new GenreModel(GenreKeys.FantasyGenre),
+				new GenreModel(GenreKeys.TerrorGenre),
+				new GenreModel(GenreKeys.DramaGenre),
+				new GenreModel(GenreKeys.HumourGenre),
+				new GenreModel(GenreKeys.ScienceFictionGenre),
+				new GenreModel(GenreKeys.ActionGenre),
+				new GenreModel(GenreKeys.SuperHeroesGenre)
+			};
+		}
+
+		public void RefreshMovieList()
+		{
+			foreach (MovieModel movie in MovieList)
+			{
+				movie.Genre = new GenreModel(movie.Genre.ID);
+			}
 		}
 
 		private async Task OnLanguageOptionsAsync()

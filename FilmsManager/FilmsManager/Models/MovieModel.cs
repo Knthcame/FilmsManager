@@ -5,10 +5,10 @@ namespace FilmsManager.Models
     public class MovieModel : BaseModel
     {
         private string _title;
-        private string _genre;
+        private GenreModel _genre;
         private object _image;
 
-        public MovieModel(string title, string genre, object image)
+        public MovieModel(string title, GenreModel genre, object image)
         {
             _title = title;
             _genre = genre;
@@ -21,7 +21,7 @@ namespace FilmsManager.Models
             set { SetProperty(ref _title, value); }
         }
 
-        public string Genre
+        public GenreModel Genre
         {
             get => _genre;
             set { SetProperty(ref _genre, value); }

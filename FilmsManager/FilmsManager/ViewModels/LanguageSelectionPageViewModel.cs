@@ -2,10 +2,12 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Threading.Tasks;
+using FilmsManager.Events;
 using FilmsManager.Models;
 using FilmsManager.Resources;
 using FilmsManager.ResxLocalization;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Navigation;
 
 namespace FilmsManager.ViewModels
@@ -27,8 +29,11 @@ namespace FilmsManager.ViewModels
 			set { SetProperty( ref _selectedLanguage, value); }
 		}
 
-		public LanguageSelectionPageViewModel(INavigationService navigationService) : base(navigationService)
+		private readonly IEventAggregator _eventAggregator;
+
+		public LanguageSelectionPageViewModel(INavigationService navigationService, IEventAggregator eventAggregator) : base(navigationService)
 		{
+			_eventAggregator = eventAggregator;
 			SelectLanguageCommand = new DelegateCommand(async() => await OnSelectLanguageAsync());
 		}
 
@@ -40,7 +45,7 @@ namespace FilmsManager.ViewModels
 			var ci = new CultureInfo(SelectedLanguage.Abreviation);
 			AppResources.Culture = ci;
 			Xamarin.Forms.DependencyService.Get<ILocalize>().SetCurrentCultureInfo(ci);
-			App.RefreshMainPage();
+			_eventAggregator.GetEvent<SelectLanguageEvent>().Publish();
 			await NavigationService.GoBackAsync();
 		}
 	}

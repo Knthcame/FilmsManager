@@ -1,4 +1,5 @@
-﻿using FilmsManager.Models;
+﻿using FilmsManager.Constants;
+using FilmsManager.Models;
 using FilmsManager.Resources;
 using Prism.Commands;
 using Prism.Navigation;
@@ -114,7 +115,7 @@ namespace FilmsManager.ViewModels
 			parameters.TryGetValue("genreList", out genreList);
 			if ( genreList != null )
 			{
-				genreList.Insert(0, new GenreModel("All"));
+				genreList.Insert(0, new GenreModel(GenreKeys.AllGenres));
 				GenreList = new ObservableCollection<GenreModel>(genreList);
 			}
 			

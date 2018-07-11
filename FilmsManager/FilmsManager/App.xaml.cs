@@ -37,11 +37,6 @@ namespace FilmsManager
 			await NavigationService.NavigateAsync("NavigationPage/HomePage");
         }
 
-		public static void RefreshMainPage()
-		{
-			Current.MainPage = new NavigationPage(new HomePage());
-		}
-
 		protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();

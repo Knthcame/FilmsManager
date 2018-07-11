@@ -11,7 +11,7 @@ namespace FilmsManager.ResxLocalization
 	[ContentProperty("Text")]
 	public class TranslateExtension : IMarkupExtension
 	{
-		private static CultureInfo _ci { get; set; }
+		public static CultureInfo CultureInfo { get; set; }
 		public static string ResourceId;
 
 		static readonly Lazy<ResourceManager> ResMgr = new Lazy<ResourceManager>(
@@ -21,7 +21,7 @@ namespace FilmsManager.ResxLocalization
 
 		public TranslateExtension()
 		{
-			_ci = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
+			CultureInfo = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
 			ResourceId = $"{typeof(AppResources).GetTypeInfo().Namespace}.{nameof(AppResources)}";
 		}
 
@@ -30,12 +30,12 @@ namespace FilmsManager.ResxLocalization
 			if (Text == null)
 				return string.Empty;
 
-			var translation = ResMgr.Value.GetString(Text, _ci);
+			var translation = ResMgr.Value.GetString(Text, CultureInfo);
 			if (translation == null)
 			{
 			#if DEBUG
 				throw new ArgumentException(
-					string.Format("Key '{0}' was not found in resources '{1}' for culture '{2}'.", Text, ResourceId, _ci.Name),
+					string.Format("Key '{0}' was not found in resources '{1}' for culture '{2}'.", Text, ResourceId, CultureInfo.Name),
 					"Text");
 			#else
                 translation = Text; // HACK: returns the key, which GETS DISPLAYED TO THE USER

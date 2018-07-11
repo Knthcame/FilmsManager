@@ -48,7 +48,7 @@
                    BackgroundColor="Transparent"
                    VerticalOptions="Fill">
 
-                <Label Text="{Binding Movie.Genre}"
+                <Label Text="{Binding Movie.Genre.Name}"
                        HorizontalOptions="Center"
                        VerticalOptions="Center"
                        TextColor="White"

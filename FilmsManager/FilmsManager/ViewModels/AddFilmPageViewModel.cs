@@ -17,7 +17,6 @@ namespace FilmsManager.ViewModels
 		private IList<GenreModel> _genreList;
 		private string _defaultMovieImage = "movie.jpg";
 		private object _movieImage;
-		private string _movieGenre;
 		private string _movieTitle;
 		private GenreModel _selectedGenre;
 
@@ -38,15 +37,7 @@ namespace FilmsManager.ViewModels
 
 		private readonly IEventAggregator _eventAggregator;
 
-		public GenreModel SelectedGenre
-		{
-			get => _selectedGenre;
-			set
-			{
-				_selectedGenre = value;
-				_movieGenre = _selectedGenre?.Name;
-			}
-		}
+		
 
 		public string MovieTitle
 		{
@@ -54,10 +45,10 @@ namespace FilmsManager.ViewModels
 			set { SetProperty(ref _movieTitle, value); }
 		}
 
-		public string MovieGenre
+		public GenreModel SelectedGenre
 		{
-			get => _movieGenre;
-			set { SetProperty(ref _movieGenre, value); }
+			get => _selectedGenre;
+			set { SetProperty(ref _selectedGenre, value); }
 		}
 
 		public object MovieImage
@@ -109,7 +100,7 @@ namespace FilmsManager.ViewModels
 
 		private async Task OnAddAsync()
 		{
-			if (MovieTitle == null | MovieGenre == null)
+			if (MovieTitle == null | SelectedGenre == null)
 			{
 				bool action = await _pageDialogService.DisplayAlertAsync(AppResources.MissingEntriesTitle, AppResources.MissingEntriesMessage, AppResources.MissingEntriesOkButton, AppResources.MissingEntriesCancelButton)	;
 				if (action) await NavigationService.GoBackAsync();
@@ -119,13 +110,13 @@ namespace FilmsManager.ViewModels
 				bool action = await _pageDialogService.DisplayAlertAsync(AppResources.AddFilmDefaultImageTitle, AppResources.AddFilmDefaultImageMessage, AppResources.AddFilmDefaultImageOkButton, AppResources.AddFilmDefaultImageCancelButton);
 				if (action)
 				{
-					MovieList.Add(new MovieModel(MovieTitle, MovieGenre, MovieImage));
+					MovieList.Add(new MovieModel(MovieTitle, SelectedGenre, MovieImage));
 					await NavigationService.GoBackAsync();
 				}
 			}
 			else
 			{
-				MovieList.Add(new MovieModel(MovieTitle, MovieGenre, MovieImage));
+				MovieList.Add(new MovieModel(MovieTitle, SelectedGenre, MovieImage));
 				await NavigationService.GoBackAsync();
 			}
 

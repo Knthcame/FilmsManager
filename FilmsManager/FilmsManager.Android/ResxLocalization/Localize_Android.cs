@@ -21,6 +21,7 @@ namespace FilmsManager.Droid.ResxLocalization
 		public void SetCurrentCultureInfo(CultureInfo ci)
 		{
 			_cultureInfo = ci;
+			TranslateExtension.CultureInfo = ci;
 			SetLocale(ci);
 		}
 
@@ -82,7 +83,7 @@ namespace FilmsManager.Droid.ResxLocalization
 					// add more application-specific cases here (if required)
 					// ONLY use cultures that have been tested and known to work
 			}
-			return netLanguage;
+			return new PlatformCulture(netLanguage).ToString();
 		}
 		string ToDotnetFallbackLanguage(PlatformCulture platCulture)
 		{

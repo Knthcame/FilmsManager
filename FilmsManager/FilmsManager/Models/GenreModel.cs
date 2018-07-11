@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FilmsManager.Constants;
+using FilmsManager.Resources;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -14,9 +16,45 @@ namespace FilmsManager.Models
 			set { SetProperty(ref _name, value); }
 		}
 
-			public GenreModel(string name)
+		private int _id;
+
+		public int ID
 		{
-			_name = name;
+			get { return _id; }
+			set { SetProperty(ref _id, value); }
+		}
+
+
+		public GenreModel(int id)
+		{
+			ID = id;
+			switch (id)
+			{
+				case GenreKeys.ActionGenre:
+					Name = AppResources.ActionGenre;
+					break;
+				case GenreKeys.DramaGenre:
+					Name = AppResources.DramaGenre;
+					break;
+				case GenreKeys.FantasyGenre:
+					Name = AppResources.FantasyGenre;
+					break;
+				case GenreKeys.HumourGenre:
+					Name = AppResources.HumourGenre;
+					break;
+				case GenreKeys.ScienceFictionGenre:
+					Name = AppResources.ScienceFictionGenre;
+					break;
+				case GenreKeys.SuperHeroesGenre:
+					Name = AppResources.SuperHeroesGenre;
+					break;
+				case GenreKeys.TerrorGenre:
+					Name = AppResources.TerrorGenre;
+					break;
+				case GenreKeys.AllGenres:
+					Name = AppResources.AllGenres;
+					break;
+			}
 		}
 	}
 }

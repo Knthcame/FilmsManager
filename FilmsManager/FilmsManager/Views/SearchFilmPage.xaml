@@ -160,7 +160,7 @@
                                                     />
                                             </Frame>
 
-                                            <Label  Text="{Binding Genre}"
+                                            <Label  Text="{Binding Genre.Name}"
                                                     TextColor="LightGray"
                                                     FontSize="Medium"
                                                     Grid.Column="2"

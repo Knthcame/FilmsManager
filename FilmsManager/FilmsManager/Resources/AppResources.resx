@@ -169,6 +169,9 @@
   <data name="AddFilmPageTitle" xml:space="preserve">
     <value>Add a film</value>
   </data>
+  <data name="AllGenres" xml:space="preserve">
+    <value>All</value>
+  </data>
   <data name="DramaGenre" xml:space="preserve">
     <value>Drama</value>
   </data>
@@ -200,6 +203,9 @@
   <data name="ImageColumn" xml:space="preserve">
     <value>Image</value>
     <comment>Header for the image column of MovieList</comment>
+  </data>
+  <data name="LanguageAbreviation" xml:space="preserve">
+    <value>EN</value>
   </data>
   <data name="LanguageSelectionPageTitle" xml:space="preserve">
     <value>Language selection</value>

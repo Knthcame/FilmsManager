@@ -8,7 +8,7 @@
                 prism:ViewModelLocator.AutowireViewModel="True"
                 x:Class="FilmsManager.Views.HomePage"
                 Icon="icon.png"
-                Title="{Localization:Translate HomePageTitle}">
+                Title="{Binding Title}">
 
     <ContentPage.Content>
 
@@ -28,22 +28,22 @@
             </Grid.RowDefinitions>
 
             <Image Source="{Binding BackgroundImage}"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="3"
-                    Grid.Row="0"
-                    Grid.RowSpan="3"
-                    Aspect="Fill"
-                    />
+                   Grid.Column="0"
+                   Grid.ColumnSpan="3"
+                   Grid.Row="0"
+                   Grid.RowSpan="3"
+                   Aspect="Fill"
+                   />
 
-            <Frame  BorderColor="Black"
-                    CornerRadius="0"
-                    BackgroundColor="LightGray"
-                    Padding="0"
-                    Margin="0"
-                    HasShadow="False"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="3"
-                    Grid.Row="0">
+            <Frame BorderColor="Black"
+                   CornerRadius="0"
+                   BackgroundColor="LightGray"
+                   Padding="0"
+                   Margin="0"
+                   HasShadow="False"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="3"
+                   Grid.Row="0">
 
                 <StackLayout>
                     <Grid>
@@ -53,19 +53,19 @@
                             <ColumnDefinition Width="35*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Label Text="{Localization:Translate ImageColumn}"
+                        <Label Text="{Binding ImageColumn}"
                                 VerticalTextAlignment="Center"
                                 HorizontalOptions="CenterAndExpand"
                                 VerticalOptions="CenterAndExpand"
                                 Grid.Column="0"/>
 
-                        <Label Text="{Localization:Translate TitleColumn}"
+                        <Label Text="{Binding TitleColumn}"
                             VerticalTextAlignment="Center"
                                 HorizontalOptions="CenterAndExpand"
                                 VerticalOptions="CenterAndExpand"
                                 Grid.Column="1"/>
 
-                        <Label Text="{Localization:Translate GenreColumn}"
+                        <Label Text="{Binding GenreColumn}"
                             VerticalTextAlignment="Center"
                                 HorizontalOptions="CenterAndExpand"
                                 VerticalOptions="CenterAndExpand"
@@ -131,7 +131,7 @@
                                                 />
                                         </Frame>
 
-                                        <Label  Text="{Binding Genre}"
+                                        <Label  Text="{Binding Genre.Name}"
                                                 TextColor="LightGray"
                                                 FontSize="Medium"
                                                 Grid.Column="2"
@@ -156,24 +156,9 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <!--<Picker BackgroundColor="Transparent"
-                    ItemsSource="{Binding LanguageList}"
-                    ItemDisplayBinding="{Binding Language}"
-                    SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}"
-                    Grid.Column="2"
-                    Grid.Row="2">
-                
-                <Picker.Behaviors>
-
-                    <b:EventToCommandBehavior EventName="SelectedIndexChanged"
-                                              Command="{Binding SelectLanguageCommand}"/>
-                </Picker.Behaviors>
-                
-            </Picker>-->
-
             <Button VerticalOptions="End"
                     HorizontalOptions="Fill"
-                    Text="{Localization:Translate HomePageAddButton}"
+                    Text="{Binding AddText}"
                     TextColor="Black"
                     Command="{Binding NavigateCommand}"
                     BackgroundColor="LightGray"
@@ -192,10 +177,27 @@
                      CommandParameter="{Binding .}">
         </ToolbarItem>
 
-        <ToolbarItem Icon="{Localization:Translate Flag}"
+        <ToolbarItem Icon="{Binding Flag}"
+                     Text="{Binding LanguageAbreviation}"
                      Order="Primary"
                      Priority="1"
                      Command="{Binding LanguageOptionsCommand}">
+
+            <!--<ToolbarItem.Icon>
+                
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="Android" Value="{Binding Flag}"/>
+                </OnPlatform>
+                
+            </ToolbarItem.Icon>
+
+            <ToolbarItem.Text>
+                
+                <OnPlatform x:TypeArguments="x:String">
+                    <On Platform="iOS" Value="{Binding LanguageAbreviation}"/>
+                </OnPlatform>
+                
+            </ToolbarItem.Text>-->
             
         </ToolbarItem>
     </ContentPage.ToolbarItems>

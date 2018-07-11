@@ -205,6 +205,15 @@ namespace FilmsManager.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        internal static string AllGenres {
+            get {
+                return ResourceManager.GetString("AllGenres", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Drama.
         /// </summary>
         internal static string DramaGenre {
@@ -291,6 +300,15 @@ namespace FilmsManager.Resources {
         internal static string ImageColumn {
             get {
                 return ResourceManager.GetString("ImageColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EN.
+        /// </summary>
+        internal static string LanguageAbreviation {
+            get {
+                return ResourceManager.GetString("LanguageAbreviation", resourceCulture);
             }
         }
         
