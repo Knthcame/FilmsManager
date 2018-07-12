@@ -247,6 +247,9 @@
   <data name="SearchFilmPageTitle" xml:space="preserve">
     <value>Search film</value>
   </data>
+  <data name="SearchTypeButtonText" xml:space="preserve">
+    <value>Search by </value>
+  </data>
   <data name="SuperHeroesGenre" xml:space="preserve">
     <value>Super heroes</value>
   </data>

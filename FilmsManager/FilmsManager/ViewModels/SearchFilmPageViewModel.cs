@@ -1,6 +1,7 @@
 ﻿using FilmsManager.Constants;
 using FilmsManager.Models;
 using FilmsManager.Resources;
+using FilmsManager.Views;
 using Prism.Commands;
 using Prism.Navigation;
 using System.Collections.Generic;
@@ -13,10 +14,12 @@ namespace FilmsManager.ViewModels
 {
 	public class SearchFilmPageViewModel : BaseViewModel
 	{
+		private const int TITLE = 0;
+		private const int GENRE = 1;
 		private string _textEntry;
 		private ObservableCollection<MovieModel> _filteredMovieList = new ObservableCollection<MovieModel>();
-		private string _alternativeType = "Genre";
-		private string _searchType = "Title";
+		private string _searchTypeButtonText = AppResources.SearchTypeButtonText + AppResources.GenreColumn;
+		private int _searchType = TITLE;
 		private bool _searchBarVisible = true;
 		private bool _pickerVisible = false;
 		private GenreModel _selectedGenre;
@@ -38,13 +41,13 @@ namespace FilmsManager.ViewModels
 			set { SetProperty(ref _searchBarVisible, value); }
 		}
 
-		public string AlternativeType
+		public string SearchTypeButtonText
 		{
-			get => _alternativeType;
-			set { SetProperty(ref _alternativeType, value); }
+			get => _searchTypeButtonText;
+			set { SetProperty(ref _searchTypeButtonText, value); }
 		}
 
-		public string SearchType
+		public int SearchType
 		{
 			get => _searchType;
 			set { SetProperty(ref _searchType, value); }
@@ -131,24 +134,24 @@ namespace FilmsManager.ViewModels
 			{
 				{ "movie", SelectedMovie }
 			};
-			await NavigationService.NavigateAsync("FilmDetailsPage", parameters);
+			await NavigationService.NavigateAsync(nameof(FilmDetailsPage), parameters);
 		}
 
 		private void OnSwapSearch()
 		{
 			switch (SearchType)
 			{
-				case "Title": //Title to Genre
-					SearchType = "Genre";
-					AlternativeType = "Title";
+				case TITLE: //Title to Genre
+					SearchType = GENRE;
+					SearchTypeButtonText = AppResources.SearchTypeButtonText + AppResources.TitleColumn;
 					PickerVisible = true;
 					SearchBarVisible = false;
 					SelectedGenre = null;
 					break;
 
-				case "Genre": //Genre to Title
-					SearchType = "Title";
-					AlternativeType = "Genre";
+				case GENRE: //Genre to Title
+					SearchType = TITLE;
+					SearchTypeButtonText = AppResources.SearchTypeButtonText + AppResources.GenreColumn;
 					PickerVisible = false;
 					SearchBarVisible = true;
 					TextEntry = null;
@@ -161,18 +164,18 @@ namespace FilmsManager.ViewModels
 		{
 			switch (SearchType)
 			{
-				case "Title":
+				case TITLE:
 					if (TextEntry == null)
 						return;
 					FilteredMovieList = new ObservableCollection<MovieModel>(_movieList.Where(m => m.Title.Contains(TextEntry)));
 					break;
-				case "Genre":
+				case GENRE:
 					if (SelectedGenre == null)
 						return;
-					if ( SelectedGenre.Name == "All")
+					if ( SelectedGenre.ID == GenreKeys.AllGenres)
 						FilteredMovieList = new ObservableCollection<MovieModel>(_movieList);
 					else
-						FilteredMovieList = new ObservableCollection<MovieModel>(_movieList.Where(m => m.Genre.Equals(SelectedGenre.Name)));
+						FilteredMovieList = new ObservableCollection<MovieModel>(_movieList.Where(m => m.Genre.Name.Equals(SelectedGenre.Name)));
 					break;
 			}
 		}

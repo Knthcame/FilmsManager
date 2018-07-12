@@ -1,6 +1,7 @@
 ﻿using FilmsManager.Events;
 using FilmsManager.Models;
 using FilmsManager.Resources;
+using FilmsManager.Views;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Navigation;
@@ -76,16 +77,6 @@ namespace FilmsManager.ViewModels
 			MovieList = GetNavigationParameter(parameters, "movieList", MovieList) as ObservableCollection<MovieModel>;
 
 			GenreList = GetNavigationParameter(parameters, "genreList", GenreList) as ObservableCollection<GenreModel>;
-
-			//ObservableCollection<MovieModel> movieList;
-			//parameters.TryGetValue("movieList", out movieList);
-			//if ( movieList != null )
-			//	MovieList = movieList;
-
-			//ObservableCollection<GenreModel> genreList;
-			//parameters.TryGetValue("genreList", out genreList);
-			//if (genreList != null)
-			//	GenreList = genreList;
 		}
 
 		private void OnPickImage(PickImageModel imageModel)
@@ -95,7 +86,7 @@ namespace FilmsManager.ViewModels
 
 		private async Task OnOpenGalleryAsync()
 		{
-			await NavigationService.NavigateAsync("PickImagePage", useModalNavigation: true);
+			await NavigationService.NavigateAsync(nameof(PickImagePage), useModalNavigation: true);
 		}
 
 		private async Task OnAddAsync()

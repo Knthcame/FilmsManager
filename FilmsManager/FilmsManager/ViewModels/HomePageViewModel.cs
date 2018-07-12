@@ -5,12 +5,12 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using FilmsManager.Resources;
-using Prism.Services;
 using System.Collections.Generic;
 using Prism.Events;
 using FilmsManager.Events;
 using Xamarin.Forms;
 using FilmsManager.Constants;
+using FilmsManager.Views;
 
 namespace FilmsManager.ViewModels
 {
@@ -152,7 +152,7 @@ namespace FilmsManager.ViewModels
 
 		private async Task OnLanguageOptionsAsync()
 		{
-			await NavigationService.NavigateAsync("LanguageSelectionPage", useModalNavigation: true);
+			await NavigationService.NavigateAsync(nameof(LanguageSelectionPage), useModalNavigation: true);
 		}
 
 		private async Task OnFilmDetailAsync()
@@ -163,7 +163,7 @@ namespace FilmsManager.ViewModels
 			{
 				{ "movie", SelectedMovie }
 			};
-			await NavigationService.NavigateAsync("FilmDetailsPage", parameters);
+			await NavigationService.NavigateAsync(nameof(FilmDetailsPage), parameters);
 		}
 
 		private async Task OnSearchAsync()
@@ -173,7 +173,7 @@ namespace FilmsManager.ViewModels
 				{ "movieList", MovieList },
 				{ "genreList", GenreList }
 			};
-			await NavigationService.NavigateAsync("SearchFilmPage", parameters);
+			await NavigationService.NavigateAsync(nameof(SearchFilmPage), parameters);
 		}
 
 		private async Task OnNavigateAsync()
@@ -183,7 +183,7 @@ namespace FilmsManager.ViewModels
 				{ "movieList", MovieList },
 				{ "genreList", GenreList }
 			};
-			await NavigationService.NavigateAsync("AddFilmPage", parameters);
+			await NavigationService.NavigateAsync(nameof(AddFilmPage), parameters);
 		}
 
 		public override void OnAppearing()

@@ -34,7 +34,7 @@ namespace FilmsManager
 				AppResources.Culture = ci; // set the RESX for resource localization
 			}
 
-			await NavigationService.NavigateAsync("NavigationPage/HomePage");
+			await NavigationService.NavigateAsync("NavigationPage/"+ nameof(HomePage));
         }
 
 		protected override void RegisterTypes(IContainerRegistry containerRegistry)

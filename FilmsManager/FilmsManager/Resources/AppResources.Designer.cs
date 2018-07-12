@@ -430,6 +430,15 @@ namespace FilmsManager.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search by .
+        /// </summary>
+        internal static string SearchTypeButtonText {
+            get {
+                return ResourceManager.GetString("SearchTypeButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Super heroes.
         /// </summary>
         internal static string SuperHeroesGenre {

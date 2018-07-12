@@ -183,7 +183,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
 
-                <Button Text="{Binding AlternativeType, StringFormat= 'Search by \{0\}'}"
+                <Button Text="{Binding SearchTypeButtonText}"
                         Command="{Binding SwapSearchCommand}"
                         BackgroundColor="LightGray"
                         Grid.Column="0"
