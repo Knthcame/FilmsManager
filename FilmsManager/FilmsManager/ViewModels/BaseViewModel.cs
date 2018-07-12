@@ -50,8 +50,8 @@ namespace FilmsManager.ViewModels
 		{
 			if(parameters.TryGetValue(parameterID, out object aux))
 				return aux;
-			
-			return outProperty;
+			else
+				return outProperty;
 		}
 	}
 }

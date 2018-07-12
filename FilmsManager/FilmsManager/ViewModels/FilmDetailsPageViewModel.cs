@@ -8,6 +8,8 @@ namespace FilmsManager.ViewModels
 	{
 		private MovieModel _movie;
 
+		public string BackgroundImage { get; set; } = AppImages.BackgroundImageHome;
+
 		public MovieModel Movie
 		{
 			get => _movie;

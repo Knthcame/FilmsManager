@@ -26,6 +26,10 @@ namespace FilmsManager.ViewModels
 
 		private PickImageModel _selectedImage;
 
+		public string PreloadedImagesCover { get; set; } = AppImages.Shrek;
+
+		public string OpenMobileGalleryCover { get; set; } = AppImages.Icon;
+
 		public ICommand PickImageCommand { get; set; }
 
 		public ICommand PreloadedPhotoCommand { get; set; }
@@ -108,27 +112,27 @@ namespace FilmsManager.ViewModels
 		{
 			new PickImageModel()
 			{
-				ImageName = "Shrek.jpg"
+				ImageName = AppImages.Shrek
 			},
 			new PickImageModel()
 			{
-				ImageName = "Shrek2.jpg"
+				ImageName = AppImages.Shrek2
 			},
 			new PickImageModel()
 			{
-				ImageName = "Shrek3.jpg"
+				ImageName = AppImages.Shrek3
 			},
 			new PickImageModel()
 			{
-				ImageName = "infinity_war.jpg"
+				ImageName = AppImages.InfinityWar
 			},
 			new PickImageModel()
 			{
-				ImageName = "HarryPotter.jpg"
+				ImageName = AppImages.HarryPotter
 			},
 			new PickImageModel()
 			{
-				ImageName = "LOTR.jpg"
+				ImageName = AppImages.LOTR
 			}
 		};
 		public override async Task<bool> OnBackButtonPressedAsync()

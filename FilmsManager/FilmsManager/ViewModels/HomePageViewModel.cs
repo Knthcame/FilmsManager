@@ -18,7 +18,9 @@ namespace FilmsManager.ViewModels
 	{
 		private MovieModel _selectedMovie;
 
-		public string BackgroundImage { get; set; } = "Back6.jpg";
+		public string BackgroundImage { get; set; } = AppImages.BackgroundImageHome;
+
+		public string SearchToolbarIcon { get; set; } = AppImages.MagnifyingGlass;
 
 		public IList<MovieModel> MovieList
 		{
@@ -101,9 +103,9 @@ namespace FilmsManager.ViewModels
 			FilmDetailsCommand = new DelegateCommand(async () => await OnFilmDetailAsync());
 			LanguageOptionsCommand = new DelegateCommand(async () => await OnLanguageOptionsAsync());
 			MovieList = new ObservableCollection<MovieModel> {
-				new MovieModel("Shrek", new GenreModel(GenreKeys.HumourGenre), "Shrek.jpg"),
-				new MovieModel("Shrek 2", new GenreModel(GenreKeys.HumourGenre), "Shrek2.jpg"),
-				new MovieModel("Infinity war", new GenreModel(GenreKeys.SuperHeroesGenre), "infinity_war.jpg")
+				new MovieModel("Shrek", new GenreModel(GenreKeys.HumourGenre), AppImages.Shrek),
+				new MovieModel("Shrek 2", new GenreModel(GenreKeys.HumourGenre), AppImages.Shrek2),
+				new MovieModel("Infinity war", new GenreModel(GenreKeys.SuperHeroesGenre), AppImages.InfinityWar)
 			};
 			LoadResources();
 		}

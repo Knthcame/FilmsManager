@@ -20,8 +20,8 @@ namespace FilmsManager.ViewModels
 
 		public IList<LanguageModel> LanguageList { get; set; } = new ObservableCollection<LanguageModel>()
 		{
-			new LanguageModel("English", "en", "uk.png"),
-			new LanguageModel("Spanish", "es", "spain.png")
+			new LanguageModel("English", "en", AppImages.UKFlag),
+			new LanguageModel("Spanish", "es", AppImages.SpainFlag)
 		};
 		public LanguageModel SelectedLanguage
 		{

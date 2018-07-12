@@ -7,7 +7,6 @@
                 xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
                 prism:ViewModelLocator.AutowireViewModel="True"
                 x:Class="FilmsManager.Views.HomePage"
-                Icon="icon.png"
                 Title="{Binding Title}">
 
     <ContentPage.Content>
@@ -172,7 +171,7 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Order="Primary" 
                      Priority="0"
-                     Icon="search.png"
+                     Icon="{Binding SearchToolbarIcon}"
                      Command="{Binding SearchCommand}"
                      CommandParameter="{Binding .}">
         </ToolbarItem>

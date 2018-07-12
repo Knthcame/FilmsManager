@@ -58,7 +58,7 @@
             <Button Command="{Binding AddCommand}"
                     HorizontalOptions="End"
                     VerticalOptions="EndAndExpand"
-                    Image="Check3.png"
+                    Image="{Binding CheckButonIcon}"
                     WidthRequest="50"
                     HeightRequest="50"/>
             

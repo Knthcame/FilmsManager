@@ -16,12 +16,14 @@ namespace FilmsManager.ViewModels
 	public class AddFilmPageViewModel : BaseViewModel
 	{
 		private IList<GenreModel> _genreList;
-		private string _defaultMovieImage = "movie.jpg";
+		private string _defaultMovieImage = AppImages.Movie;
 		private object _movieImage;
 		private string _movieTitle;
 		private GenreModel _selectedGenre;
 
-		public string BackgroundImage { get; set; } = "Back3.jpg";
+		public string BackgroundImage { get; set; } = AppImages.BackgroundImageAddFilm;
+
+		public string CheckButonIcon { get; set; } = AppImages.Check;
 
 		public ICommand AddCommand { get; set; }
 		public ICommand OpenGalleryCommand { get; set; }
@@ -81,7 +83,7 @@ namespace FilmsManager.ViewModels
 
 		private void OnPickImage(PickImageModel imageModel)
 		{
-			MovieImage = imageModel.ImageName;
+			MovieImage = imageModel?.ImageName;
 		}
 
 		private async Task OnOpenGalleryAsync()

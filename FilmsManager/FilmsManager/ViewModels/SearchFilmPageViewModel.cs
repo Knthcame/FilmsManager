@@ -27,7 +27,7 @@ namespace FilmsManager.ViewModels
 		private ObservableCollection<GenreModel> _genreList;
 		private IList<MovieModel> _movieList;
 
-		public string BackgroundImage { get; set; } = "back6.jpg";
+		public string BackgroundImage { get; set; } = AppImages.BackgroundImageHome;
 
 		public bool PickerVisible
 		{
@@ -165,17 +165,17 @@ namespace FilmsManager.ViewModels
 			switch (SearchType)
 			{
 				case TITLE:
-					if (TextEntry == null)
-						return;
-					FilteredMovieList = new ObservableCollection<MovieModel>(_movieList.Where(m => m.Title.Contains(TextEntry)));
+					if (TextEntry != null) 
+						FilteredMovieList = new ObservableCollection<MovieModel>(_movieList.Where(m => m.Title.Contains(TextEntry)));
 					break;
 				case GENRE:
-					if (SelectedGenre == null)
-						return;
-					if ( SelectedGenre.ID == GenreKeys.AllGenres)
-						FilteredMovieList = new ObservableCollection<MovieModel>(_movieList);
-					else
-						FilteredMovieList = new ObservableCollection<MovieModel>(_movieList.Where(m => m.Genre.Name.Equals(SelectedGenre.Name)));
+					if (SelectedGenre != null)
+					{
+						if (SelectedGenre.ID == GenreKeys.AllGenres)
+							FilteredMovieList = new ObservableCollection<MovieModel>(_movieList);
+						else
+							FilteredMovieList = new ObservableCollection<MovieModel>(_movieList.Where(movie => movie.Genre.Name.Equals(SelectedGenre.Name)));
+					}
 					break;
 			}
 		}

@@ -19,7 +19,7 @@
                 <RowDefinition Height="70*"/>
             </Grid.RowDefinitions>
                 
-            <Image Source="Back6.jpg" 
+            <Image Source="{Binding BackgroundImage}" 
                    Aspect="Fill"
                    Grid.Row="0"
                    Grid.RowSpan="3"/>

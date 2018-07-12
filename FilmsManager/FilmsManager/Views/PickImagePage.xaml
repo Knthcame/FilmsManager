@@ -3,6 +3,7 @@
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
                 xmlns:Localization="clr-namespace:FilmsManager.ResxLocalization"
+                xmlns:Resources="clr-namespace:FilmsManager.Resources"
                 xmlns:views="clr-namespace:FilmsManager.Views"
                 xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
                 prism:ViewModelLocator.AutowireViewModel="True"
@@ -25,7 +26,7 @@
                     <RowDefinition Height="50*"/>
                 </Grid.RowDefinitions>
 
-                <Image Source="Shrek.jpg"
+                <Image Source="{Binding PreloadedImagesCover}"
                        Aspect="AspectFill"
                        Grid.Row="0"/>
 
@@ -37,7 +38,7 @@
                         VerticalOptions="Center"
                         BackgroundColor="Black"/>
 
-                <Image Source="icon.png"
+                <Image Source="{Binding OpenMobileGalleryCover}"
                        Aspect="AspectFill"
                        Grid.Row="1"/>
 
