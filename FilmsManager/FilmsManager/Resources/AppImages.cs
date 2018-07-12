@@ -6,7 +6,7 @@ namespace FilmsManager.Resources
 {
     public static class AppImages
     {
-		public const string BackgroundImageHome = "back6.png";
+		public const string BackgroundImageHome = "Back6.png";
 		public const string Shrek = "Shrek.jpg";
 		public const string Shrek2 = "Shrek2.jpg";
 		public const string Shrek3 = "Shrek3.jpg";
@@ -16,11 +16,10 @@ namespace FilmsManager.Resources
 		public const string LOTR = "LOTR.jpg";
 		public const string BackgroundImageAddFilm = "Back3.jpg";
 		public const string Check = "Check3.png";
-		public const string InfinityWar = "infinity_war,jpg";
+		public const string InfinityWar = "infinity_war.jpg";
 		public const string Movie = "movie.jpg";
 		public const string Icon = "icon.png";
 		public const string UKFlag = "uk.png";
 		public const string SpainFlag = "spain.png";
-
 	}
 }
