@@ -160,6 +160,12 @@
   <data name="AddFilmDefaultImageTitle" xml:space="preserve">
     <value>Default image</value>
   </data>
+  <data name="AddFilmMissingGenre" xml:space="preserve">
+    <value>Missing genre:</value>
+  </data>
+  <data name="AddFilmMissingTitle" xml:space="preserve">
+    <value>Missing title:</value>
+  </data>
   <data name="AddFilmPageEntryPlaceholder" xml:space="preserve">
     <value>Insert Movie Title</value>
   </data>

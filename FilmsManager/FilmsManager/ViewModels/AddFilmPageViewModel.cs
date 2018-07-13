@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace FilmsManager.ViewModels
 {
@@ -20,6 +21,9 @@ namespace FilmsManager.ViewModels
 		private object _movieImage;
 		private string _movieTitle;
 		private GenreModel _selectedGenre;
+		private bool _missingTitle;
+		private bool _missingGenre;
+		private Color _chooseFilmButtonBorderColor = Color.Black;
 
 		public string BackgroundImage { get; set; } = AppImages.BackgroundImageAddFilm;
 
@@ -40,24 +44,50 @@ namespace FilmsManager.ViewModels
 
 		private readonly IEventAggregator _eventAggregator;
 
-		
+
 
 		public string MovieTitle
 		{
 			get => _movieTitle;
-			set { SetProperty(ref _movieTitle, value); }
+			set
+			{
+				SetProperty(ref _movieTitle, value);
+				MissingTitle = false;
+			}
 		}
 
 		public GenreModel SelectedGenre
 		{
 			get => _selectedGenre;
-			set { SetProperty(ref _selectedGenre, value); }
+			set
+			{
+				SetProperty(ref _selectedGenre, value);
+				MissingGenre = false;
+			}
 		}
 
 		public object MovieImage
 		{
 			get => _movieImage;
 			set { SetProperty(ref _movieImage, value); }
+		}
+
+		public bool MissingTitle
+		{
+			get => _missingTitle;
+			set { SetProperty(ref _missingTitle, value); }
+		}
+
+		public bool MissingGenre
+		{
+			get => _missingGenre;
+			set { SetProperty(ref _missingGenre, value); }
+		}
+
+		public Color ChooseFilmButtonBorderColor
+		{
+			get => _chooseFilmButtonBorderColor;
+			set { SetProperty(ref _chooseFilmButtonBorderColor, value); }
 		}
 
 		public AddFilmPageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IPageDialogService pageDialogService) : base(navigationService)
@@ -73,7 +103,7 @@ namespace FilmsManager.ViewModels
 
 		public override void OnNavigatedTo(NavigationParameters parameters)
 		{
-			if (parameters == null || parameters.Count==0)
+			if (parameters == null || parameters.Count == 0)
 				return;
 
 			MovieList = GetNavigationParameter(parameters, "movieList", MovieList) as ObservableCollection<MovieModel>;
@@ -83,6 +113,7 @@ namespace FilmsManager.ViewModels
 
 		private void OnPickImage(PickImageModel imageModel)
 		{
+			ChooseFilmButtonBorderColor = Color.Black;
 			MovieImage = imageModel?.ImageName;
 		}
 
@@ -95,8 +126,16 @@ namespace FilmsManager.ViewModels
 		{
 			if (MovieTitle == null | SelectedGenre == null)
 			{
-				bool action = await _pageDialogService.DisplayAlertAsync(AppResources.MissingEntriesTitle, AppResources.MissingEntriesMessage, AppResources.MissingEntriesOkButton, AppResources.MissingEntriesCancelButton)	;
-				if (action) await NavigationService.GoBackAsync();
+				bool action = await _pageDialogService.DisplayAlertAsync(AppResources.MissingEntriesTitle, AppResources.MissingEntriesMessage, AppResources.MissingEntriesOkButton, AppResources.MissingEntriesCancelButton);
+				if (action)
+					await NavigationService.GoBackAsync();
+				else
+				{
+					if (MovieTitle == null)
+						MissingTitle = true;
+					if (SelectedGenre == null)
+						MissingGenre = true;
+				}
 			}
 			else if (MovieImage as string == _defaultMovieImage)
 			{
@@ -106,6 +145,7 @@ namespace FilmsManager.ViewModels
 					MovieList.Add(new MovieModel(MovieTitle, SelectedGenre, MovieImage));
 					await NavigationService.GoBackAsync();
 				}
+				else ChooseFilmButtonBorderColor = Color.Red;
 			}
 			else
 			{

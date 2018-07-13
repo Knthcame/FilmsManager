@@ -178,6 +178,24 @@ namespace FilmsManager.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Missing genre:.
+        /// </summary>
+        internal static string AddFilmMissingGenre {
+            get {
+                return ResourceManager.GetString("AddFilmMissingGenre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Missing title:.
+        /// </summary>
+        internal static string AddFilmMissingTitle {
+            get {
+                return ResourceManager.GetString("AddFilmMissingTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Insert Movie Title.
         /// </summary>
         internal static string AddFilmPageEntryPlaceholder {

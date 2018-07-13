@@ -156,6 +156,12 @@
   <data name="AddFilmDefaultImageTitle" xml:space="preserve">
     <value>Imagen por defecto</value>
   </data>
+  <data name="AddFilmMissingGenre" xml:space="preserve">
+    <value>Selecciona el género:</value>
+  </data>
+  <data name="AddFilmMissingTitle" xml:space="preserve">
+    <value>Introduce el título:</value>
+  </data>
   <data name="AddFilmPageEntryPlaceholder" xml:space="preserve">
     <value>Insertar título de la película</value>
   </data>

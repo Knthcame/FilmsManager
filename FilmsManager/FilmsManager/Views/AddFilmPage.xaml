@@ -27,23 +27,28 @@
 
             <StackLayout Grid.Row="0"
                          Grid.Column="0">
+
+            <Label  Text="{Localization:Translate AddFilmMissingTitle}"
+                    TextColor="Red"
+                    IsVisible="{Binding MissingTitle}"/>
             
-            <Entry  Placeholder="{Localization:Translate AddFilmPageEntryPlaceholder}" 
+            <Entry  Placeholder="{Localization:Translate AddFilmPageEntryPlaceholder}"
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="Start"
                     Text="{Binding MovieTitle}"/>
 
+            <Label  Text="{Localization:Translate AddFilmMissingGenre}"
+                    TextColor="Red"
+                    IsVisible="{Binding MissingGenre}"/>
+
             <Picker Title="{Localization:Translate AddFilmPagePickerPlaceholder}"
                     ItemsSource="{Binding GenreList}"
                     ItemDisplayBinding="{Binding Name}"
-                    SelectedItem="{Binding SelectedGenre, Mode=TwoWay}">
-            </Picker>
+                    SelectedItem="{Binding SelectedGenre, Mode=TwoWay}"/>
 
-
-            <Image Source="{Binding MovieImage}"
-                   Aspect="AspectFit"
-                   HeightRequest="200"/>
-
+            <Image  Source="{Binding MovieImage}"
+                    Aspect="AspectFit"
+                    HeightRequest="200"/>
 
             <Button Text="{Localization:Translate OpenGalleryButton}"
                     HeightRequest="80"
@@ -52,7 +57,7 @@
                     HorizontalOptions="CenterAndExpand"
                     VerticalOptions="StartAndExpand"
                     BorderWidth="5"
-                    BorderColor="Black"
+                    BorderColor="{Binding ChooseFilmButtonBorderColor}"
                     BackgroundColor="White"/>
 
             <Button Command="{Binding AddCommand}"
