@@ -7,6 +7,8 @@ using Prism;
 using Prism.Ioc;
 using FilmsManager.Droid.ResxLocalization;
 using FilmsManager.ResxLocalization;
+using Plugin.Permissions;
+using Android.Runtime;
 
 namespace FilmsManager.Droid
 {
@@ -26,6 +28,8 @@ namespace FilmsManager.Droid
 
 			base.OnCreate(bundle);
 
+			Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, bundle);
+
 			Forms.Init(this, bundle);
 
 			DependencyService.Register<Localize_Android>();
@@ -42,6 +46,12 @@ namespace FilmsManager.Droid
 			}
 			else return base.OnOptionsItemSelected(item);
 				
+		}
+
+		public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
+		{
+			PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+			base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 		}
 	}
 

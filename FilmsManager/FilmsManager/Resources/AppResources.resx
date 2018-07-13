@@ -256,6 +256,18 @@
   <data name="SearchTypeButtonText" xml:space="preserve">
     <value>Search by </value>
   </data>
+  <data name="StorageAccesCancelButton" xml:space="preserve">
+    <value>Deny</value>
+  </data>
+  <data name="StorageAccesMessage" xml:space="preserve">
+    <value>The application needs permission to acces your gallery</value>
+  </data>
+  <data name="StorageAccesOkButton" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="StorageAccesTitle" xml:space="preserve">
+    <value>Need acces to storage</value>
+  </data>
   <data name="SuperHeroesGenre" xml:space="preserve">
     <value>Super heroes</value>
   </data>

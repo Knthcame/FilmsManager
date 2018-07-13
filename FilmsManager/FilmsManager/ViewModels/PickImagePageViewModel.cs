@@ -2,6 +2,8 @@
 using FilmsManager.Models;
 using FilmsManager.Resources;
 using Plugin.Media;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Navigation;
@@ -83,7 +85,35 @@ namespace FilmsManager.ViewModels
 
 		private async Task PickGalleryPhotoAsync()
 		{
-			if (!CrossMedia.Current.IsPickPhotoSupported)
+			Permission permission = Permission.Unknown;
+			switch (Device.RuntimePlatform)
+			{
+				case Device.Android:
+					permission = Permission.Storage;
+					break;
+				case Device.iOS:
+					permission = Permission.Photos;
+					break;
+			}
+
+			var status = await CrossPermissions.Current.CheckPermissionStatusAsync(permission);
+			if (status!= PermissionStatus.Granted)
+			{
+				bool accepted = true;
+				if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(permission))
+				{
+					accepted = await _pageDialogService.DisplayAlertAsync(AppResources.StorageAccesTitle, AppResources.StorageAccesMessage, AppResources.StorageAccesOkButton, AppResources.StorageAccesCancelButton);
+				}
+				if (accepted)
+				{
+					var results = await CrossPermissions.Current.RequestPermissionsAsync(permission);
+					//Best practice to always check that the key exists
+					if (results.ContainsKey(permission))
+						status = results[permission];
+				}
+				
+			}
+			if (status == PermissionStatus.Denied)
 				return;
 
 			var photo = await CrossMedia.Current.PickPhotoAsync();
@@ -95,7 +125,8 @@ namespace FilmsManager.ViewModels
 					return stream;
 				})
 			};
-			_eventAggregator.GetEvent<PickImageEvent>().Publish(model);
+			if (photo != null)
+				_eventAggregator.GetEvent<PickImageEvent>().Publish(model);
 			await NavigationService.GoBackAsync();
 		}
 

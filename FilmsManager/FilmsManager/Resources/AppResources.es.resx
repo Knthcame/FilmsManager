@@ -249,6 +249,18 @@
   <data name="SearchTypeButtonText" xml:space="preserve">
     <value>Buscar por </value>
   </data>
+  <data name="StorageAccesCancelButton" xml:space="preserve">
+    <value>Denegar</value>
+  </data>
+  <data name="StorageAccesMessage" xml:space="preserve">
+    <value>Esta aplicación necesita permiso para acceder a las imágenes de la galeria</value>
+  </data>
+  <data name="StorageAccesOkButton" xml:space="preserve">
+    <value>De acuerdo</value>
+  </data>
+  <data name="StorageAccesTitle" xml:space="preserve">
+    <value>Acceso al almacenamiento requerido</value>
+  </data>
   <data name="SuperHeroesGenre" xml:space="preserve">
     <value>Super Héroes</value>
   </data>

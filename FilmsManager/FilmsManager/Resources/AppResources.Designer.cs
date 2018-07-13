@@ -457,6 +457,42 @@ namespace FilmsManager.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deny.
+        /// </summary>
+        internal static string StorageAccesCancelButton {
+            get {
+                return ResourceManager.GetString("StorageAccesCancelButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The application needs permission to acces your gallery.
+        /// </summary>
+        internal static string StorageAccesMessage {
+            get {
+                return ResourceManager.GetString("StorageAccesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        internal static string StorageAccesOkButton {
+            get {
+                return ResourceManager.GetString("StorageAccesOkButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Need acces to storage.
+        /// </summary>
+        internal static string StorageAccesTitle {
+            get {
+                return ResourceManager.GetString("StorageAccesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Super heroes.
         /// </summary>
         internal static string SuperHeroesGenre {
