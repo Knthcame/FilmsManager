@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FilmsManager.Resources
+﻿namespace FilmsManager.Resources
 {
-    public static class AppImages
+	public static class AppImages
     {
-		public const string BackgroundImageHome = "Back6.png";
+		public const string BackgroundImageHome = "Back6.jpg";
 		public const string Shrek = "Shrek.jpg";
 		public const string Shrek2 = "Shrek2.jpg";
 		public const string Shrek3 = "Shrek3.jpg";

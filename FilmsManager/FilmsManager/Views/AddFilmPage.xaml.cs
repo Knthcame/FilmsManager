@@ -15,15 +15,6 @@ namespace FilmsManager.Views
 			InitializeComponent();
 		}
 
-		protected override bool OnBackButtonPressed()
-		{
-			var bindingContext = BindingContext as AddFilmPageViewModel;
-			bindingContext?.OnBackButtonPressedAsync();
-			return true;
-		}
-
-		public bool NeedOverrideSoftBackButton { get; set; } = true;
-
 		protected override void OnAppearing()
 		{
 			if (Device.RuntimePlatform == Device.Android)
