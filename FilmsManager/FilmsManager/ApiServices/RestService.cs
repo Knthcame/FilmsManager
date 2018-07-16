@@ -1,4 +1,5 @@
-﻿using FilmsManager.Constants;
+﻿using FilmsManager.ApiServices.Interfaces;
+using FilmsManager.Constants;
 using Models;
 using Newtonsoft.Json;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FilmsManager.ApiServices
 {
-    public class RestService
+    public class RestService : IRestService
     {
 		HttpClient client;
 
@@ -47,7 +48,8 @@ namespace FilmsManager.ApiServices
 
 			return Items;
 		}
-		public async Task SaveTodoItemAsync(ToDoItem item, bool isNewItem = false)
+
+		public async Task SaveToDoItemAsync(ToDoItem item, bool isNewItem)
 		{
 			// RestUrl = http://developer.xamarin.com:8081/api/todoitems
 			var uri = new Uri(string.Format(ApiConstants.RestUrl, string.Empty));
@@ -79,7 +81,8 @@ namespace FilmsManager.ApiServices
 			}
 		}
 
-		public async Task DeleteTodoItemAsync(string id)
+		public async Task DeleteToDoItemAsync(string id)
+
 		{
 			// RestUrl = http://developer.xamarin.com:8081/api/todoitems/{0}
 			var uri = new Uri(string.Format(ApiConstants.RestUrl, id));

@@ -1,6 +1,6 @@
 ﻿using Prism.Mvvm;
 
-namespace Models
+namespace FilmsManager.Models
 {
 	public class BaseModel : BindableBase
     {

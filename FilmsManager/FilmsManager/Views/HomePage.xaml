@@ -53,22 +53,22 @@
                         </Grid.ColumnDefinitions>
 
                         <Label Text="{Binding ImageColumn}"
-                                VerticalTextAlignment="Center"
-                                HorizontalOptions="CenterAndExpand"
-                                VerticalOptions="CenterAndExpand"
-                                Grid.Column="0"/>
+                               VerticalTextAlignment="Center"
+                               HorizontalOptions="CenterAndExpand"
+                               VerticalOptions="CenterAndExpand"
+                               Grid.Column="0"/>
 
                         <Label Text="{Binding TitleColumn}"
-                            VerticalTextAlignment="Center"
-                                HorizontalOptions="CenterAndExpand"
-                                VerticalOptions="CenterAndExpand"
-                                Grid.Column="1"/>
+                               VerticalTextAlignment="Center"
+                               HorizontalOptions="CenterAndExpand"
+                               VerticalOptions="CenterAndExpand"
+                               Grid.Column="1"/>
 
                         <Label Text="{Binding GenreColumn}"
-                            VerticalTextAlignment="Center"
-                                HorizontalOptions="CenterAndExpand"
-                                VerticalOptions="CenterAndExpand"
-                                Grid.Column="2"/>
+                               VerticalTextAlignment="Center"
+                               HorizontalOptions="CenterAndExpand"
+                               VerticalOptions="CenterAndExpand"
+                               Grid.Column="2"/>
                     </Grid>
                 </StackLayout>
             </Frame>

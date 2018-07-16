@@ -1,8 +1,5 @@
 ﻿using FilmsManager.Constants;
 using FilmsManager.Resources;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FilmsManager.Models
 {

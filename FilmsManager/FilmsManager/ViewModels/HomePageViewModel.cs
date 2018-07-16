@@ -1,5 +1,4 @@
-﻿using Models;
-using Prism.Commands;
+﻿using Prism.Commands;
 using Prism.Navigation;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -12,12 +11,18 @@ using Xamarin.Forms;
 using FilmsManager.Constants;
 using FilmsManager.Views;
 using FilmsManager.Models;
+using FilmsManager.ApiServices;
+using FilmsManager.ApiServices.Interfaces;
+using Models;
+using System.Linq;
 
 namespace FilmsManager.ViewModels
 {
 	public class HomePageViewModel : BaseViewModel
 	{
 		private MovieModel _selectedMovie;
+
+		private readonly IRestService _restService = new RestService();
 
 		public string BackgroundImage { get; set; } = AppImages.BackgroundImageHome;
 
@@ -103,11 +108,13 @@ namespace FilmsManager.ViewModels
 			SearchCommand = new DelegateCommand(async () => await OnSearchAsync());
 			FilmDetailsCommand = new DelegateCommand(async () => await OnFilmDetailAsync());
 			LanguageOptionsCommand = new DelegateCommand(async () => await OnLanguageOptionsAsync());
-			MovieList = new ObservableCollection<MovieModel> {
+			MovieList = new ObservableCollection<MovieModel>
+			{
+				new MovieModel("Infinity war", new GenreModel(GenreKeys.SuperHeroesGenre), AppImages.InfinityWar),
 				new MovieModel("Shrek", new GenreModel(GenreKeys.HumourGenre), AppImages.Shrek),
-				new MovieModel("Shrek 2", new GenreModel(GenreKeys.HumourGenre), AppImages.Shrek2),
-				new MovieModel("Infinity war", new GenreModel(GenreKeys.SuperHeroesGenre), AppImages.InfinityWar)
+				new MovieModel("Shrek 2", new GenreModel(GenreKeys.HumourGenre), AppImages.Shrek2)
 			};
+			MovieList.OrderBy(m => m.Title);
 			LoadResources();
 		}
 
@@ -192,6 +199,7 @@ namespace FilmsManager.ViewModels
 		public override void OnAppearing()
 		{
 			SelectedMovie = null;
+			MovieList = new ObservableCollection<MovieModel>(MovieList.OrderBy(m => m.Title));
 		}
 
 	}

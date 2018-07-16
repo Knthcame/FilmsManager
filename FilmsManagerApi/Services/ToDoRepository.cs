@@ -45,23 +45,23 @@ namespace FilmsManagerApi.Services
                 new ToDoItem
                 {
                     Id = "6bb8a868-dba1-4f1a-93b7-24ebce87e243",
-                    //Title = "Learn app development",
-                    //Description = "Attend Xamarin University",
-                    //ImageName = "learning_app.png"
+                    Title = "Learn app development",
+                    Genre = "Attend Xamarin University",
+                    Image = "learning_app.png"
                 },
                 new ToDoItem
                 {
                     Id = "b94afb54-a1cb-4313-8af3-b7511551b33b",
-                    //Title = "Develop apps",
-                    //Description = "Use Visual Studio",
-                    //ImageName = "developing_app.png"
+                    Title = "Develop apps",
+                    Genre = "Use Visual Studio",
+                    Image = "developing_app.png"
                 },
                 new ToDoItem
                 {
                     Id = "ecfa6f80-3671-4911-aabe-63cc442c1ecf",
-                    //Title = "Publish apps",
-                    //Description = "All app stores",
-                    //ImageName = "publishing_app.png"
+                    Title = "Publish apps",
+                    Genre = "All app stores",
+                    Image = "publishing_app.png"
                 }
             };
         }
