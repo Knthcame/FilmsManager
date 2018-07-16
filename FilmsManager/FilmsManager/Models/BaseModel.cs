@@ -1,9 +1,8 @@
-﻿using FilmsManager.ViewModels;
-using Prism.Mvvm;
+﻿using Prism.Mvvm;
 
-namespace FilmsManager.Models
+namespace Models
 {
-    public class BaseModel : BindableBase
+	public class BaseModel : BindableBase
     {
 
     }

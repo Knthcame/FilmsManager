@@ -1,4 +1,4 @@
-﻿using FilmsManager.Models;
+﻿using Models;
 using Prism.Commands;
 using Prism.Navigation;
 using System.Collections.ObjectModel;
@@ -11,6 +11,7 @@ using FilmsManager.Events;
 using Xamarin.Forms;
 using FilmsManager.Constants;
 using FilmsManager.Views;
+using FilmsManager.Models;
 
 namespace FilmsManager.ViewModels
 {
@@ -192,11 +193,6 @@ namespace FilmsManager.ViewModels
 		{
 			SelectedMovie = null;
 		}
-
-		//public override Task<bool> OnBackButtonPressedAsync()
-		//{
-		//	return base.OnBackButtonPressedAsync();
-		//}
 
 	}
 }
