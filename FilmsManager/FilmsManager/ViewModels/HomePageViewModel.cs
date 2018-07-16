@@ -193,6 +193,10 @@ namespace FilmsManager.ViewModels
 			SelectedMovie = null;
 		}
 
+		//public override Task<bool> OnBackButtonPressedAsync()
+		//{
+		//	return base.OnBackButtonPressedAsync();
+		//}
 
 	}
 }

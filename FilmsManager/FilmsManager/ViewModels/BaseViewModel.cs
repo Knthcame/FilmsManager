@@ -35,8 +35,7 @@ namespace FilmsManager.ViewModels
 
 		public virtual async Task<bool> OnBackButtonPressedAsync()
 		{
-			await NavigationService.GoBackAsync();
-			return true;
+			return await NavigationService.GoBackAsync();
 		}
 
 		/// <summary>

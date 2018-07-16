@@ -26,9 +26,16 @@ namespace FilmsManager.Views
 
 		protected override bool OnBackButtonPressed()
 		{
+			if (this.GetType().Name == nameof(HomePage))
+			{
+				return base.OnBackButtonPressed();
+			}
+
 			var bindingContext = BindingContext as BaseViewModel;
 			bindingContext?.OnBackButtonPressedAsync();
 			return true;
 		}
+
+
 	}
 }
