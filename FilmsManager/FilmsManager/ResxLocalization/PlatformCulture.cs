@@ -1,5 +1,4 @@
-﻿using FilmsManager.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace FilmsManager.ResxLocalization

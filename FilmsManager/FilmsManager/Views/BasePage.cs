@@ -1,6 +1,4 @@
-﻿using FilmsManager.Resources;
-using FilmsManager.ResxLocalization;
-using FilmsManager.ViewModels;
+﻿using FilmsManager.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 

@@ -1,13 +1,15 @@
 ﻿using Prism;
 using Prism.Ioc;
-using FilmsManager.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Prism.Unity;
-using FilmsManager.Resources;
+using Models.Managers.Interfaces;
+using Models.Managers;
+using Models.ApiServices;
+using Models.ApiServices.Interfaces;
 using FilmsManager.ResxLocalization;
-using System.Globalization;
-using Unity;
+using FilmsManager.Resources;
+using FilmsManager.Views;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace FilmsManager
@@ -46,6 +48,8 @@ namespace FilmsManager
 			containerRegistry.RegisterForNavigation<FilmDetailsPage>();
 			containerRegistry.RegisterForNavigation<HomePage>();
 			containerRegistry.RegisterForNavigation<LanguageSelectionPage>();
+			containerRegistry.RegisterInstance<IGenreModelManager>(new GenreModelManager());
+			containerRegistry.RegisterInstance<IRestService>(new RestService());
 		}
     }
 }

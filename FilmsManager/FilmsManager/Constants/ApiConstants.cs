@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FilmsManager.Constants
+namespace Models.Constants
 {
     public static class ApiConstants
     {
-		public static string RestUrl = "http://developer.xamarin.com:8081/api/todoitems/{0}";
+		public static string RestUrl = "http://10.0.100.233:62990/api/ToDoItems/{0}";
 	}
 }

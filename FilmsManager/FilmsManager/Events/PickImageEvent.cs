@@ -1,12 +1,9 @@
 ﻿using FilmsManager.Models;
 using Prism.Events;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace FilmsManager.Events
+namespace Models.Events
 {
-    public class PickImageEvent : PubSubEvent<PickImageModel>
+	public class PickImageEvent : PubSubEvent<PickImageModel>
     {
     }
 }

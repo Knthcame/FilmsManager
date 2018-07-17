@@ -1,8 +1,8 @@
-﻿using Models;
+﻿using Models.Classes;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FilmsManager.ApiServices.Interfaces
+namespace Models.ApiServices.Interfaces
 {
 	public interface IRestService
     {

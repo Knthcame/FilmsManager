@@ -1,4 +1,4 @@
-﻿namespace FilmsManager.Resources
+﻿namespace Models.Resources
 {
 	public static class AppImages
     {

@@ -1,4 +1,6 @@
-﻿namespace FilmsManager.Models
+﻿using Models.Classes;
+
+namespace FilmsManager.Models
 {
 	public class LanguageModel : BaseModel
 	{

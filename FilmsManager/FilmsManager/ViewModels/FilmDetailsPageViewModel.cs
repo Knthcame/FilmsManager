@@ -1,5 +1,6 @@
 ﻿using FilmsManager.Models;
 using FilmsManager.Resources;
+using Models.Resources;
 using Prism.Navigation;
 
 namespace FilmsManager.ViewModels

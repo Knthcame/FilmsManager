@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FilmsManager.Constants
+﻿namespace Models.Constants
 {
-    public static class GenreKeys
+	public static class GenreKeys
     {
 		public const int AllGenres = 0;
 		public const int FantasyGenre = 1;

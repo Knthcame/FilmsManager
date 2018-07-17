@@ -1,17 +1,18 @@
-﻿using FilmsManager.Events;
-using FilmsManager.Models;
-using FilmsManager.Resources;
-using FilmsManager.Views;
+﻿using Models.Events;
+using Models.Resources;
+using Models.Classes;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Navigation;
 using Prism.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using FilmsManager.Resources;
+using FilmsManager.Models;
+using FilmsManager.Views;
 
 namespace FilmsManager.ViewModels
 {

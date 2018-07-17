@@ -5,10 +5,10 @@ using Android.OS;
 using Xamarin.Forms;
 using Prism;
 using Prism.Ioc;
-using FilmsManager.Droid.ResxLocalization;
-using FilmsManager.ResxLocalization;
 using Plugin.Permissions;
 using Android.Runtime;
+using FilmsManager.Droid.ResxLocalization;
+using FilmsManager.ResxLocalization;
 
 namespace FilmsManager.Droid
 {

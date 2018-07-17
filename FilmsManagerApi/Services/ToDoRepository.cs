@@ -2,6 +2,9 @@
 using System.Linq;
 using FilmsManagerApi.Services.Interfaces;
 using Models;
+using Models.Classes;
+using Models.Constants;
+using Models.Resources;
 
 namespace FilmsManagerApi.Services
 {
@@ -40,28 +43,28 @@ namespace FilmsManagerApi.Services
 
         private void InitializeData()
         {
-            _toDoList = new List<ToDoItem>
-            {
-                new ToDoItem
-                {
-                    Id = "6bb8a868-dba1-4f1a-93b7-24ebce87e243",
-                    Title = "Learn app development",
-                    Genre = "Attend Xamarin University",
-                    Image = "learning_app.png"
+			_toDoList = new List<ToDoItem>
+			{
+				new ToDoItem
+				{
+					Id = "6bb8a868-dba1-4f1a-93b7-24ebce87e243",
+					Title = "Infinity war",
+					Genre = new GenreModel(GenreKeys.SuperHeroesGenre, "Super heroes"),
+					Image = AppImages.InfinityWar
                 },
                 new ToDoItem
                 {
                     Id = "b94afb54-a1cb-4313-8af3-b7511551b33b",
-                    Title = "Develop apps",
-                    Genre = "Use Visual Studio",
-                    Image = "developing_app.png"
+                    Title = "Shrek",
+                    Genre = new GenreModel(GenreKeys.HumourGenre, "Humour"),
+                    Image = AppImages.Shrek
                 },
                 new ToDoItem
                 {
                     Id = "ecfa6f80-3671-4911-aabe-63cc442c1ecf",
-                    Title = "Publish apps",
-                    Genre = "All app stores",
-                    Image = "publishing_app.png"
+                    Title = "Shrek 2",
+                    Genre = new GenreModel(GenreKeys.HumourGenre, "Humour"),
+                    Image = AppImages.Shrek2
                 }
             };
         }

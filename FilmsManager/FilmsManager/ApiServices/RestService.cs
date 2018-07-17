@@ -1,6 +1,6 @@
-﻿using FilmsManager.ApiServices.Interfaces;
-using FilmsManager.Constants;
-using Models;
+﻿using Models.ApiServices.Interfaces;
+using Models.Constants;
+using Models.Classes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FilmsManager.ApiServices
+namespace Models.ApiServices
 {
     public class RestService : IRestService
     {

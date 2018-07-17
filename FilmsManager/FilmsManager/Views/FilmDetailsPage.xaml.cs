@@ -1,5 +1,4 @@
 ﻿using FilmsManager.ViewModels;
-using Xamarin.Forms.Xaml;
 
 namespace FilmsManager.Views
 {
@@ -8,13 +7,6 @@ namespace FilmsManager.Views
 		public FilmDetailsPage () : base()
 		{
 			InitializeComponent ();
-		}
-
-		protected override bool OnBackButtonPressed()
-		{
-			var bindingContext = BindingContext as FilmDetailsPageViewModel;
-			bindingContext?.OnBackButtonPressedAsync();
-			return true;
 		}
 	}
 }

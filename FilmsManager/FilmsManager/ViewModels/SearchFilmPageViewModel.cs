@@ -1,7 +1,7 @@
-﻿using FilmsManager.Constants;
-using FilmsManager.Models;
-using FilmsManager.Resources;
-using FilmsManager.Views;
+﻿using Models.Constants;
+using Models.Managers.Interfaces;
+using Models.Resources;
+using Models.Classes;
 using Prism.Commands;
 using Prism.Navigation;
 using System.Collections.Generic;
@@ -9,6 +9,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using FilmsManager.Models;
+using FilmsManager.Resources;
+using FilmsManager.Views;
 
 namespace FilmsManager.ViewModels
 {
@@ -94,8 +97,11 @@ namespace FilmsManager.ViewModels
 
 		public ICommand FilmDetailsCommand { get; set; }
 
-		public SearchFilmPageViewModel(INavigationService navigationService) : base(navigationService)
+		private readonly IGenreModelManager _genreModelManager;
+
+		public SearchFilmPageViewModel(INavigationService navigationService, IGenreModelManager genreModelManager) : base(navigationService)
 		{
+			_genreModelManager = genreModelManager;
 			Title = AppResources.SearchFilmPageTitle;
 			SearchFilmCommand = new DelegateCommand(OnSearchFilm);
 			SwapSearchCommand = new DelegateCommand(OnSwapSearch);
@@ -120,7 +126,7 @@ namespace FilmsManager.ViewModels
 				GenreModel[] genres = new GenreModel[genreList.Count];
 				genreList.CopyTo(genres, 0);
 				GenreList = new ObservableCollection<GenreModel>(genres);
-				GenreList.Insert(0, new GenreModel(GenreKeys.AllGenres));
+				GenreList.Insert(0, _genreModelManager.FindByID(GenreKeys.AllGenres));
 			}
 			
 		}

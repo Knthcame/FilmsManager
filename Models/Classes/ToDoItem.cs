@@ -1,4 +1,4 @@
-﻿namespace Models
+﻿namespace Models.Classes
 {
 	public class ToDoItem
     {
@@ -6,7 +6,7 @@
 
 		public string Title { get; set; }
 
-		public object Genre { get; set; }
+		public GenreModel Genre { get; set; }
 
 		public object Image { get; set; }
 	}

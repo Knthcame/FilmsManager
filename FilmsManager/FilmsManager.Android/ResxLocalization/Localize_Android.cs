@@ -1,7 +1,7 @@
-﻿using System.Globalization;
-using System.Threading;
-using FilmsManager.Droid.ResxLocalization;
+﻿using FilmsManager.Droid.ResxLocalization;
 using FilmsManager.ResxLocalization;
+using System.Globalization;
+using System.Threading;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(Localize_Android))]

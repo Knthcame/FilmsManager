@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Models;
+using Models.Classes;
 
 namespace FilmsManagerApi.Services.Interfaces
 {
-    public interface IToDoRepository
+	public interface IToDoRepository
     {
         bool DoesItemExist(string id);
         IEnumerable<ToDoItem> All { get; }

@@ -2,13 +2,15 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Threading.Tasks;
-using FilmsManager.Events;
 using FilmsManager.Models;
 using FilmsManager.Resources;
 using FilmsManager.ResxLocalization;
+using Models.Events;
+using Models.Resources;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Navigation;
+using Xamarin.Forms;
 
 namespace FilmsManager.ViewModels
 {
@@ -44,7 +46,7 @@ namespace FilmsManager.ViewModels
 
 			var ci = new CultureInfo(SelectedLanguage.Abreviation);
 			AppResources.Culture = ci;
-			Xamarin.Forms.DependencyService.Get<ILocalize>().SetCurrentCultureInfo(ci);
+			DependencyService.Get<ILocalize>().SetCurrentCultureInfo(ci);
 			_eventAggregator.GetEvent<SelectLanguageEvent>().Publish();
 			await NavigationService.GoBackAsync();
 		}

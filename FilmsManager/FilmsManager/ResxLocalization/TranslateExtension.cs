@@ -1,4 +1,5 @@
 ﻿using FilmsManager.Resources;
+using Models.Resources;
 using System;
 using System.Globalization;
 using System.Reflection;

@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using FilmsManagerApi.Enums;
 using FilmsManagerApi.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Models;
+using Models.Classes;
 
 namespace FilmsManagerApi.Controllers
 {

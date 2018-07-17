@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using Models.Classes;
+using Xamarin.Forms;
 
 namespace FilmsManager.Models
 {

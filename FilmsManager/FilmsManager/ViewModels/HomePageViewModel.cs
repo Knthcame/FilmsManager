@@ -3,18 +3,21 @@ using Prism.Navigation;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using FilmsManager.Resources;
+using Models.Resources;
 using System.Collections.Generic;
 using Prism.Events;
-using FilmsManager.Events;
+using Models.Events;
 using Xamarin.Forms;
-using FilmsManager.Constants;
-using FilmsManager.Views;
-using FilmsManager.Models;
-using FilmsManager.ApiServices;
-using FilmsManager.ApiServices.Interfaces;
-using Models;
+using Models.Constants;
+using Models.ApiServices;
+using Models.ApiServices.Interfaces;
 using System.Linq;
+using Models.Managers.Interfaces;
+using Models.Classes;
+using FilmsManager.Models;
+using FilmsManager.Resources;
+using FilmsManager.Views;
+using Nito.AsyncEx;
 
 namespace FilmsManager.ViewModels
 {
@@ -27,6 +30,8 @@ namespace FilmsManager.ViewModels
 		public string BackgroundImage { get; set; } = AppImages.BackgroundImageHome;
 
 		public string SearchToolbarIcon { get; set; } = AppImages.MagnifyingGlass;
+
+		private IList<MovieModel> _movieList = new ObservableCollection<MovieModel>();
 
 		public IList<MovieModel> MovieList
 		{
@@ -44,6 +49,8 @@ namespace FilmsManager.ViewModels
 		public ICommand LanguageOptionsCommand { get; set; }
 
 		private readonly IEventAggregator _eventAggregator;
+
+		private readonly IGenreModelManager _genreModelManager;
 
 		public MovieModel SelectedMovie
 		{
@@ -92,30 +99,39 @@ namespace FilmsManager.ViewModels
 
 		private string _genreColumn;
 
-		private IList<MovieModel> _movieList;
-
 		public string GenreColumn
 		{
 			get { return _genreColumn; }
 			set { SetProperty(ref _genreColumn, value); }
 		}
 
-		public HomePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator) : base(navigationService)
+		public INotifyTaskCompletion InitializationNotifier { get; private set; }
+
+		public Task Initialization => InitializationNotifier.Task;
+
+		public HomePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IGenreModelManager genreModelManager) : base(navigationService)
 		{
+			_genreModelManager = genreModelManager;
 			_eventAggregator = eventAggregator;
 			_eventAggregator.GetEvent<SelectLanguageEvent>().Subscribe(LoadResources);
 			NavigateCommand = new DelegateCommand(async () => await OnNavigateAsync());
 			SearchCommand = new DelegateCommand(async () => await OnSearchAsync());
 			FilmDetailsCommand = new DelegateCommand(async () => await OnFilmDetailAsync());
 			LanguageOptionsCommand = new DelegateCommand(async () => await OnLanguageOptionsAsync());
-			MovieList = new ObservableCollection<MovieModel>
-			{
-				new MovieModel("Infinity war", new GenreModel(GenreKeys.SuperHeroesGenre), AppImages.InfinityWar),
-				new MovieModel("Shrek", new GenreModel(GenreKeys.HumourGenre), AppImages.Shrek),
-				new MovieModel("Shrek 2", new GenreModel(GenreKeys.HumourGenre), AppImages.Shrek2)
-			};
+			InitializationNotifier = NotifyTaskCompletion.Create(RetrieveMovieListAsync());
 			MovieList.OrderBy(m => m.Title);
 			LoadResources();
+		}
+
+		public async Task RetrieveMovieListAsync()
+		{
+			var list = await _restService.RefreshDataAsync();
+			var movies = new ObservableCollection<MovieModel>();
+			foreach (ToDoItem item in list)
+			{
+				movies.Add(new MovieModel(item.Title, item.Genre, item.Id));
+			}
+			MovieList = new ObservableCollection<MovieModel>(movies);
 		}
 
 		public void LoadResources()
@@ -142,13 +158,13 @@ namespace FilmsManager.ViewModels
 		{
 			return new ObservableCollection<GenreModel>()
 			{
-				new GenreModel(GenreKeys.FantasyGenre),
-				new GenreModel(GenreKeys.TerrorGenre),
-				new GenreModel(GenreKeys.DramaGenre),
-				new GenreModel(GenreKeys.HumourGenre),
-				new GenreModel(GenreKeys.ScienceFictionGenre),
-				new GenreModel(GenreKeys.ActionGenre),
-				new GenreModel(GenreKeys.SuperHeroesGenre)
+				_genreModelManager.FindByID(GenreKeys.FantasyGenre),
+				_genreModelManager.FindByID(GenreKeys.TerrorGenre),
+				_genreModelManager.FindByID(GenreKeys.DramaGenre),
+				_genreModelManager.FindByID(GenreKeys.HumourGenre),
+				_genreModelManager.FindByID(GenreKeys.ScienceFictionGenre),
+				_genreModelManager.FindByID(GenreKeys.ActionGenre),
+				_genreModelManager.FindByID(GenreKeys.SuperHeroesGenre)
 			};
 		}
 
@@ -156,7 +172,7 @@ namespace FilmsManager.ViewModels
 		{
 			foreach (MovieModel movie in MovieList)
 			{
-				movie.Genre = new GenreModel(movie.Genre.ID);
+				movie.Genre = _genreModelManager.FindByID(movie.Genre.ID);
 			}
 		}
 
