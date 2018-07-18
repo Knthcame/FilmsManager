@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace FilmsManagerApi
 {
@@ -11,8 +12,11 @@ namespace FilmsManagerApi
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .Build();
-    }
+			WebHost.CreateDefaultBuilder(args)
+				  .UseKestrel()
+				  .UseUrls("http://*:62991")
+				  .UseContentRoot(Directory.GetCurrentDirectory())
+				  .UseStartup<Startup>()
+				  .Build();
+	}
 }

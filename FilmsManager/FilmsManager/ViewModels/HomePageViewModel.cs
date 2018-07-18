@@ -129,7 +129,7 @@ namespace FilmsManager.ViewModels
 			var movies = new ObservableCollection<MovieModel>();
 			foreach (ToDoItem item in list)
 			{
-				movies.Add(new MovieModel(item.Title, item.Genre, item.Id));
+				movies.Add(new MovieModel(item.Title, item.Genre, item.Image));
 			}
 			MovieList = new ObservableCollection<MovieModel>(movies);
 		}

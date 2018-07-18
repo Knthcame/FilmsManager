@@ -66,8 +66,8 @@ namespace FilmsManagerApi.Controllers
 			return NoContent();
 		}
 
-		[HttpDelete("id")]
-		public IActionResult Delete(string id)
+		[HttpDelete("{id}")]
+		public IActionResult Delete([FromRoute] string id)
 		{
 			try
 			{
