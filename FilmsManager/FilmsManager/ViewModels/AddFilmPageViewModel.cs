@@ -142,22 +142,22 @@ namespace FilmsManager.ViewModels
 				bool action = await _pageDialogService.DisplayAlertAsync(AppResources.AddFilmDefaultImageTitle, AppResources.AddFilmDefaultImageMessage, AppResources.AddFilmDefaultImageOkButton, AppResources.AddFilmDefaultImageCancelButton);
 				if (action)
 				{
-					//MovieList.Add(new MovieModel(MovieTitle, SelectedGenre, MovieImage));
-					await NavigationService.GoBackAsync();
+					await SaveNewFilm();
 				}
 				else ChooseFilmButtonBorderColor = Color.Red;
 			}
 			else
 			{
-				ToDoItem item = new ToDoItem{
-					Title = MovieTitle,
-					Genre = SelectedGenre,
-					Image = MovieImage
-				};
-				await _restService.SaveToDoItemAsync(item, true);
-				_eventAggregator.GetEvent<AddFilmEvent>().Publish();
-				await NavigationService.GoBackAsync();
+				await SaveNewFilm();
 			}
+		}
+
+		private async Task SaveNewFilm()
+		{
+			ToDoItem item = new ToDoItem(null, MovieTitle, SelectedGenre, MovieImage);
+			await _restService.SaveToDoItemAsync(item, true);
+			_eventAggregator.GetEvent<AddFilmEvent>().Publish();
+			await NavigationService.GoBackAsync();
 		}
 
 		public override async Task<bool> OnBackButtonPressedAsync()

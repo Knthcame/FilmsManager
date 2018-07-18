@@ -113,15 +113,14 @@ namespace FilmsManager.ViewModels
 		{
 			_genreModelManager = genreModelManager;
 			_eventAggregator = eventAggregator;
-			_eventAggregator.GetEvent<SelectLanguageEvent>().Subscribe(LoadResources);
+			_eventAggregator.GetEvent<SelectLanguageEvent>().Subscribe(async () => await LoadResourcesAsync());
 			_eventAggregator.GetEvent<AddFilmEvent>().Subscribe(async () => await RetrieveMovieListAsync());
 			NavigateCommand = new DelegateCommand(async () => await OnNavigateAsync());
 			SearchCommand = new DelegateCommand(async () => await OnSearchAsync());
 			FilmDetailsCommand = new DelegateCommand(async () => await OnFilmDetailAsync());
 			LanguageOptionsCommand = new DelegateCommand(async () => await OnLanguageOptionsAsync());
 			InitializationNotifier = NotifyTaskCompletion.Create(RetrieveMovieListAsync());
-			MovieList.OrderBy(m => m.Title);
-			LoadResources();
+			InitializationNotifier = NotifyTaskCompletion.Create(LoadResourcesAsync());
 		}
 
 		public async Task RetrieveMovieListAsync()
@@ -130,12 +129,12 @@ namespace FilmsManager.ViewModels
 			var movies = new ObservableCollection<MovieModel>();
 			foreach (ToDoItem item in list)
 			{
-				movies.Add(new MovieModel(item.Title, item.Genre, item.Image));
+				movies.Add(new MovieModel(item.Id, item.Title, item.Genre, item.Image));
 			}
 			MovieList = new ObservableCollection<MovieModel>(movies.OrderBy(m => m.Title));
 		}
 
-		public void LoadResources()
+		public async Task LoadResourcesAsync()
 		{
 			Title = AppResources.HomePageTitle;
 			ImageColumn = AppResources.ImageColumn;
@@ -152,7 +151,7 @@ namespace FilmsManager.ViewModels
 					break;
 			}
 			GenreList = GenerateGenreList();
-			RefreshMovieList();
+			await RefreshMovieListAsync();
 		}
 
 		public ObservableCollection<GenreModel> GenerateGenreList()
@@ -169,12 +168,14 @@ namespace FilmsManager.ViewModels
 			};
 		}
 
-		public void RefreshMovieList()
+		public async Task RefreshMovieListAsync()
 		{
 			foreach (MovieModel movie in MovieList)
 			{
 				movie.Genre = _genreModelManager.FindByID(movie.Genre.ID);
+				await _restService.SaveToDoItemAsync(new ToDoItem(movie.Id, movie.Title, movie.Genre, movie.Image), false);
 			}
+			await RetrieveMovieListAsync();
 		}
 
 		private async Task OnLanguageOptionsAsync()
