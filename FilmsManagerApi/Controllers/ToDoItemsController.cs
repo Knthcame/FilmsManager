@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using FilmsManagerApi.Enums;
 using FilmsManagerApi.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -31,6 +32,7 @@ namespace FilmsManagerApi.Controllers
 				if (_toDoRepository.DoesItemExist(item.Id))
 					return StatusCode(StatusCodes.Status409Conflict, ErrorCodeEnum.ToDoItemIdInUse.ToString());
 
+				item.Id = GenerateId();
 				_toDoRepository.Insert(item);
 			}
 			catch (Exception)
@@ -85,6 +87,11 @@ namespace FilmsManagerApi.Controllers
 			}
 
 			return NoContent();
+		}
+
+		private string GenerateId()
+		{
+			return Thread.CurrentThread.ManagedThreadId.ToString() + System.DateTime.Now.ToString();
 		}
 	}
 }

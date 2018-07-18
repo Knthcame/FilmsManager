@@ -6,7 +6,6 @@ using System.Windows.Input;
 using Models.Resources;
 using System.Collections.Generic;
 using Prism.Events;
-using Models.Events;
 using Xamarin.Forms;
 using Models.Constants;
 using Models.ApiServices;
@@ -18,6 +17,7 @@ using FilmsManager.Models;
 using FilmsManager.Resources;
 using FilmsManager.Views;
 using Nito.AsyncEx;
+using FilmsManager.Events;
 
 namespace FilmsManager.ViewModels
 {
@@ -114,6 +114,7 @@ namespace FilmsManager.ViewModels
 			_genreModelManager = genreModelManager;
 			_eventAggregator = eventAggregator;
 			_eventAggregator.GetEvent<SelectLanguageEvent>().Subscribe(LoadResources);
+			_eventAggregator.GetEvent<AddFilmEvent>().Subscribe(async () => await RetrieveMovieListAsync());
 			NavigateCommand = new DelegateCommand(async () => await OnNavigateAsync());
 			SearchCommand = new DelegateCommand(async () => await OnSearchAsync());
 			FilmDetailsCommand = new DelegateCommand(async () => await OnFilmDetailAsync());
@@ -131,7 +132,7 @@ namespace FilmsManager.ViewModels
 			{
 				movies.Add(new MovieModel(item.Title, item.Genre, item.Image));
 			}
-			MovieList = new ObservableCollection<MovieModel>(movies);
+			MovieList = new ObservableCollection<MovieModel>(movies.OrderBy(m => m.Title));
 		}
 
 		public void LoadResources()
@@ -215,7 +216,6 @@ namespace FilmsManager.ViewModels
 		public override void OnAppearing()
 		{
 			SelectedMovie = null;
-			MovieList = new ObservableCollection<MovieModel>(MovieList.OrderBy(m => m.Title));
 		}
 
 	}

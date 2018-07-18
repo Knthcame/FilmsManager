@@ -1,6 +1,6 @@
-﻿using FilmsManager.Models;
+﻿using FilmsManager.Events;
+using FilmsManager.Models;
 using FilmsManager.Resources;
-using Models.Events;
 using Models.Resources;
 using Plugin.Media;
 using Plugin.Permissions;

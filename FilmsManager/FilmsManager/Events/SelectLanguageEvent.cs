@@ -1,7 +1,7 @@
 ﻿using Prism.Events;
 
-namespace Models.Events
-{
+namespace FilmsManager.Events
+{ 
 	class SelectLanguageEvent : PubSubEvent
     {
     }

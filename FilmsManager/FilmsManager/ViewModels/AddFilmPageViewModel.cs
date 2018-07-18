@@ -1,5 +1,4 @@
-﻿using Models.Events;
-using Models.Resources;
+﻿using Models.Resources;
 using Models.Classes;
 using Prism.Commands;
 using Prism.Events;
@@ -13,6 +12,8 @@ using Xamarin.Forms;
 using FilmsManager.Resources;
 using FilmsManager.Models;
 using FilmsManager.Views;
+using Models.ApiServices.Interfaces;
+using FilmsManager.Events;
 
 namespace FilmsManager.ViewModels
 {
@@ -40,13 +41,11 @@ namespace FilmsManager.ViewModels
 			set { SetProperty(ref _genreList, value); }
 		}
 
-		public IList<MovieModel> MovieList { get; set; }
-
 		private readonly IPageDialogService _pageDialogService;
 
 		private readonly IEventAggregator _eventAggregator;
 
-
+		private readonly IRestService _restService;
 
 		public string MovieTitle
 		{
@@ -92,11 +91,12 @@ namespace FilmsManager.ViewModels
 			set { SetProperty(ref _chooseFilmButtonBorderColor, value); }
 		}
 
-		public AddFilmPageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IPageDialogService pageDialogService) : base(navigationService)
+		public AddFilmPageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IPageDialogService pageDialogService, IRestService restService) : base(navigationService)
 		{
 			Title = AppResources.AddFilmPageTitle;
 			_movieImage = _defaultMovieImage;
 			_eventAggregator = eventAggregator;
+			_restService = restService;
 			AddCommand = new DelegateCommand(async () => await OnAddAsync());
 			OpenGalleryCommand = new DelegateCommand(async () => await OnOpenGalleryAsync());
 			_eventAggregator.GetEvent<PickImageEvent>().Subscribe(OnPickImage);
@@ -107,8 +107,6 @@ namespace FilmsManager.ViewModels
 		{
 			if (parameters == null || parameters.Count == 0)
 				return;
-
-			MovieList = GetNavigationParameter(parameters, "movieList", MovieList) as ObservableCollection<MovieModel>;
 
 			GenreList = GetNavigationParameter(parameters, "genreList", GenreList) as ObservableCollection<GenreModel>;
 		}
@@ -144,17 +142,22 @@ namespace FilmsManager.ViewModels
 				bool action = await _pageDialogService.DisplayAlertAsync(AppResources.AddFilmDefaultImageTitle, AppResources.AddFilmDefaultImageMessage, AppResources.AddFilmDefaultImageOkButton, AppResources.AddFilmDefaultImageCancelButton);
 				if (action)
 				{
-					MovieList.Add(new MovieModel(MovieTitle, SelectedGenre, MovieImage));
+					//MovieList.Add(new MovieModel(MovieTitle, SelectedGenre, MovieImage));
 					await NavigationService.GoBackAsync();
 				}
 				else ChooseFilmButtonBorderColor = Color.Red;
 			}
 			else
 			{
-				MovieList.Add(new MovieModel(MovieTitle, SelectedGenre, MovieImage));
+				ToDoItem item = new ToDoItem{
+					Title = MovieTitle,
+					Genre = SelectedGenre,
+					Image = MovieImage
+				};
+				await _restService.SaveToDoItemAsync(item, true);
+				_eventAggregator.GetEvent<AddFilmEvent>().Publish();
 				await NavigationService.GoBackAsync();
 			}
-
 		}
 
 		public override async Task<bool> OnBackButtonPressedAsync()
