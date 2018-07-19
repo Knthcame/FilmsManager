@@ -15,7 +15,7 @@ namespace Models.ApiServices
     {
 		HttpClient client;
 
-		public List<ToDoItem> Items { get; set; }
+		public List<MovieItem> Items { get; set; }
 
 		public RestService()
 		{
@@ -25,9 +25,9 @@ namespace Models.ApiServices
 			};
 		}
 
-		public async Task<List<ToDoItem>> RefreshDataAsync()
+		public async Task<List<MovieItem>> RefreshDataAsync()
 		{
-			Items = new List<ToDoItem>();
+			Items = new List<MovieItem>();
 
 			// RestUrl = http://developer.xamarin.com:8081/api/ToDoItems
 			var uri = new Uri(string.Format(ApiConstants.RestUrl, string.Empty));
@@ -38,7 +38,7 @@ namespace Models.ApiServices
 				if (response.IsSuccessStatusCode)
 				{
 					var content = await response.Content.ReadAsStringAsync();
-					Items = JsonConvert.DeserializeObject<List<ToDoItem>>(content);
+					Items = JsonConvert.DeserializeObject<List<MovieItem>>(content);
 				}
 			}
 			catch (Exception ex)
@@ -49,7 +49,7 @@ namespace Models.ApiServices
 			return Items;
 		}
 
-		public async Task SaveToDoItemAsync(ToDoItem item, bool isNewItem)
+		public async Task SaveToDoItemAsync(MovieItem item, bool isNewItem)
 		{
 			// RestUrl = http://developer.xamarin.com:8081/api/todoitems
 			var uri = new Uri(string.Format(ApiConstants.RestUrl, string.Empty));

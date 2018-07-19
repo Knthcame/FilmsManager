@@ -152,7 +152,7 @@ namespace FilmsManager.ViewModels
 		{
 			var list = await _restService.RefreshDataAsync();
 			var movies = new ObservableCollection<MovieModel>();
-			foreach (ToDoItem item in list)
+			foreach (MovieItem item in list)
 			{
 				movies.Add(new MovieModel(item.Id, item.Title, item.Genre, item.Image));
 			}
@@ -198,7 +198,7 @@ namespace FilmsManager.ViewModels
 			foreach (MovieModel movie in MovieList)
 			{
 				movie.Genre = _genreModelManager.FindByID(movie.Genre.ID);
-				await _restService.SaveToDoItemAsync(new ToDoItem(movie.Id, movie.Title, movie.Genre, movie.Image), false);
+				await _restService.SaveToDoItemAsync(new MovieItem(movie.Id, movie.Title, movie.Genre, movie.Image), false);
 			}
 			await RetrieveMovieListAsync();
 		}

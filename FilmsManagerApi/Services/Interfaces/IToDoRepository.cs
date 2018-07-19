@@ -6,10 +6,10 @@ namespace FilmsManagerApi.Services.Interfaces
 	public interface IToDoRepository
     {
         bool DoesItemExist(string id);
-        IEnumerable<ToDoItem> All { get; }
-        ToDoItem Find(string id);
-        void Insert(ToDoItem item);
-        void Update(ToDoItem item);
+        IEnumerable<MovieItem> All { get; }
+        MovieItem Find(string id);
+        void Insert(MovieItem item);
+        void Update(MovieItem item);
         void Delete(string id);
     }
 }

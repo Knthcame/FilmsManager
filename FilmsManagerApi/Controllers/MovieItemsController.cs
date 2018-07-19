@@ -9,11 +9,11 @@ using Models.Classes;
 namespace FilmsManagerApi.Controllers
 {
 	[Route("api/[controller]")]
-	public class ToDoItemsController : Controller
+	public class MovieItemsController : Controller
 	{
 		private readonly IToDoRepository _toDoRepository;
 
-		public ToDoItemsController(IToDoRepository toDoRepository)
+		public MovieItemsController(IToDoRepository toDoRepository)
 		{
 			_toDoRepository = toDoRepository;
 		}
@@ -22,7 +22,7 @@ namespace FilmsManagerApi.Controllers
 		public IActionResult List() => Ok(_toDoRepository.All);
 
 		[HttpPost]
-		public IActionResult Create([FromBody] ToDoItem item)
+		public IActionResult Create([FromBody] MovieItem item)
 		{
 			if (item == null || !ModelState.IsValid)
 				return BadRequest(ErrorCodeEnum.ToDoItemNameAndDescriptionRequired.ToString());
@@ -45,7 +45,7 @@ namespace FilmsManagerApi.Controllers
 		}
 
 		[HttpPut]
-		public IActionResult Modify([FromBody] ToDoItem item)
+		public IActionResult Modify([FromBody] MovieItem item)
 		{
 			if (item == null || !ModelState.IsValid)
 				return BadRequest(ErrorCodeEnum.ToDoItemNameAndDescriptionRequired.ToString());
