@@ -45,27 +45,9 @@ namespace FilmsManagerApi.Services
         {
 			_toDoList = new List<ToDoItem>
 			{
-				new ToDoItem
-				{
-					Id = "6bb8a868-dba1-4f1a-93b7-24ebce87e243",
-					Title = "Infinity war",
-					Genre = new GenreModel(GenreKeys.SuperHeroesGenre, "Super heroes"),
-					Image = AppImages.InfinityWar
-                },
-                new ToDoItem
-                {
-                    Id = "b94afb54-a1cb-4313-8af3-b7511551b33b",
-                    Title = "Shrek",
-                    Genre = new GenreModel(GenreKeys.HumourGenre, "Humour"),
-                    Image = AppImages.Shrek
-                },
-                new ToDoItem
-                {
-                    Id = "ecfa6f80-3671-4911-aabe-63cc442c1ecf",
-                    Title = "Shrek 2",
-                    Genre = new GenreModel(GenreKeys.HumourGenre, "Humour"),
-                    Image = AppImages.Shrek2
-                }
+				new ToDoItem ( "6bb8a868-dba1-4f1a-93b7-24ebce87e243", "Infinity war", new GenreModel(GenreKeys.SuperHeroesGenre, "Super heroes"), AppImages.InfinityWar),
+                new ToDoItem ( "b94afb54-a1cb-4313-8af3-b7511551b33b", "Shrek", new GenreModel(GenreKeys.HumourGenre, "Humour"), AppImages.Shrek),             
+                new ToDoItem ( "ecfa6f80-3671-4911-aabe-63cc442c1ecf", "Shrek 2", new GenreModel(GenreKeys.HumourGenre, "Humour"), AppImages.Shrek2)
             };
         }
     }
