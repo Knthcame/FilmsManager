@@ -7,7 +7,8 @@
                 xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
                 prism:ViewModelLocator.AutowireViewModel="True"
                 x:Class="FilmsManager.Views.HomePage"
-                Title="{Binding Title}">
+                Title="{Binding Title}"
+                x:Name="MyView">
 
     <ContentPage.Content>
 
@@ -83,14 +84,29 @@
                       SelectedItem="{Binding SelectedMovie, Mode=TwoWay}"
                       CachingStrategy="RecycleElement">
 
-                <ListView.Behaviors>
+                <!--<ListView.Behaviors>
                     <b:EventToCommandBehavior EventName="ItemSelected" 
                                               Command="{Binding FilmDetailsCommand}"/>
-                </ListView.Behaviors>
+                </ListView.Behaviors>-->
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell Height="90">
+
+                            <ViewCell.ContextActions>
+
+                                <MenuItem Command="{Binding Path=BindingContext.FilmDetailsCommand, Source={x:Reference MyView}}" 
+                                          CommandParameter="{Binding .}"
+                                          Text="Details"
+                                          prism:ViewModelLocator.AutowireViewModel="True"/>
+
+                                <MenuItem Command="{Binding Path=BindingContext.DeleteFilmCommand, Source={x:Reference MyView}}"
+                                          CommandParameter="{Binding .}"
+                                          Text="Delete"
+                                          IsDestructive="True"/>
+
+                            </ViewCell.ContextActions>
+                            
                             <Frame BorderColor="White"
                                 Margin="0,3"
                                 Padding="0"

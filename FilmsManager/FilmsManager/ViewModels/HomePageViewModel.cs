@@ -48,6 +48,8 @@ namespace FilmsManager.ViewModels
 
 		public ICommand LanguageOptionsCommand { get; set; }
 
+		public ICommand DeleteFilmCommand { get; set; }
+
 		private readonly IEventAggregator _eventAggregator;
 
 		private readonly IGenreModelManager _genreModelManager;
@@ -117,10 +119,17 @@ namespace FilmsManager.ViewModels
 			_eventAggregator.GetEvent<AddFilmEvent>().Subscribe(async () => await RetrieveMovieListAsync());
 			NavigateCommand = new DelegateCommand(async () => await OnNavigateAsync());
 			SearchCommand = new DelegateCommand(async () => await OnSearchAsync());
-			FilmDetailsCommand = new DelegateCommand(async () => await OnFilmDetailAsync());
+			FilmDetailsCommand = new DelegateCommand<MovieModel>(async (movie) => await OnFilmDetailAsync(movie));
 			LanguageOptionsCommand = new DelegateCommand(async () => await OnLanguageOptionsAsync());
+			DeleteFilmCommand = new DelegateCommand<MovieModel>(async (movie) => await OnDeleteFilmAsync(movie));
 			InitializationNotifier = NotifyTaskCompletion.Create(RetrieveMovieListAsync());
 			InitializationNotifier = NotifyTaskCompletion.Create(LoadResourcesAsync());
+		}
+
+		private async Task OnDeleteFilmAsync(MovieModel movie)
+		{
+			await _restService.DeleteToDoItemAsync(movie.Id);
+			await RetrieveMovieListAsync();
 		}
 
 		public async Task RetrieveMovieListAsync()
@@ -183,13 +192,13 @@ namespace FilmsManager.ViewModels
 			await NavigationService.NavigateAsync(nameof(LanguageSelectionPage), useModalNavigation: true);
 		}
 
-		private async Task OnFilmDetailAsync()
+		private async Task OnFilmDetailAsync(MovieModel movie)
 		{
-			if (SelectedMovie == null)
+			if (movie == null)
 				return;
 			var parameters = new NavigationParameters
 			{
-				{ "movie", SelectedMovie }
+				{ "movie", movie }
 			};
 			await NavigationService.NavigateAsync(nameof(FilmDetailsPage), parameters);
 		}
