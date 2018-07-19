@@ -50,6 +50,8 @@ namespace FilmsManager.ViewModels
 
 		public ICommand DeleteFilmCommand { get; set; }
 
+		public ICommand RefreshCommand { get; set; }
+
 		private readonly IEventAggregator _eventAggregator;
 
 		private readonly IGenreModelManager _genreModelManager;
@@ -100,11 +102,18 @@ namespace FilmsManager.ViewModels
 		}
 
 		private string _genreColumn;
+		private bool _listViewIsRefreshing =false;
 
 		public string GenreColumn
 		{
 			get { return _genreColumn; }
 			set { SetProperty(ref _genreColumn, value); }
+		}
+
+		public bool ListViewIsRefreshing
+		{
+			get => _listViewIsRefreshing;
+			set { SetProperty(ref _listViewIsRefreshing, value); }
 		}
 
 		public INotifyTaskCompletion InitializationNotifier { get; private set; }
@@ -122,8 +131,15 @@ namespace FilmsManager.ViewModels
 			FilmDetailsCommand = new DelegateCommand<MovieModel>(async (movie) => await OnFilmDetailAsync(movie));
 			LanguageOptionsCommand = new DelegateCommand(async () => await OnLanguageOptionsAsync());
 			DeleteFilmCommand = new DelegateCommand<MovieModel>(async (movie) => await OnDeleteFilmAsync(movie));
+			RefreshCommand = new DelegateCommand(async () => await RefreshMovieListAsync());
 			InitializationNotifier = NotifyTaskCompletion.Create(RetrieveMovieListAsync());
 			InitializationNotifier = NotifyTaskCompletion.Create(LoadResourcesAsync());
+		}
+
+		private async Task RefreshMovieListAsync()
+		{
+			await RetrieveMovieListAsync();
+			ListViewIsRefreshing = false;
 		}
 
 		private async Task OnDeleteFilmAsync(MovieModel movie)
@@ -160,7 +176,7 @@ namespace FilmsManager.ViewModels
 					break;
 			}
 			GenreList = GenerateGenreList();
-			await RefreshMovieListAsync();
+			await UpdateMovieListLanguageAsync();
 		}
 
 		public ObservableCollection<GenreModel> GenerateGenreList()
@@ -177,7 +193,7 @@ namespace FilmsManager.ViewModels
 			};
 		}
 
-		public async Task RefreshMovieListAsync()
+		public async Task UpdateMovieListLanguageAsync()
 		{
 			foreach (MovieModel movie in MovieList)
 			{

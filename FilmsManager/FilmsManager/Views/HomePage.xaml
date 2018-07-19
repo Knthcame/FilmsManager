@@ -82,7 +82,10 @@
                       Grid.ColumnSpan="3"
                       Grid.Row="1"
                       SelectedItem="{Binding SelectedMovie, Mode=TwoWay}"
-                      CachingStrategy="RecycleElement">
+                      CachingStrategy="RecycleElement"
+                      IsPullToRefreshEnabled="True"
+                      RefreshCommand="{Binding Path=BindingContext.RefreshCommand, Source={x:Reference MyView}}"
+                      IsRefreshing="{Binding Path=BindingContext.ListViewIsRefreshing, Source={x:Reference MyView}, Mode=TwoWay}">
 
                 <!--<ListView.Behaviors>
                     <b:EventToCommandBehavior EventName="ItemSelected" 
@@ -91,7 +94,7 @@
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell Height="90">
+                        <ViewCell Height="90" >
 
                             <ViewCell.ContextActions>
 
