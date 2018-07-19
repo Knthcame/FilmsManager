@@ -12,6 +12,7 @@ using System.Windows.Input;
 using FilmsManager.Models;
 using FilmsManager.Resources;
 using FilmsManager.Views;
+using FilmsManager.Enums;
 
 namespace FilmsManager.ViewModels
 {
@@ -145,22 +146,25 @@ namespace FilmsManager.ViewModels
 
 		private void OnSwapSearch()
 		{
-			switch (SearchType)
+			switch ((SearchTypeEnum)SearchType)
 			{
-				case TITLE: //Title to Genre
-					SearchType = GENRE;
+				case SearchTypeEnum.Title: //Title to Genre
+					SearchType = (int) SearchTypeEnum.Genre;
 					SearchTypeButtonText = AppResources.SearchTypeButtonText + AppResources.TitleColumn;
 					PickerVisible = true;
 					SearchBarVisible = false;
 					SelectedGenre = null;
 					break;
 
-				case GENRE: //Genre to Title
-					SearchType = TITLE;
+				case SearchTypeEnum.Genre: //Genre to Title
+					SearchType = (int) SearchTypeEnum.Title;
 					SearchTypeButtonText = AppResources.SearchTypeButtonText + AppResources.GenreColumn;
 					PickerVisible = false;
 					SearchBarVisible = true;
 					TextEntry = null;
+					break;
+				default:
+					SearchType = (int) SearchTypeEnum.Title;
 					break;
 			}
 			FilteredMovieList = new ObservableCollection<MovieModel>(_movieList);
