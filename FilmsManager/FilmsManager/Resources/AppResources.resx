@@ -178,6 +178,12 @@
   <data name="AllGenres" xml:space="preserve">
     <value>All</value>
   </data>
+  <data name="DeleteMenuItemText" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DetailsMenuItemText" xml:space="preserve">
+    <value>Details</value>
+  </data>
   <data name="DramaGenre" xml:space="preserve">
     <value>Drama</value>
   </data>

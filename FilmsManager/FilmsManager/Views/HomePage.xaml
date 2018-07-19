@@ -100,12 +100,12 @@
 
                                 <MenuItem Command="{Binding Path=BindingContext.FilmDetailsCommand, Source={x:Reference MyView}}" 
                                           CommandParameter="{Binding .}"
-                                          Text="Details"
+                                          Text="{Localization:Translate DetailsMenuItemText}"
                                           prism:ViewModelLocator.AutowireViewModel="True"/>
 
                                 <MenuItem Command="{Binding Path=BindingContext.DeleteFilmCommand, Source={x:Reference MyView}}"
                                           CommandParameter="{Binding .}"
-                                          Text="Delete"
+                                          Text="{Localization:Translate DeleteMenuItemText}"
                                           IsDestructive="True"/>
 
                             </ViewCell.ContextActions>

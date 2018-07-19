@@ -232,6 +232,24 @@ namespace FilmsManager.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        internal static string DeleteMenuItemText {
+            get {
+                return ResourceManager.GetString("DeleteMenuItemText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        internal static string DetailsMenuItemText {
+            get {
+                return ResourceManager.GetString("DetailsMenuItemText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Drama.
         /// </summary>
         internal static string DramaGenre {
