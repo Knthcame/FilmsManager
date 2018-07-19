@@ -11,15 +11,15 @@ namespace FilmsManagerApi.Controllers
 	[Route("api/[controller]")]
 	public class MovieItemsController : Controller
 	{
-		private readonly IToDoRepository _toDoRepository;
+		private readonly IToDoRepository _movieRepository;
 
-		public MovieItemsController(IToDoRepository toDoRepository)
+		public MovieItemsController(IToDoRepository movieRepository)
 		{
-			_toDoRepository = toDoRepository;
+			_movieRepository = movieRepository;
 		}
 
 		[HttpGet]
-		public IActionResult List() => Ok(_toDoRepository.All);
+		public IActionResult List() => Ok(_movieRepository.All);
 
 		[HttpPost]
 		public IActionResult Create([FromBody] MovieItem item)
@@ -29,11 +29,11 @@ namespace FilmsManagerApi.Controllers
 
 			try
 			{
-				if (_toDoRepository.DoesItemExist(item.Id))
+				if (_movieRepository.DoesItemExist(item.Id))
 					return StatusCode(StatusCodes.Status409Conflict, ErrorCodeEnum.ToDoItemIdInUse.ToString());
 
 				item.Id = GenerateId();
-				_toDoRepository.Insert(item);
+				_movieRepository.Insert(item);
 			}
 			catch (Exception)
 			{
@@ -52,12 +52,12 @@ namespace FilmsManagerApi.Controllers
 
 			try
 			{
-				var foundItem = _toDoRepository.Find(item.Id);
+				var foundItem = _movieRepository.Find(item.Id);
 
 				if (foundItem == null)
 					return NotFound(ErrorCodeEnum.RecordNotFound.ToString());
 
-				_toDoRepository.Update(item);
+				_movieRepository.Update(item);
 			}
 			catch (Exception)
 			{
@@ -73,12 +73,12 @@ namespace FilmsManagerApi.Controllers
 		{
 			try
 			{
-				var item = _toDoRepository.Find(id);
+				var item = _movieRepository.Find(id);
 
 				if (item == null)
 					return NotFound(ErrorCodeEnum.RecordNotFound.ToString());
 
-				_toDoRepository.Delete(id);
+				_movieRepository.Delete(id);
 			}
 			catch (Exception)
 			{

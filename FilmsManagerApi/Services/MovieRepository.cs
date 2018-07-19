@@ -1,18 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FilmsManagerApi.Services.Interfaces;
-using Models;
 using Models.Classes;
 using Models.Constants;
 using Models.Resources;
 
 namespace FilmsManagerApi.Services
 {
-	public class ToDoRepository : IToDoRepository
+	public class MovieRepository : IToDoRepository
     {
         private List<MovieItem> _toDoList;
 
-        public ToDoRepository()
+        public MovieRepository()
         {
             InitializeData();
         }
