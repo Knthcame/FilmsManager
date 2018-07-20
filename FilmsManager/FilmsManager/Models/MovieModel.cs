@@ -1,9 +1,9 @@
 ﻿using Models.Classes;
-using Xamarin.Forms;
+using Prism.Mvvm;
 
 namespace FilmsManager.Models
 {
-	public class MovieModel : BaseModel
+	public class MovieModel : BindableBase
 	{
 		private string _title;
 		private GenreModel _genre;

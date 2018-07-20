@@ -1,8 +1,8 @@
-﻿using Models.Classes;
+﻿using Prism.Mvvm;
 
 namespace FilmsManager.Models
 {
-	public class LanguageModel : BaseModel
+	public class LanguageModel : BindableBase
 	{
 		private string _abreviation;
 

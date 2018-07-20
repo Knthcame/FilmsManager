@@ -1,9 +1,9 @@
-﻿using Models.Classes;
+﻿using Prism.Mvvm;
 using Xamarin.Forms;
 
 namespace FilmsManager.Models
 {
-	public class PickImageModel : BaseModel
+	public class PickImageModel : BindableBase 
 	{
 		private object _imageName;
 

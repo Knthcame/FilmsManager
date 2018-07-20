@@ -105,79 +105,14 @@
             </Frame>
 
 
-            <ListView ItemsSource="{Binding FilteredMovieList}"
-                        HasUnevenRows="True"
-                        BackgroundColor="Transparent"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="3"
-                        Grid.Row="2"
-                        SelectedItem="{Binding SelectedMovie, Mode=TwoWay}">
-
-                <ListView.Behaviors>
-                    <b:EventToCommandBehavior EventName="ItemSelected"
-                                                Command="{Binding FilmDetailsCommand}"/>
-                </ListView.Behaviors>
-
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell Height="90">
-                            <Frame BorderColor="White"
-                                Margin="0,3"
-                                Padding="0"
-                                BackgroundColor="Transparent"
-                                HasShadow="False">
-                                <Frame.CornerRadius>
-                                    <OnPlatform  x:TypeArguments="x:Single">
-                                        <On Platform="Android" Value="12"/>
-                                        <On Platform="iOS" Value="2"/>
-                                    </OnPlatform>
-                                </Frame.CornerRadius>
-                                <StackLayout>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="30*"/>
-                                            <ColumnDefinition Width="35*"/>
-                                            <ColumnDefinition Width="35*"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <Frame  BorderColor="LightGray"
-                                                CornerRadius="0"
-                                                Grid.Column="1"
-                                                BackgroundColor="Transparent"
-                                                Padding="0"
-                                                Margin="0">
-
-                                            <Label  Text="{Binding Title}"
-                                                    TextColor="White"
-                                                    FontSize="Large"
-                                                    Grid.Column="1"
-                                                    VerticalOptions="CenterAndExpand"
-                                                    HorizontalOptions="Center"
-                                                />
-                                        </Frame>
-
-                                        <Label  Text="{Binding Genre.Name}"
-                                                TextColor="LightGray"
-                                                FontSize="Medium"
-                                                Grid.Column="2"
-                                                VerticalOptions="CenterAndExpand"
-                                                HorizontalOptions="CenterAndExpand"/>
-
-                                        <Image  Source="{Binding Image}"
-                                                Grid.Column="0"
-                                                VerticalOptions="Center"
-                                                HorizontalOptions="Center"
-                                                BackgroundColor="White"
-                                                Margin="5,1,0,1"/>
-                                    </Grid>
-                                </StackLayout>
-
-                            </Frame>
-                        </ViewCell>
-
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <views:MovieListContentView MoviesSource="{Binding FilteredMovieList}"
+                                        RefreshCommand="{Binding RefreshCommand}"
+                                        DeleteCommand="{Binding DeleteFilmCommand}"
+                                        IsRefreshingMovieList="False"
+                                        IsPullToRefreshEnabled="False"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="3"
+                                        Grid.Row="2"/>
 
             <Button Text="{Binding SearchTypeButtonText}"
                     Command="{Binding SwapSearchCommand}"

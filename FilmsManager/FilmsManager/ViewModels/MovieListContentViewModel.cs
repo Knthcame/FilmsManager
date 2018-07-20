@@ -17,7 +17,7 @@ namespace FilmsManager.ViewModels
 {
 	public class MovieListContentViewModel : BaseViewModel
 	{
-		private MovieModel _selectedMovie;
+		protected MovieModel _selectedMovie;
 
 		public string BackgroundImage { get; set; } = AppImages.BackgroundImageHome;
 
@@ -50,7 +50,7 @@ namespace FilmsManager.ViewModels
 			_restService = restService;
 			_genreModelManager = genreModelManager;
 			DeleteFilmCommand = new DelegateCommand<MovieModel>(async (movie) => await OnDeleteFilmAsync(movie));
-			ShowDetailsCommand = new DelegateCommand<MovieModel>(async (movie) => await OnFilmDetailAsync(movie));
+			ShowDetailsCommand = new DelegateCommand<MovieModel>(async (movie) => await OnShowDetailAsync(movie));
 			RefreshCommand = new DelegateCommand(async () => await RefreshMovieListAsync());
 			InitializationNotifier = NotifyTaskCompletion.Create(RetrieveMovieListAsync());
 			GenreList = GenerateGenreList();
@@ -76,7 +76,7 @@ namespace FilmsManager.ViewModels
 			MovieList = new ObservableCollection<MovieModel>(movies.OrderBy(m => m.Title));
 		}
 
-		protected async Task OnFilmDetailAsync(MovieModel movie)
+		protected async Task OnShowDetailAsync(MovieModel movie)
 		{
 			if (movie == null)
 				return;
