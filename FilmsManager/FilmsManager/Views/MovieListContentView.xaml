@@ -17,7 +17,7 @@
                       Grid.Column="0"
                       Grid.ColumnSpan="3"
                       Grid.Row="1"
-                      IsPullToRefreshEnabled="True">
+                      IsPullToRefreshEnabled="{Binding IsPullToRefreshEnabled, Source={x:Reference MyContentView}}">
                 <!--CachingStrategy="RecycleElement"-->
 
                 <ListView.ItemTemplate>

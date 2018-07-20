@@ -19,10 +19,18 @@ namespace FilmsManager.Views
 
 		public static readonly BindableProperty ShowDetailsCommandProperty = BindableProperty.Create(propertyName: nameof(ShowDetailsCommand), returnType: typeof(ICommand), declaringType: typeof(MovieListContentView));
 
+		public static readonly BindableProperty IsPullToRefreshEnabledProperty = BindableProperty.Create(propertyName: nameof(IsPullToRefreshEnabled), returnType: typeof(bool), declaringType: typeof(MovieListContentView));
+
 		public IEnumerable<MovieModel> MoviesSource
 		{
 			get => (IEnumerable<MovieModel>) GetValue(MoviesSourceProperty);
 			set => SetValue(MoviesSourceProperty, value);
+		}
+
+		public bool IsPullToRefreshEnabled
+		{
+			get => (bool) GetValue(IsPullToRefreshEnabledProperty);
+			set => SetValue(IsPullToRefreshEnabledProperty, value);
 		}
 
 		public bool IsRefreshingMovieList

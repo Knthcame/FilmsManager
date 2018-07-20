@@ -1,16 +1,11 @@
 ﻿using Prism.Commands;
 using Prism.Navigation;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Models.Resources;
-using System.Collections.Generic;
 using Prism.Events;
 using Xamarin.Forms;
-using Models.Constants;
-using Models.ApiServices;
 using Models.ApiServices.Interfaces;
-using System.Linq;
 using Models.Managers.Interfaces;
 using Models.Classes;
 using FilmsManager.Models;
@@ -21,46 +16,18 @@ using FilmsManager.Events;
 
 namespace FilmsManager.ViewModels
 {
-	public class HomePageViewModel : BaseViewModel
+	public class HomePageViewModel : MovieListContentViewModel
 	{
-		private MovieModel _selectedMovie;
-
-		private readonly IRestService _restService = new RestService();
-
-		public string BackgroundImage { get; set; } = AppImages.BackgroundImageHome;
 
 		public string SearchToolbarIcon { get; set; } = AppImages.MagnifyingGlass;
-
-		private IList<MovieModel> _movieList = new ObservableCollection<MovieModel>();
-
-		public IList<MovieModel> MovieList
-		{
-			get => _movieList;
-			set { SetProperty(ref _movieList, value); }
-		}
-		public IList<GenreModel> GenreList { get; set; }
 
 		public ICommand NavigateCommand { get; set; }
 
 		public ICommand SearchCommand { get; set; }
 
-		public ICommand FilmDetailsCommand { get; set; }
-
 		public ICommand LanguageOptionsCommand { get; set; }
 
-		public ICommand DeleteFilmCommand { get; set; }
-
-		public ICommand RefreshCommand { get; set; }
-
 		private readonly IEventAggregator _eventAggregator;
-
-		private readonly IGenreModelManager _genreModelManager;
-
-		public MovieModel SelectedMovie
-		{
-			get => _selectedMovie;
-			set { SetProperty(ref _selectedMovie, value); }
-		}
 
 		private string _languageAbreviation;
 
@@ -116,47 +83,21 @@ namespace FilmsManager.ViewModels
 			set { SetProperty(ref _listViewIsRefreshing, value); }
 		}
 
-		public INotifyTaskCompletion InitializationNotifier { get; private set; }
-
-		public Task Initialization => InitializationNotifier.Task;
-
-		public HomePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IGenreModelManager genreModelManager) : base(navigationService)
+		public HomePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IGenreModelManager genreModelManager, IRestService restService) : base(navigationService, restService, genreModelManager)
 		{
-			_genreModelManager = genreModelManager;
 			_eventAggregator = eventAggregator;
 			_eventAggregator.GetEvent<SelectLanguageEvent>().Subscribe(async () => await LoadResourcesAsync());
 			_eventAggregator.GetEvent<AddFilmEvent>().Subscribe(async () => await RetrieveMovieListAsync());
 			NavigateCommand = new DelegateCommand(async () => await OnNavigateAsync());
 			SearchCommand = new DelegateCommand(async () => await OnSearchAsync());
-			FilmDetailsCommand = new DelegateCommand<MovieModel>(async (movie) => await OnFilmDetailAsync(movie));
 			LanguageOptionsCommand = new DelegateCommand(async () => await OnLanguageOptionsAsync());
-			DeleteFilmCommand = new DelegateCommand<MovieModel>(async (movie) => await OnDeleteFilmAsync(movie));
-			RefreshCommand = new DelegateCommand(async () => await RefreshMovieListAsync());
-			InitializationNotifier = NotifyTaskCompletion.Create(RetrieveMovieListAsync());
 			InitializationNotifier = NotifyTaskCompletion.Create(LoadResourcesAsync());
 		}
 
-		private async Task RefreshMovieListAsync()
+		protected override async Task RefreshMovieListAsync()
 		{
-			await RetrieveMovieListAsync();
+			await base.RefreshMovieListAsync();
 			ListViewIsRefreshing = false;
-		}
-
-		private async Task OnDeleteFilmAsync(MovieModel movie)
-		{
-			await _restService.DeleteToDoItemAsync(movie.Id);
-			await RetrieveMovieListAsync();
-		}
-
-		public async Task RetrieveMovieListAsync()
-		{
-			var list = await _restService.RefreshDataAsync();
-			var movies = new ObservableCollection<MovieModel>();
-			foreach (MovieItem item in list)
-			{
-				movies.Add(new MovieModel(item.Id, item.Title, item.Genre, item.Image));
-			}
-			MovieList = new ObservableCollection<MovieModel>(movies.OrderBy(m => m.Title));
 		}
 
 		public async Task LoadResourcesAsync()
@@ -175,22 +116,7 @@ namespace FilmsManager.ViewModels
 					LanguageAbreviation = AppResources.LanguageAbreviation;
 					break;
 			}
-			GenreList = GenerateGenreList();
 			await UpdateMovieListLanguageAsync();
-		}
-
-		public ObservableCollection<GenreModel> GenerateGenreList()
-		{
-			return new ObservableCollection<GenreModel>()
-			{
-				_genreModelManager.FindByID(GenreKeys.FantasyGenre),
-				_genreModelManager.FindByID(GenreKeys.TerrorGenre),
-				_genreModelManager.FindByID(GenreKeys.DramaGenre),
-				_genreModelManager.FindByID(GenreKeys.HumourGenre),
-				_genreModelManager.FindByID(GenreKeys.ScienceFictionGenre),
-				_genreModelManager.FindByID(GenreKeys.ActionGenre),
-				_genreModelManager.FindByID(GenreKeys.SuperHeroesGenre)
-			};
 		}
 
 		public async Task UpdateMovieListLanguageAsync()
@@ -206,17 +132,6 @@ namespace FilmsManager.ViewModels
 		private async Task OnLanguageOptionsAsync()
 		{
 			await NavigationService.NavigateAsync(nameof(LanguageSelectionPage), useModalNavigation: true);
-		}
-
-		private async Task OnFilmDetailAsync(MovieModel movie)
-		{
-			if (movie == null)
-				return;
-			var parameters = new NavigationParameters
-			{
-				{ "movie", movie }
-			};
-			await NavigationService.NavigateAsync(nameof(FilmDetailsPage), parameters);
 		}
 
 		private async Task OnSearchAsync()
@@ -237,11 +152,6 @@ namespace FilmsManager.ViewModels
 				{ "genreList", GenreList }
 			};
 			await NavigationService.NavigateAsync(nameof(AddFilmPage), parameters);
-		}
-
-		public override void OnAppearing()
-		{
-			SelectedMovie = null;
 		}
 
 	}

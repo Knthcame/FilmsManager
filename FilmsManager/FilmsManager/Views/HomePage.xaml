@@ -80,6 +80,7 @@
                                         DeleteCommand="{Binding DeleteFilmCommand}"
                                         IsRefreshingMovieList="{Binding ListViewIsRefreshing, Mode=TwoWay}"
                                         ShowDetailsCommand="{Binding FilmDetailsCommand}"
+                                        IsPullToRefreshEnabled="True"
                                         Grid.Column="0"
                                         Grid.ColumnSpan="3"
                                         Grid.Row="1"/>
