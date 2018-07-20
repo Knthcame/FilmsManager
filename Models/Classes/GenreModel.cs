@@ -7,7 +7,11 @@
 		public string Name
 		{
 			get => _name;
-			set { SetProperty(ref _name, value); }
+			set
+			{
+				_name = value;
+				RaisePropertyChanged();
+			}
 		}
 
 		private int _id;
@@ -15,7 +19,11 @@
 		public int ID
 		{
 			get { return _id; }
-			set { SetProperty(ref _id, value); }
+			set
+			{
+				_id = value;
+				RaisePropertyChanged();
+			}
 		}
 
 
