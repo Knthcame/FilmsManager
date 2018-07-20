@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              x:Class="FilmsManager.Views.MovieListContentView"
+              xmlns:Localization="clr-namespace:FilmsManager.ResxLocalization"
+              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+              prism:ViewModelLocator.AutowireViewModel="True"
+              x:Name="MyContentView">
+
+    <ContentView.Content>
+        <StackLayout>
+            <ListView ItemsSource="{Binding MoviesSource, Source={x:Reference MyContentView}}" 
+                      IsRefreshing="{Binding IsRefreshingMovieList, Source={x:Reference MyContentView}, Mode=TwoWay}"
+                      RefreshCommand="{Binding RefreshCommand, Source={x:Reference MyContentView}}"
+                      HasUnevenRows="True"
+                      BackgroundColor="Transparent"
+                      Grid.Column="0"
+                      Grid.ColumnSpan="3"
+                      Grid.Row="1"
+                      IsPullToRefreshEnabled="True">
+                <!--CachingStrategy="RecycleElement"-->
+
+                <ListView.ItemTemplate>
+
+                    <DataTemplate>
+
+                        <ViewCell Height="90" >
+
+                            <ViewCell.ContextActions>
+
+                                <MenuItem Command="{Binding ShowDetailsCommand, Source={x:Reference Name=MyContentView}}"
+                                          CommandParameter="{Binding .}"
+                                          Text="{Localization:Translate DetailsMenuItemText}"/>
+
+                                <MenuItem Command="{Binding DeleteCommand, Source={x:Reference Name=MyContentView}}" 
+                                          CommandParameter="{Binding .}"
+                                          Text="{Localization:Translate DeleteMenuItemText}"
+                                          IsDestructive="True"/>
+
+                            </ViewCell.ContextActions>
+
+                            <Frame BorderColor="White"
+                                   Margin="0,3"
+                                   Padding="0"
+                                   BackgroundColor="Transparent"
+                                   HasShadow="False">
+
+                                <Frame.CornerRadius>
+
+                                    <OnPlatform  x:TypeArguments="x:Single">
+                                        <On Platform="Android" Value="12"/>
+                                        <On Platform="iOS" Value="2"/>
+                                    </OnPlatform>
+
+                                </Frame.CornerRadius>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30*"/>
+                                        <ColumnDefinition Width="35*"/>
+                                        <ColumnDefinition Width="35*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="100*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Frame  BorderColor="LightGray"
+                                        CornerRadius="0"
+                                        Grid.Column="1"
+                                        BackgroundColor="Transparent"
+                                        Padding="0"
+                                        Margin="0">
+
+                                        <Label Text="{Binding Title}"
+                                               TextColor="White"
+                                               FontSize="Large"
+                                               Grid.Column="1"
+                                               VerticalOptions="CenterAndExpand"
+                                               HorizontalOptions="Center"/>
+                                    </Frame>
+
+                                    <Label Text="{Binding Genre.Name}"
+                                           TextColor="LightGray"
+                                           FontSize="Medium"
+                                           Grid.Column="2"
+                                           VerticalOptions="CenterAndExpand"
+                                           HorizontalOptions="CenterAndExpand"/>
+
+                                    <Image Source="{Binding Image}"
+                                           Grid.Column="0"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="Center"
+                                           BackgroundColor="White"
+                                           Margin="5,1,0,1"
+                                           Aspect="AspectFit"/>
+                                </Grid>
+
+                            </Frame>
+
+                        </ViewCell>
+
+                    </DataTemplate>
+
+                </ListView.ItemTemplate>
+
+            </ListView>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

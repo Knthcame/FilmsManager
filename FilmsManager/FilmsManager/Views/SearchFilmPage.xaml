@@ -27,29 +27,28 @@
             </Grid.RowDefinitions>
 
             <Image Source="{Binding BackgroundImage}"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="3"
-                    Grid.Row="0"
-                    Grid.RowSpan="4"
-                    Aspect="Fill"
-                    />
+                   Grid.Column="0"
+                   Grid.ColumnSpan="3"
+                   Grid.Row="0"
+                   Grid.RowSpan="4"
+                   Aspect="Fill"/>
 
             <SearchBar Text="{Binding TextEntry}"
-                        TextColor="Black"
-                        Placeholder="{Localization:Translate SearchFilmPageSearchBarPlaceholder}"
-                        PlaceholderColor="DarkGray"
-                        SearchCommand="{Binding SearchFilmCommand}"
-                        SearchCommandParameter="{Binding TextEntry}"
-                        IsVisible="{Binding SearchBarVisible}"
-                        BackgroundColor="LightGray"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="3"
-                        Grid.Row="0">
+                       TextColor="Black"
+                       Placeholder="{Localization:Translate SearchFilmPageSearchBarPlaceholder}"
+                       PlaceholderColor="DarkGray"
+                       SearchCommand="{Binding SearchFilmCommand}"
+                       SearchCommandParameter="{Binding TextEntry}"
+                       IsVisible="{Binding SearchBarVisible}"
+                       BackgroundColor="LightGray"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="3"
+                       Grid.Row="0">
 
                 <SearchBar.Behaviors>
 
                     <b:EventToCommandBehavior EventName="TextChanged"
-                                                Command="{Binding SearchFilmCommand}"/>
+                                              Command="{Binding SearchFilmCommand}"/>
 
                 </SearchBar.Behaviors>
             </SearchBar>

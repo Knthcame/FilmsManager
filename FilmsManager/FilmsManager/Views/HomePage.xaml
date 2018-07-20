@@ -75,104 +75,14 @@
             </Frame>
 
 
-            <ListView ItemsSource="{Binding MovieList}"
-                      HasUnevenRows="True"
-                      BackgroundColor="Transparent"
-                      Grid.Column="0"
-                      Grid.ColumnSpan="3"
-                      Grid.Row="1"
-                      SelectedItem="{Binding SelectedMovie, Mode=TwoWay}"
-                      CachingStrategy="RecycleElement"
-                      IsPullToRefreshEnabled="True"
-                      RefreshCommand="{Binding Path=BindingContext.RefreshCommand, Source={x:Reference MyView}}"
-                      IsRefreshing="{Binding Path=BindingContext.ListViewIsRefreshing, Source={x:Reference MyView}, Mode=TwoWay}">
-
-                <!--<ListView.Behaviors>
-                    <b:EventToCommandBehavior EventName="ItemSelected" 
-                                              Command="{Binding FilmDetailsCommand}"/>
-                </ListView.Behaviors>-->
-
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell Height="90" >
-
-                            <ViewCell.ContextActions>
-
-                                <MenuItem Command="{Binding Path=BindingContext.FilmDetailsCommand, Source={x:Reference MyView}}" 
-                                          CommandParameter="{Binding .}"
-                                          Text="{Localization:Translate DetailsMenuItemText}"
-                                          prism:ViewModelLocator.AutowireViewModel="True"/>
-
-                                <MenuItem Command="{Binding Path=BindingContext.DeleteFilmCommand, Source={x:Reference MyView}}"
-                                          CommandParameter="{Binding .}"
-                                          Text="{Localization:Translate DeleteMenuItemText}"
-                                          IsDestructive="True"/>
-
-                            </ViewCell.ContextActions>
-                            
-                            <Frame BorderColor="White"
-                                Margin="0,3"
-                                Padding="0"
-                                BackgroundColor="Transparent"
-                                HasShadow="False">
-                                <Frame.CornerRadius>
-                                    <OnPlatform  x:TypeArguments="x:Single">
-                                        <On Platform="Android" Value="12"/>
-                                        <On Platform="iOS" Value="2"/>
-                                    </OnPlatform>
-                                </Frame.CornerRadius>
-                                <StackLayout>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="30*"/>
-                                            <ColumnDefinition Width="35*"/>
-                                            <ColumnDefinition Width="35*"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="100*"/>
-                                        </Grid.RowDefinitions>
-
-                                        <Frame  BorderColor="LightGray"
-                                                CornerRadius="0"
-                                                Grid.Column="1"
-                                                BackgroundColor="Transparent"
-                                                Padding="0"
-                                                Margin="0">
-
-                                            <Label  Text="{Binding Title}"
-                                                    TextColor="White"
-                                                    FontSize="Large"
-                                                    Grid.Column="1"
-                                                    VerticalOptions="CenterAndExpand"
-                                                    HorizontalOptions="Center"
-                                                />
-                                        </Frame>
-
-                                        <Label  Text="{Binding Genre.Name}"
-                                                TextColor="LightGray"
-                                                FontSize="Medium"
-                                                Grid.Column="2"
-                                                VerticalOptions="CenterAndExpand"
-                                                HorizontalOptions="CenterAndExpand"/>
-
-                                        <Image  Source="{Binding Image}"
-                                                Grid.Column="0"
-                                                VerticalOptions="Center"
-                                                HorizontalOptions="Center"
-                                                BackgroundColor="White"
-                                                Margin="5,1,0,1"
-                                                Aspect="AspectFit"/>
-                                    </Grid>
-                                </StackLayout>
-
-                            </Frame>
-                        </ViewCell>
-
-                    </DataTemplate>
-
-                </ListView.ItemTemplate>
-            </ListView>
+            <views:MovieListContentView MoviesSource="{Binding MovieList}"
+                                        RefreshCommand="{Binding RefreshCommand}"
+                                        DeleteCommand="{Binding DeleteFilmCommand}"
+                                        IsRefreshingMovieList="{Binding ListViewIsRefreshing, Mode=TwoWay}"
+                                        ShowDetailsCommand="{Binding FilmDetailsCommand}"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="3"
+                                        Grid.Row="1"/>
 
             <Button VerticalOptions="End"
                     HorizontalOptions="Fill"
