@@ -78,7 +78,7 @@
             <views:MovieListContentView MoviesSource="{Binding MovieList}"
                                         RefreshCommand="{Binding RefreshCommand}"
                                         DeleteCommand="{Binding DeleteFilmCommand}"
-                                        IsRefreshingMovieList="{Binding ListViewIsRefreshing, Mode=TwoWay}"
+                                        IsRefreshingMovieList="{Binding IsRefreshingMovieList, Mode=TwoWay}"
                                         ShowDetailsCommand="{Binding ShowDetailsCommand}"
                                         IsPullToRefreshEnabled="True"
                                         Grid.Column="0"

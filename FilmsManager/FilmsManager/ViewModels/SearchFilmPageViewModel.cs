@@ -1,19 +1,17 @@
 ﻿using Models.Constants;
 using Models.Managers.Interfaces;
-using Models.Resources;
 using Models.Classes;
 using Prism.Commands;
 using Prism.Navigation;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using FilmsManager.Models;
 using FilmsManager.Resources;
-using FilmsManager.Views;
 using FilmsManager.Enums;
 using Models.ApiServices.Interfaces;
+using FilmsManager.Extensions;
 
 namespace FilmsManager.ViewModels
 {
@@ -57,11 +55,7 @@ namespace FilmsManager.ViewModels
 			set { SetProperty(ref _textEntry, value); }
 		}
 
-		public ObservableCollection<MovieModel> FilteredMovieList
-		{
-			get => _filteredMovieList;
-			set { SetProperty(ref _filteredMovieList, value); }
-		}
+		public ObservableCollection<MovieModel> FilteredMovieList { get; set; } = new ObservableCollection<MovieModel>();
 
 		public GenreModel SelectedGenre
 		{
@@ -84,7 +78,7 @@ namespace FilmsManager.ViewModels
 			Title = AppResources.SearchFilmPageTitle;
 			SearchFilmCommand = new DelegateCommand(OnSearchFilm);
 			SwapSearchCommand = new DelegateCommand(OnSwapSearch);
-			FilteredMovieList = new ObservableCollection<MovieModel>(MovieList);
+			FilteredMovieList.AddRange(MovieList);
 		}
 
 		//public override void OnNavigatedTo(NavigationParameters parameters)

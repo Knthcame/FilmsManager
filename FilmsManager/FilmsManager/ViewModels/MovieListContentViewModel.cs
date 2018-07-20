@@ -1,8 +1,7 @@
 ﻿using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using FilmsManager.Models;
+using FilmsManager.Extensions;
 using FilmsManager.Views;
 using Models.ApiServices.Interfaces;
 using Models.Classes;
@@ -17,13 +16,16 @@ namespace FilmsManager.ViewModels
 {
 	public class MovieListContentViewModel : BaseViewModel
 	{
+
+		//private ObservableCollection<MovieModel> _movieList = new ObservableCollection<MovieModel>();
+
 		protected MovieModel _selectedMovie;
 
 		public string BackgroundImage { get; set; } = AppImages.BackgroundImageHome;
 
-		public ObservableCollection<MovieModel> MovieList = new ObservableCollection<MovieModel>();
+		public ObservableCollection<MovieModel> MovieList { get; set; } = new ObservableCollection<MovieModel>();
 
-		public ObservableCollection<GenreModel> GenreList = new ObservableCollection<GenreModel>();
+		public ObservableCollection<GenreModel> GenreList { get; set; } = new ObservableCollection<GenreModel>();
 
 		public MovieModel SelectedMovie
 		{
@@ -67,13 +69,9 @@ namespace FilmsManager.ViewModels
 
 		protected async Task RetrieveMovieListAsync()
 		{
-			var list = await _restService.RefreshDataAsync();
-			var movies = new ObservableCollection<MovieModel>();
-			foreach (MovieItem item in list)
-			{
-				movies.Add(new MovieModel(item.Id, item.Title, item.Genre, item.Image));
-			}
-			MovieList = new ObservableCollection<MovieModel>(movies.OrderBy(m => m.Title));
+			var movies = await _restService.RefreshDataAsync();
+			MovieList.Clear();
+			MovieList.AddRange(movies);
 		}
 
 		protected async Task OnShowDetailAsync(MovieModel movie)

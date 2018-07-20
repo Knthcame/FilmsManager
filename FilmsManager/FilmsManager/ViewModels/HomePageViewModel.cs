@@ -8,7 +8,6 @@ using Xamarin.Forms;
 using Models.ApiServices.Interfaces;
 using Models.Managers.Interfaces;
 using Models.Classes;
-using FilmsManager.Models;
 using FilmsManager.Resources;
 using FilmsManager.Views;
 using Nito.AsyncEx;
@@ -18,6 +17,19 @@ namespace FilmsManager.ViewModels
 {
 	public class HomePageViewModel : MovieListContentViewModel
 	{
+		private string _titleColumn;
+
+		private string _imageColumn;
+
+		private string _addText;
+
+		private FileImageSource _flag;
+
+		private string _languageAbreviation;
+
+		private string _genreColumn;
+
+		private bool _isRefreshingMovieList = false;
 
 		public string SearchToolbarIcon { get; set; } = AppImages.MagnifyingGlass;
 
@@ -29,15 +41,11 @@ namespace FilmsManager.ViewModels
 
 		private readonly IEventAggregator _eventAggregator;
 
-		private string _languageAbreviation;
-
 		public string LanguageAbreviation
 		{
 			get { return _languageAbreviation; }
 			set { SetProperty(ref _languageAbreviation, value); }
 		}
-
-		private FileImageSource _flag;
 
 		public FileImageSource Flag
 		{
@@ -45,14 +53,11 @@ namespace FilmsManager.ViewModels
 			set { SetProperty(ref _flag, value); }
 		}
 
-		private string _addText;
 		public string AddText
 		{
 			get { return _addText; }
 			set { SetProperty(ref _addText, value); }
 		}
-
-		private string _imageColumn;
 
 		public string ImageColumn
 		{
@@ -60,16 +65,11 @@ namespace FilmsManager.ViewModels
 			set { SetProperty(ref _imageColumn, value); }
 		}
 
-		private string _titleColumn;
-
 		public string TitleColumn
 		{
 			get { return _titleColumn; }
 			set { SetProperty(ref _titleColumn, value); }
 		}
-
-		private string _genreColumn;
-		private bool _listViewIsRefreshing =false;
 
 		public string GenreColumn
 		{
@@ -77,10 +77,10 @@ namespace FilmsManager.ViewModels
 			set { SetProperty(ref _genreColumn, value); }
 		}
 
-		public bool ListViewIsRefreshing
+		public bool IsRefreshingMovieList
 		{
-			get => _listViewIsRefreshing;
-			set { SetProperty(ref _listViewIsRefreshing, value); }
+			get => _isRefreshingMovieList;
+			set { SetProperty(ref _isRefreshingMovieList, value); }
 		}
 
 		public HomePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IGenreModelManager genreModelManager, IRestService restService) : base(navigationService, restService, genreModelManager)
@@ -97,7 +97,7 @@ namespace FilmsManager.ViewModels
 		protected override async Task RefreshMovieListAsync()
 		{
 			await base.RefreshMovieListAsync();
-			ListViewIsRefreshing = false;
+			IsRefreshingMovieList = false;
 		}
 
 		public async Task LoadResourcesAsync()
@@ -124,7 +124,7 @@ namespace FilmsManager.ViewModels
 			foreach (MovieModel movie in MovieList)
 			{
 				movie.Genre = _genreModelManager.FindByID(movie.Genre.ID);
-				await _restService.SaveToDoItemAsync(new MovieItem(movie.Id, movie.Title, movie.Genre, movie.Image), false);
+				await _restService.SaveToDoItemAsync(new global::Models.Classes.MovieModel(movie.Id, movie.Title, movie.Genre, movie.Image), false);
 			}
 			await RetrieveMovieListAsync();
 		}

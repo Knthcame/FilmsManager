@@ -22,7 +22,7 @@ namespace FilmsManagerApi.Controllers
 		public IActionResult List() => Ok(_movieRepository.All);
 
 		[HttpPost]
-		public IActionResult Create([FromBody] MovieItem item)
+		public IActionResult Create([FromBody] MovieModel item)
 		{
 			if (item == null || !ModelState.IsValid)
 				return BadRequest(ErrorCodeEnum.ToDoItemNameAndDescriptionRequired.ToString());
@@ -45,7 +45,7 @@ namespace FilmsManagerApi.Controllers
 		}
 
 		[HttpPut]
-		public IActionResult Modify([FromBody] MovieItem item)
+		public IActionResult Modify([FromBody] MovieModel item)
 		{
 			if (item == null || !ModelState.IsValid)
 				return BadRequest(ErrorCodeEnum.ToDoItemNameAndDescriptionRequired.ToString());

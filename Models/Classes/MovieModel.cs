@@ -1,6 +1,6 @@
 ﻿namespace Models.Classes
 {
-	public class MovieItem
+	public class MovieModel
     {
 		public string Id { get; set; }
 
@@ -10,7 +10,7 @@
 
 		public object Image { get; set; }
 
-		public MovieItem(string id, string title, GenreModel genre, object image)
+		public MovieModel(string id, string title, GenreModel genre, object image)
 		{
 			Id = id;
 			Title = title;
