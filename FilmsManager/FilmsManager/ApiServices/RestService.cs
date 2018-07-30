@@ -51,7 +51,6 @@ namespace Models.ApiServices
 
 		public async Task SaveToDoItemAsync(MovieModel item, bool isNewItem)
 		{
-			// RestUrl = http://developer.xamarin.com:8081/api/todoitems
 			var uri = new Uri(string.Format(ApiConstants.RestUrl, string.Empty));
 
 			try
@@ -84,7 +83,6 @@ namespace Models.ApiServices
 		public async Task DeleteToDoItemAsync(string id)
 
 		{
-			// RestUrl = http://developer.xamarin.com:8081/api/todoitems/{0}
 			var uri = new Uri(string.Format(ApiConstants.RestUrl, id));
 
 			try

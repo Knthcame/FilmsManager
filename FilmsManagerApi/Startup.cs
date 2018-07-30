@@ -21,7 +21,7 @@ namespace FilmsManagerApi
         {
             services.AddMvc();
 
-			services.AddSingleton<IToDoRepository, MovieRepository>();
+			services.AddSingleton<IMovieRepository, MovieRepository>();
 		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

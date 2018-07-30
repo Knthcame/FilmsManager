@@ -17,6 +17,7 @@ namespace FilmsManager.ViewModels
 	public class LanguageSelectionPageViewModel : BaseViewModel
 	{
 		public DelegateCommand SelectLanguageCommand { get; set; }
+        public DelegateCommand GoBackCommand { get; set; }
 
 		private LanguageModel _selectedLanguage;
 
@@ -37,6 +38,7 @@ namespace FilmsManager.ViewModels
 		{
 			_eventAggregator = eventAggregator;
 			SelectLanguageCommand = new DelegateCommand(async() => await OnSelectLanguageAsync());
+            GoBackCommand = new DelegateCommand(async() => await OnBackButtonPressedAsync());
 		}
 
 		private async Task OnSelectLanguageAsync()

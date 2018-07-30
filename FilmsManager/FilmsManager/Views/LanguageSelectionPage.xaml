@@ -10,7 +10,15 @@
                 Title="{Localization:Translate LanguageSelectionPageTitle}">
     
     <ContentPage.Content>
+        
         <StackLayout>
+            
+            <Button Text="{Localization:Translate GoBackButtonText}"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Start"
+                    Command="{Binding GoBackCommand}"
+                    BackgroundColor="Transparent"/>
+            
             <ListView ItemsSource="{Binding LanguageList}"
                       SelectedItem="{Binding SelectedLanguage}"
                       CachingStrategy="RecycleElement">
@@ -21,12 +29,19 @@
                 </ListView.Behaviors>
                 
                 <ListView.ItemTemplate>
+                    
                     <DataTemplate>
+                        
                         <ImageCell ImageSource="{Binding Flag}"
                                    Text="{Binding Language}"/>
                     </DataTemplate>
+                    
                 </ListView.ItemTemplate>
+                
             </ListView>
+            
         </StackLayout>
+        
     </ContentPage.Content>
+    
 </views:BasePage>
