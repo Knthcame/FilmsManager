@@ -3,13 +3,13 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iis": {
-      "applicationUrl": "http://localhost/FilmsManagerApi",
+      "applicationUrl": "http://localhost:62991/",
       "sslPort": 0
     },
-    "iisExpress": {
-      "applicationUrl": "http://192.168.42.200:62991/",
-      "sslPort": 0
-    }
+			"iisExpress": {
+				"applicationUrl": "http://localhost:62991/",
+				"sslPort": 0
+			}
   },
   "profiles": {
     "IIS Express": {
@@ -20,14 +20,14 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "FilmsManagerApi": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "api/MovieItems",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "http://192.168.42.200:62991/"
-    }
+			"FilmsManagerApi": {
+				"commandName": "Project",
+				"launchBrowser": true,
+				"launchUrl": "api/MovieItems",
+				"environmentVariables": {
+					"ASPNETCORE_ENVIRONMENT": "Development"
+				},
+				"applicationUrl": "http://localhost:62991/"
+			}
   }
 }

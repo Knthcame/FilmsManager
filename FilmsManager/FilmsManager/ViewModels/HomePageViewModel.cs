@@ -123,8 +123,8 @@ namespace FilmsManager.ViewModels
 		{
 			foreach (MovieModel movie in MovieList)
 			{
-				movie.Genre = _genreModelManager.FindByID(movie.Genre.ID);
-				await _restService.SaveToDoItemAsync(new global::Models.Classes.MovieModel(movie.Id, movie.Title, movie.Genre, movie.Image), false);
+				movie.Genre = _genreModelManager.FindByID(movie.Genre.Id);
+				await _restService.SaveToDoItemAsync(new MovieModel(movie.Id, movie.Title, movie.Genre, movie.Image), false);
 			}
 			await RetrieveMovieListAsync();
 		}

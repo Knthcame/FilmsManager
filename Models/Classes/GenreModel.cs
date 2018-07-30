@@ -1,35 +1,16 @@
 ﻿namespace Models.Classes
 {
 	public class GenreModel : BaseModel
-	{
-		private string _name;
+    { 
+		public string Name { get; set; }
 
-		public string Name
-		{
-			get => _name;
-			set
-			{
-				_name = value;
-				RaisePropertyChanged();
-			}
-		}
+		public int Id { get; set; }
 
-		private int _id;
-
-		public int ID
-		{
-			get { return _id; }
-			set
-			{
-				_id = value;
-				RaisePropertyChanged();
-			}
-		}
-
+        public string Culture { get; set; }
 
 		public GenreModel(int id, string name)
 		{
-			ID = id;
+			Id = id;
 			Name = name;
 		}
 	}

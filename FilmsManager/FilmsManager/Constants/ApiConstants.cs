@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Models.Constants
+﻿namespace FilmsManager.Constants
 {
-    public static class ApiConstants
+	public static class ApiConstants
     {
-		public static string RestUrl = "http://192.168.42.200:62991/api/MovieItems/{0}";
+		public static string RestUrl = "http://10.0.100.232:62991/api/MovieItems/{0}";
 	}
 }

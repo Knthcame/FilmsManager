@@ -141,7 +141,7 @@ namespace FilmsManager.ViewModels
 				case SearchTypeEnum.Genre:
 					if (SelectedGenre != null)
 					{
-						if (SelectedGenre.ID == GenreKeys.AllGenres)
+						if (SelectedGenre.Id == GenreKeys.AllGenres)
 							FilteredMovieList = new ObservableCollection<MovieModel>(MovieList);
 						else
 							FilteredMovieList = new ObservableCollection<MovieModel>(MovieList.Where(movie => movie.Genre.Name.Equals(SelectedGenre.Name)));

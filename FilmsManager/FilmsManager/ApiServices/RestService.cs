@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using FilmsManager.Constants;
 
 namespace Models.ApiServices
 {
@@ -28,8 +29,7 @@ namespace Models.ApiServices
 		public async Task<List<MovieModel>> RefreshDataAsync()
 		{
 			Items = new List<MovieModel>();
-
-			// RestUrl = http://developer.xamarin.com:8081/api/ToDoItems
+			
 			var uri = new Uri(string.Format(ApiConstants.RestUrl, string.Empty));
 
 			try

@@ -1,5 +1,4 @@
-﻿using FilmsManager.Models;
-using Models.Classes;
+﻿using Models.Classes;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Input;

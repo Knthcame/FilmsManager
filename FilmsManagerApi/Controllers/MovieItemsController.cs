@@ -11,11 +11,13 @@ namespace FilmsManagerApi.Controllers
 	[Route("api/[controller]")]
 	public class MovieItemsController : Controller
 	{
-		private readonly IToDoRepository _movieRepository;
+		private readonly IMovieRepository _movieRepository;
+        private readonly IGenreRepository _genreRepository;
 
-		public MovieItemsController(IToDoRepository movieRepository)
+        public MovieItemsController(IMovieRepository movieRepository, IGenreRepository genreRepository)
 		{
 			_movieRepository = movieRepository;
+            _genreRepository = genreRepository;
 		}
 
 		[HttpGet]

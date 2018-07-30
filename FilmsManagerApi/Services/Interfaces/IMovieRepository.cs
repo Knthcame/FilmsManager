@@ -3,7 +3,7 @@ using Models.Classes;
 
 namespace FilmsManagerApi.Services.Interfaces
 {
-	public interface IToDoRepository
+	public interface IMovieRepository
     {
         bool DoesItemExist(string id);
         IEnumerable<MovieModel> All { get; }
