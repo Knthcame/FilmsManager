@@ -80,10 +80,14 @@
                                         DeleteCommand="{Binding DeleteFilmCommand}"
                                         IsRefreshingMovieList="{Binding IsRefreshingMovieList, Mode=TwoWay}"
                                         ShowDetailsCommand="{Binding ShowDetailsCommand}"
+                                        SelectedItem="{Binding SelectedMovie}"
+                                        SelectItemCommand="{Binding SelectItemCommand}"
                                         IsPullToRefreshEnabled="True"
                                         Grid.Column="0"
                                         Grid.ColumnSpan="3"
-                                        Grid.Row="1"/>
+                                        Grid.Row="1">
+                
+            </views:MovieListContentView>
 
             <Button VerticalOptions="End"
                     HorizontalOptions="Fill"

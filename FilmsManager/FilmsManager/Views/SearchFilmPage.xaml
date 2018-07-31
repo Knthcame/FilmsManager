@@ -108,6 +108,8 @@
             <views:MovieListContentView MoviesSource="{Binding FilteredMovieList}"
                                         RefreshCommand="{Binding RefreshCommand}"
                                         DeleteCommand="{Binding DeleteFilmCommand}"
+                                        SelectedItem="{Binding SelectedMovie}"
+                                        SelectItemCommand="{Binding SelectItemCommand}"
                                         IsRefreshingMovieList="False"
                                         IsPullToRefreshEnabled="False"
                                         Grid.Column="0"

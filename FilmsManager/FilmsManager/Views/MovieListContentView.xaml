@@ -1,13 +1,15 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
-              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-              x:Class="FilmsManager.Views.MovieListContentView"
-              xmlns:Localization="clr-namespace:FilmsManager.ResxLocalization"
-              x:Name="MyContentView">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+             x:Class="FilmsManager.Views.MovieListContentView"
+             xmlns:Localization="clr-namespace:FilmsManager.ResxLocalization"
+             x:Name="MyContentView">
 
     <ContentView.Content>
         <StackLayout>
-            <ListView ItemsSource="{Binding MoviesSource, Source={x:Reference MyContentView}}" 
+            <ListView x:Name="MyListView"
+                      ItemsSource="{Binding MoviesSource, Source={x:Reference MyContentView}}" 
                       IsRefreshing="{Binding IsRefreshingMovieList, Source={x:Reference MyContentView}, Mode=TwoWay}"
                       RefreshCommand="{Binding RefreshCommand, Source={x:Reference MyContentView}}"
                       HasUnevenRows="True"
@@ -15,8 +17,17 @@
                       Grid.Column="0"
                       Grid.ColumnSpan="3"
                       Grid.Row="1"
+                      SelectedItem="{Binding SelectedItem, Source={x:Reference MyContentView}}"
                       IsPullToRefreshEnabled="{Binding IsPullToRefreshEnabled, Source={x:Reference MyContentView}}">
                 <!--CachingStrategy="RecycleElement"-->
+
+                <ListView.Behaviors>
+
+                    <b:EventToCommandBehavior EventName="ItemSelected"
+                                              Command="{Binding SelectItemCommand}"/>
+
+                </ListView.Behaviors>
+
 
                 <ListView.ItemTemplate>
 

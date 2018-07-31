@@ -9,12 +9,12 @@ using Models.Classes;
 namespace FilmsManagerApi.Controllers
 {
 	[Route("api/[controller]")]
-	public class MovieItemsController : Controller
+	public class MovieController : Controller
 	{
 		private readonly IRepository<MovieModel> _movieRepository;
         private readonly IRepository<GenreModel> _genreRepository;
 
-        public MovieItemsController(IRepository<MovieModel> movieRepository, IRepository<GenreModel> genreRepository)
+        public MovieController(IRepository<MovieModel> movieRepository, IRepository<GenreModel> genreRepository)
 		{
 			_movieRepository = movieRepository;
             _genreRepository = genreRepository;

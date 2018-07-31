@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 namespace FilmsManagerApi.Controllers
 {
     [Route("api/[controller]")]
-    public class GenreItemsController : Controller
+    public class GenreController : Controller
     {
         private readonly IRepository<GenreModel> _genreRepository;
 
-        public GenreItemsController(IRepository<GenreModel> genreRepository)
+        public GenreController(IRepository<GenreModel> genreRepository)
         {
             _genreRepository = genreRepository;
 

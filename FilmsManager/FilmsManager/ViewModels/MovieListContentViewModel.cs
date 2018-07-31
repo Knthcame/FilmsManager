@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using FilmsManager.Extensions;
@@ -16,10 +18,9 @@ namespace FilmsManager.ViewModels
 {
 	public class MovieListContentViewModel : BaseViewModel
 	{
+        #region Properties
 
-		//private ObservableCollection<MovieModel> _movieList = new ObservableCollection<MovieModel>();
-
-		protected MovieModel _selectedMovie;
+        protected MovieModel _selectedMovie;
 
 		public string BackgroundImage { get; set; } = AppImages.BackgroundImageHome;
 
@@ -43,22 +44,32 @@ namespace FilmsManager.ViewModels
 
 		public ICommand ShowDetailsCommand { get; set; }
 
-		public INotifyTaskCompletion InitializationNotifier { get; protected set; }
+        public ICommand SelectItemCommand { get; set; }
+
+        public INotifyTaskCompletion InitializationNotifier { get; protected set; }
 
 		public Task Initialization => InitializationNotifier.Task;
 
-		public MovieListContentViewModel(INavigationService navigationService, IRestService restService, IGenreModelManager genreModelManager) : base(navigationService)
+        #endregion Properties
+
+        public MovieListContentViewModel(INavigationService navigationService, IRestService restService, IGenreModelManager genreModelManager) : base(navigationService)
 		{
 			_restService = restService;
 			_genreModelManager = genreModelManager;
 			DeleteFilmCommand = new DelegateCommand<MovieModel>(async (movie) => await OnDeleteFilmAsync(movie));
 			ShowDetailsCommand = new DelegateCommand<MovieModel>(async (movie) => await OnShowDetailAsync(movie));
 			RefreshCommand = new DelegateCommand(async () => await RefreshMovieListAsync());
+            SelectItemCommand = new DelegateCommand(OnSelectItem);
 			InitializationNotifier = NotifyTaskCompletion.Create(RetrieveMovieListAsync());
-			GenreList = GenerateGenreList();
+            InitializationNotifier = NotifyTaskCompletion.Create(GetGenreListAsync());
 		}
 
-		protected async Task OnDeleteFilmAsync(MovieModel movie)
+        private void OnSelectItem()
+        {
+            SelectedMovie = null;
+        }
+
+        protected async Task OnDeleteFilmAsync(MovieModel movie)
 		{
 			if (movie == null)
 				return;
@@ -69,7 +80,7 @@ namespace FilmsManager.ViewModels
 
 		protected async Task RetrieveMovieListAsync()
 		{
-			var movies = await _restService.RefreshDataAsync();
+			var movies = await _restService.RefreshDataAsync<MovieModel>();
 			MovieList.Clear();
 			MovieList.AddRange(movies);
 		}
@@ -90,18 +101,10 @@ namespace FilmsManager.ViewModels
 			await RetrieveMovieListAsync();
 		}
 
-		public ObservableCollection<GenreModel> GenerateGenreList()
+		public async Task GetGenreListAsync()
 		{
-			return new ObservableCollection<GenreModel>()
-			{
-				_genreModelManager.FindByID(GenreKeys.FantasyGenre),
-				_genreModelManager.FindByID(GenreKeys.TerrorGenre),
-				_genreModelManager.FindByID(GenreKeys.DramaGenre),
-				_genreModelManager.FindByID(GenreKeys.HumourGenre),
-				_genreModelManager.FindByID(GenreKeys.ScienceFictionGenre),
-				_genreModelManager.FindByID(GenreKeys.ActionGenre),
-				_genreModelManager.FindByID(GenreKeys.SuperHeroesGenre)
-			};
+            GenreList = await _restService.RefreshDataAsync<GenreModel>() as ObservableCollection<GenreModel>;
+            return;
 		}
 
 		public override void OnAppearing()

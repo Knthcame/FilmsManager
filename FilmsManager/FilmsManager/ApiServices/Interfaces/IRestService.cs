@@ -6,9 +6,9 @@ namespace Models.ApiServices.Interfaces
 {
 	public interface IRestService
     {
-		Task<List<MovieModel>> RefreshDataAsync();
+        Task<IList<TEntity>> RefreshDataAsync<TEntity>() where TEntity : IEntity;
 
-		Task SaveToDoItemAsync(MovieModel item, bool isNewItem);
+        Task SaveToDoItemAsync(MovieModel item, bool isNewItem);
 
 		Task DeleteToDoItemAsync(string id);
 	}
