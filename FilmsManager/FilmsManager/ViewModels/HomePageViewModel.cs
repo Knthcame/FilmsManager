@@ -17,7 +17,8 @@ namespace FilmsManager.ViewModels
 {
 	public class HomePageViewModel : MovieListContentViewModel
 	{
-		private string _titleColumn;
+        #region properties
+        private string _titleColumn;
 
 		private string _imageColumn;
 
@@ -82,8 +83,9 @@ namespace FilmsManager.ViewModels
 			get => _isRefreshingMovieList;
 			set { SetProperty(ref _isRefreshingMovieList, value); }
 		}
+        #endregion properties
 
-		public HomePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IGenreModelManager genreModelManager, IRestService restService) : base(navigationService, restService, genreModelManager)
+        public HomePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IGenreModelManager genreModelManager, IRestService restService) : base(navigationService, restService, genreModelManager)
 		{
 			_eventAggregator = eventAggregator;
 			_eventAggregator.GetEvent<SelectLanguageEvent>().Subscribe(async () => await LoadResourcesAsync());

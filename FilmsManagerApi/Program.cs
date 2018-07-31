@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace FilmsManagerApi
@@ -8,7 +10,14 @@ namespace FilmsManagerApi
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            try
+            {
+                BuildWebHost(args).Run();
+            }
+            catch (Exception ex)
+            {
+                Debug.Write("@@@@@             " + ex.Message);
+            }
         }
 
         public static IWebHost BuildWebHost(string[] args) =>

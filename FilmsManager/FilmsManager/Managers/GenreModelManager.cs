@@ -7,7 +7,7 @@ namespace Models.Managers
 {
 	public class GenreModelManager : IGenreModelManager
 	{
-		public GenreModel FindByID(int id)
+		public GenreModel FindByID(string id)
 		{
 			string name = null;
 			switch (id)

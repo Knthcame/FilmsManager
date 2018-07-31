@@ -14,9 +14,9 @@ namespace FilmsManagerApi.Controllers
     [Route("api/[controller]")]
     public class GenreItemsController : Controller
     {
-        private readonly IGenreRepository _genreRepository;
+        private readonly IRepository<GenreModel> _genreRepository;
 
-        public GenreItemsController(IGenreRepository genreRepository)
+        public GenreItemsController(IRepository<GenreModel> genreRepository)
         {
             _genreRepository = genreRepository;
 

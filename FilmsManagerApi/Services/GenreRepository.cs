@@ -7,13 +7,35 @@ using Models.Classes;
 
 namespace FilmsManagerApi.Services
 {
-    public class GenreRepository : IGenreRepository
+    public class GenreRepository : IRepository<GenreModel>
     {
         private readonly GenreResponse _genreResponse = new GenreResponse();
 
-        public GenreResponse All
+        IEnumerable<GenreModel> IRepository<GenreModel>.All => throw new NotImplementedException();
+
+        public void Delete(string id)
         {
-            get { return _genreResponse; }
+            throw new NotImplementedException();
+        }
+
+        public bool DoesItemExist(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public GenreModel Find(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Insert(GenreModel item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(GenreModel item)
+        {
+            throw new NotImplementedException();
         }
     }
 }

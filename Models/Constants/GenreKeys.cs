@@ -2,13 +2,13 @@
 {
 	public static class GenreKeys
     {
-		public const int AllGenres = 0;
-		public const int FantasyGenre = 1;
-		public const int TerrorGenre = 2;
-		public const int DramaGenre = 3;
-		public const int HumourGenre = 4;
-		public const int ScienceFictionGenre = 5;
-		public const int ActionGenre = 6;
-		public const int SuperHeroesGenre = 7;
+		public const string AllGenres = "All";
+        public const string FantasyGenre = "Fantasy";
+		public const string TerrorGenre = "Terror";
+		public const string DramaGenre = "Drama";
+		public const string HumourGenre = "Humour";
+		public const string ScienceFictionGenre = "Science fiction";
+		public const string ActionGenre = "Action";
+		public const string SuperHeroesGenre = "Super heroes";
 	}
 }

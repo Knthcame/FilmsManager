@@ -1,6 +1,6 @@
 ﻿namespace Models.Classes
 {
-	public class MovieModel : BaseModel
+	public class MovieModel : BaseModel, IEntity
     {
 		public string Id { get; set; }
 
