@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using FilmsManagerApi.Enums;
 using FilmsManagerApi.Services.Interfaces;
@@ -11,10 +12,10 @@ namespace FilmsManagerApi.Controllers
 	[Route("api/[controller]")]
 	public class MovieController : Controller
 	{
-		private readonly IRepository<MovieModel> _movieRepository;
-        private readonly IRepository<GenreModel> _genreRepository;
+		private readonly IRepository<MovieModel, IEnumerable<MovieModel>> _movieRepository;
+        private readonly IRepository<GenreModel, GenreResponse> _genreRepository;
 
-        public MovieController(IRepository<MovieModel> movieRepository, IRepository<GenreModel> genreRepository)
+        public MovieController(IRepository<MovieModel, IEnumerable<MovieModel>> movieRepository, IRepository<GenreModel, GenreResponse> genreRepository)
 		{
 			_movieRepository = movieRepository;
             _genreRepository = genreRepository;

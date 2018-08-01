@@ -7,7 +7,7 @@ using Models.Resources;
 
 namespace FilmsManagerApi.Services
 {
-	public class MovieRepository : IRepository<MovieModel>
+	public class MovieRepository : IRepository<MovieModel, IEnumerable<MovieModel>>
     {
         private List<MovieModel> _toDoList;
 

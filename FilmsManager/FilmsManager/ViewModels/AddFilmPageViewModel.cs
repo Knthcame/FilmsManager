@@ -19,7 +19,8 @@ namespace FilmsManager.ViewModels
 {
 	public class AddFilmPageViewModel : BaseViewModel
 	{
-		private IList<GenreModel> _genreList;
+        #region Properties
+        private IList<GenreModel> _genreList;
 		private string _defaultMovieImage = AppImages.Movie;
 		private object _movieImage;
 		private string _movieTitle;
@@ -90,8 +91,9 @@ namespace FilmsManager.ViewModels
 			get => _chooseFilmButtonBorderColor;
 			set { SetProperty(ref _chooseFilmButtonBorderColor, value); }
 		}
+        #endregion
 
-		public AddFilmPageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IPageDialogService pageDialogService, IRestService restService) : base(navigationService)
+        public AddFilmPageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IPageDialogService pageDialogService, IRestService restService) : base(navigationService)
 		{
 			Title = AppResources.AddFilmPageTitle;
 			_movieImage = _defaultMovieImage;

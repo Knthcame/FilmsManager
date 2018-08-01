@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using FilmsManagerApi.Services;
 using FilmsManagerApi.Services.Interfaces;
 using Models.Classes;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace FilmsManagerApi
 {
@@ -22,8 +24,8 @@ namespace FilmsManagerApi
         {
             services.AddMvc();
 
-			services.AddSingleton<IRepository<MovieModel>, MovieRepository>();
-            services.AddSingleton<IRepository<GenreModel>, GenreRepository>();
+			services.AddSingleton<IRepository<MovieModel, IEnumerable<MovieModel>>, MovieRepository>();
+            services.AddSingleton<IRepository<GenreModel, GenreResponse>, GenreRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -12,5 +12,19 @@ namespace FilmsManager.Extensions
 				list.Add(item);
 			}
 		}
+
+        public static bool GetGenre(this IList<GenreModel> list, string id, out GenreModel genre)
+        {
+            genre = null;
+            foreach (var item in list)
+            {
+                if (item.Id == id)
+                {
+                    genre = item;
+                    return true;
+                }
+            }
+            return false;
+        }
 	}
 }

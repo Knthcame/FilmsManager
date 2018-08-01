@@ -15,7 +15,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/MovieItems",
+      "launchUrl": "api/Movie",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -23,7 +23,7 @@
 			"FilmsManagerApi": {
 				"commandName": "Project",
 				"launchBrowser": true,
-				"launchUrl": "api/MovieItems",
+        "launchUrl": "api/Movie",
 				"environmentVariables": {
 					"ASPNETCORE_ENVIRONMENT": "Development"
 				},

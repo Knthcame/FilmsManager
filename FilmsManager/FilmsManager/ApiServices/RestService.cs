@@ -30,12 +30,12 @@ namespace Models.ApiServices
 			};
 		}
 
-		public async Task<IList<TEntity>> RefreshDataAsync<TEntity>() where TEntity : IEntity
+		public async Task<JEntity> RefreshDataAsync<TEntity, JEntity>() where TEntity : IEntity
         {
-			IList<TEntity> result = null;
+			JEntity result = default(JEntity);
 
             var type = typeof(TEntity);
-            if (!_controller.TryGetValue(type, out string controller)) return null;
+            if (!_controller.TryGetValue(type, out string controller)) return default(JEntity);
 
             var uri = new Uri(string.Format(ApiConstants.RestUrl + controller, string.Empty));
 
@@ -45,7 +45,7 @@ namespace Models.ApiServices
 				if (response.IsSuccessStatusCode)
 				{
 					var content = await response.Content.ReadAsStringAsync();
-					result = JsonConvert.DeserializeObject<IList<TEntity>>(content);
+					result = JsonConvert.DeserializeObject<JEntity>(content);
 				}
 			}
 			catch (Exception ex)

@@ -3,10 +3,10 @@ using Models.Classes;
 
 namespace FilmsManagerApi.Services.Interfaces
 {
-	public interface IRepository<TEntity> where TEntity : IEntity //, new()
+	public interface IRepository<TEntity, JEntity> where TEntity : IEntity //, new()
     {
         bool DoesItemExist(string id);
-        IEnumerable<TEntity> All { get; }
+        JEntity All { get; }
         TEntity Find(string id);
         void Insert(TEntity item);
         void Update(TEntity item);

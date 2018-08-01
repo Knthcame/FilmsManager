@@ -12,6 +12,11 @@ using FilmsManager.Resources;
 using FilmsManager.Views;
 using Nito.AsyncEx;
 using FilmsManager.Events;
+using System.Linq;
+using FilmsManager.Extensions;
+using System;
+using System.Diagnostics;
+using System.Collections.ObjectModel;
 
 namespace FilmsManager.ViewModels
 {
@@ -87,22 +92,30 @@ namespace FilmsManager.ViewModels
 
         public HomePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IGenreModelManager genreModelManager, IRestService restService) : base(navigationService, restService, genreModelManager)
 		{
+            try
+            {
 			_eventAggregator = eventAggregator;
-			_eventAggregator.GetEvent<SelectLanguageEvent>().Subscribe(async () => await LoadResourcesAsync());
+			_eventAggregator.GetEvent<SelectLanguageEvent>().Subscribe(LoadResources);
 			_eventAggregator.GetEvent<AddFilmEvent>().Subscribe(async () => await RetrieveMovieListAsync());
 			NavigateCommand = new DelegateCommand(async () => await OnNavigateAsync());
 			SearchCommand = new DelegateCommand(async () => await OnSearchAsync());
 			LanguageOptionsCommand = new DelegateCommand(async () => await OnLanguageOptionsAsync());
-			InitializationNotifier = NotifyTaskCompletion.Create(LoadResourcesAsync());
+			LoadResources();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("@@@@             ERROR: " + ex.Message);
+            }
 		}
 
 		protected override async Task RefreshMovieListAsync()
 		{
 			await base.RefreshMovieListAsync();
 			IsRefreshingMovieList = false;
+            UpdateMovieListLanguage();
 		}
 
-		public async Task LoadResourcesAsync()
+		public void LoadResources()
 		{
 			Title = AppResources.HomePageTitle;
 			ImageColumn = AppResources.ImageColumn;
@@ -118,17 +131,20 @@ namespace FilmsManager.ViewModels
 					LanguageAbreviation = AppResources.LanguageAbreviation;
 					break;
 			}
-			await UpdateMovieListLanguageAsync();
+            RefreshGenreList();
+			UpdateMovieListLanguage();
 		}
 
-		public async Task UpdateMovieListLanguageAsync()
+		public void UpdateMovieListLanguage()
 		{
 			foreach (MovieModel movie in MovieList)
 			{
-				movie.Genre = _genreModelManager.FindByID(movie.Genre.Id);
-				await _restService.SaveToDoItemAsync(new MovieModel(movie.Id, movie.Title, movie.Genre, movie.Image), false);
+                if (GenreList.GetGenre(movie.Genre.Id, out GenreModel genre))
+                {
+                    movie.Genre = genre;
+                }
 			}
-			await RetrieveMovieListAsync();
+            MovieList = new ObservableCollection<MovieModel>(MovieList);
 		}
 
 		private async Task OnLanguageOptionsAsync()
@@ -138,12 +154,7 @@ namespace FilmsManager.ViewModels
 
 		private async Task OnSearchAsync()
 		{
-			var parameters = new NavigationParameters
-			{
-				{ "movieList", MovieList },
-				{ "genreList", GenreList }
-			};
-			await NavigationService.NavigateAsync(nameof(SearchFilmPage), parameters);
+			await NavigationService.NavigateAsync(nameof(SearchFilmPage));
 		}
 
 		private async Task OnNavigateAsync()

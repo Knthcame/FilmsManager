@@ -7,26 +7,11 @@ using Models.Classes;
 
 namespace FilmsManagerApi.Services
 {
-    public class GenreRepository : IRepository<GenreModel>
+    public class GenreRepository : IRepository<GenreModel, GenreResponse>
     {
-        private readonly GenreResponse _genreResponse = new GenreResponse();
-
         public string Culture = "en-EN";
 
-        private Dictionary<string, IList<GenreModel>> _cultures = new Dictionary<string, IList<GenreModel>>()
-        {
-            {"en-EN", new GenreResponse().English },
-            {"es-ES", new GenreResponse().Spanish }
-
-        };
-
-        IEnumerable<GenreModel> IRepository<GenreModel>.All => GetGenres();
-
-        private IEnumerable<GenreModel> GetGenres()
-        {
-            _cultures.TryGetValue(Culture, out IList<GenreModel> genres);
-            return genres;
-        }
+        public GenreResponse All => new GenreResponse();
 
         public void Delete(string id)
         {
