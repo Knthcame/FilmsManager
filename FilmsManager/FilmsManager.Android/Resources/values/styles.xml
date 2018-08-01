@@ -48,7 +48,7 @@
     <item name="android:textColor">#ffffff</item>
   </style>
 
-  <color name="ListViewSelected">#0096BCE3</color>
-  <color name="ListViewHighlighted">#00E39696</color>
+  <color name="ListViewSelected">#00FFFFFF</color> <!--Transparent-->
+  <color name="ListViewHighlighted">#00FFFFFF</color> <!--Transparent-->
   
 </resources>
