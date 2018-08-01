@@ -27,6 +27,13 @@
     <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
 
     <item name="actionBarStyle">@style/MyActionBar</item>
+
+    <item name="android:colorPressedHighlight">@color/ListViewSelected</item>
+    <item name="android:colorLongPressedHighlight">@color/ListViewHighlighted</item>
+    <item name="android:colorFocusedHighlight">@color/ListViewSelected</item>
+    <item name="android:colorActivatedHighlight">@color/ListViewSelected</item>
+    <item name="android:activatedBackgroundIndicator">@color/ListViewSelected</item>
+    
   </style>
 
   <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
@@ -40,5 +47,8 @@
   <style name="MyTitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
     <item name="android:textColor">#ffffff</item>
   </style>
+
+  <color name="ListViewSelected">#0096BCE3</color>
+  <color name="ListViewHighlighted">#00E39696</color>
   
 </resources>
