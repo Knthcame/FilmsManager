@@ -8,8 +8,8 @@ namespace Models.ApiServices.Interfaces
     {
         Task<JEntity> RefreshDataAsync<TEntity, JEntity>() where TEntity : IEntity;
 
-        Task SaveToDoItemAsync(MovieModel item, bool isNewItem);
+        Task SaveToDoItemAsync<TEntity>(MovieModel item, bool isNewItem) where TEntity : IEntity;
 
-		Task DeleteToDoItemAsync(string id);
+		Task DeleteToDoItemAsync<TEntity>(string id) where TEntity : IEntity;
 	}
 }

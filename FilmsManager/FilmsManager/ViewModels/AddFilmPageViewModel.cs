@@ -157,7 +157,7 @@ namespace FilmsManager.ViewModels
 		private async Task SaveNewFilm()
 		{
 			global::Models.Classes.MovieModel item = new global::Models.Classes.MovieModel(null, MovieTitle, SelectedGenre, MovieImage);
-			await _restService.SaveToDoItemAsync(item, true);
+			await _restService.SaveToDoItemAsync<MovieModel>(item, true);
 			_eventAggregator.GetEvent<AddFilmEvent>().Publish();
 			await NavigationService.GoBackAsync();
 		}

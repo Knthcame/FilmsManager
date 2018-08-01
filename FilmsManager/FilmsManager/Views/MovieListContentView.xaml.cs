@@ -8,23 +8,25 @@ using Xamarin.Forms.Xaml;
 namespace FilmsManager.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MovieListContentView
+    public partial class MovieListContentView : BaseContentView
     {
-        public static readonly BindableProperty MoviesSourceProperty = BindableProperty.Create(propertyName: nameof(MoviesSource), returnType: typeof(IEnumerable<MovieModel>), defaultValue: null, declaringType: typeof(MovieListContentView), defaultBindingMode: BindingMode.OneWay);
+        public static readonly BindableProperty MoviesSourceProperty = 
+            BindableProperty.Create(propertyName: nameof(MoviesSource), returnType: typeof(IEnumerable<MovieModel>), defaultValue: null, declaringType: typeof(MovieListContentView));
 
-        public static readonly BindableProperty IsRefreshingMovieListProperty = BindableProperty.Create(propertyName: nameof(IsRefreshingMovieList), returnType: typeof(bool), defaultValue: false, declaringType: typeof(MovieListContentView));
+        public static readonly BindableProperty IsRefreshingMovieListProperty = 
+            BindableProperty.Create(propertyName: nameof(IsRefreshingMovieList), returnType: typeof(bool), defaultValue: false, declaringType: typeof(MovieListContentView));
 
-        public static readonly BindableProperty DeleteCommandProperty = BindableProperty.Create(propertyName: nameof(DeleteCommand), returnType: typeof(ICommand), defaultValue: null, declaringType: typeof(MovieListContentView));
+        public static readonly BindableProperty DeleteCommandProperty = 
+            BindableProperty.Create(propertyName: nameof(DeleteCommand), returnType: typeof(ICommand), defaultValue: null, declaringType: typeof(MovieListContentView));
 
-        public static readonly BindableProperty RefreshCommandProperty = BindableProperty.Create(propertyName: nameof(RefreshCommand), returnType: typeof(ICommand), defaultValue: null, declaringType: typeof(MovieListContentView));
+        public static readonly BindableProperty RefreshCommandProperty = 
+            BindableProperty.Create(propertyName: nameof(RefreshCommand), returnType: typeof(ICommand), defaultValue: null, declaringType: typeof(MovieListContentView));
 
-        public static readonly BindableProperty ShowDetailsCommandProperty = BindableProperty.Create(propertyName: nameof(ShowDetailsCommand), returnType: typeof(ICommand), defaultValue: null, declaringType: typeof(MovieListContentView));
+        public static readonly BindableProperty ShowDetailsCommandProperty = 
+            BindableProperty.Create(propertyName: nameof(ShowDetailsCommand), returnType: typeof(ICommand), defaultValue: null, declaringType: typeof(MovieListContentView));
 
-        public static readonly BindableProperty IsPullToRefreshEnabledProperty = BindableProperty.Create(propertyName: nameof(IsPullToRefreshEnabled), returnType: typeof(bool), defaultValue: false, declaringType: typeof(MovieListContentView));
-
-        public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(propertyName: nameof(SelectedItem), returnType: typeof(object), defaultValue: null, declaringType: typeof(MovieListContentView));
-
-        public static readonly BindableProperty SelectItemCommandProperty = BindableProperty.Create(propertyName: nameof(SelectItemCommand), returnType: typeof(ICommand), defaultValue: null, declaringType: typeof(MovieListContentView));
+        public static readonly BindableProperty IsPullToRefreshEnabledProperty = 
+            BindableProperty.Create(propertyName: nameof(IsPullToRefreshEnabled), returnType: typeof(bool), defaultValue: false, declaringType: typeof(MovieListContentView));
 
         public IEnumerable<MovieModel> MoviesSource
         {
@@ -60,18 +62,6 @@ namespace FilmsManager.Views
         {
             get => (ICommand)GetValue(ShowDetailsCommandProperty);
             set => SetValue(ShowDetailsCommandProperty, value);
-        }
-
-        public ICommand SelectItemCommand
-        {
-            get => (ICommand)GetValue(SelectItemCommandProperty);
-            set => SetValue(SelectItemCommandProperty, value);
-        }
-
-        public object SelectedItem
-        {
-            get => GetValue(SelectedItemProperty);
-            set => SetValue(SelectedItemProperty, value);
         }
 
         public MovieListContentView()

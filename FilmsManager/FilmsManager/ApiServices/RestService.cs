@@ -35,7 +35,8 @@ namespace Models.ApiServices
 			JEntity result = default(JEntity);
 
             var type = typeof(TEntity);
-            if (!_controller.TryGetValue(type, out string controller)) return default(JEntity);
+            if (!_controller.TryGetValue(type, out string controller))
+                return default(JEntity);
 
             var uri = new Uri(string.Format(ApiConstants.RestUrl + controller, string.Empty));
 
@@ -56,9 +57,14 @@ namespace Models.ApiServices
 			return result;
 		}
 
-		public async Task SaveToDoItemAsync(MovieModel item, bool isNewItem)
+		public async Task SaveToDoItemAsync<TEntity>(MovieModel item, bool isNewItem) where TEntity : IEntity
 		{
-			var uri = new Uri(string.Format(ApiConstants.RestUrl, string.Empty));
+            var type = typeof(TEntity);
+
+            if (!_controller.TryGetValue(type, out string controller))
+                return;
+
+            var uri = new Uri(string.Format(ApiConstants.RestUrl + controller, string.Empty));
 
 			try
 			{
@@ -87,10 +93,15 @@ namespace Models.ApiServices
 			}
 		}
 
-		public async Task DeleteToDoItemAsync(string id)
+		public async Task DeleteToDoItemAsync<TEntity>(string id) where TEntity : IEntity
 
-		{
-			var uri = new Uri(string.Format(ApiConstants.RestUrl, id));
+        {
+            var type = typeof(TEntity);
+
+            if (!_controller.TryGetValue(type, out string controller))
+                return;
+
+            var uri = new Uri(string.Format(ApiConstants.RestUrl + controller, id));
 
 			try
 			{

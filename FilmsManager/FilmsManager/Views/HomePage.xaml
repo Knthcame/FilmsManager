@@ -80,8 +80,6 @@
                                         DeleteCommand="{Binding DeleteFilmCommand}"
                                         IsRefreshingMovieList="{Binding IsRefreshingMovieList, Mode=TwoWay}"
                                         ShowDetailsCommand="{Binding ShowDetailsCommand}"
-                                        SelectedItem="{Binding SelectedMovie}"
-                                        SelectItemCommand="{Binding SelectItemCommand}"
                                         IsPullToRefreshEnabled="True"
                                         Grid.Column="0"
                                         Grid.ColumnSpan="3"

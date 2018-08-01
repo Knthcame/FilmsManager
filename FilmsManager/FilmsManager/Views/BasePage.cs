@@ -8,10 +8,6 @@ namespace FilmsManager.Views
     {
 		public BasePage() : base()
 		{
-			//var ci = localize.GetCurrentCultureInfo();
-			//AppResources.Culture = ci; // set the RESX for resource localization
-			//localize.SetLocale(ci); // set the Thread for locale-aware methods
-
 			On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
 		}
 

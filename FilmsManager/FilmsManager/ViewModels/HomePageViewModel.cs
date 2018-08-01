@@ -96,7 +96,7 @@ namespace FilmsManager.ViewModels
             {
 			_eventAggregator = eventAggregator;
 			_eventAggregator.GetEvent<SelectLanguageEvent>().Subscribe(LoadResources);
-			_eventAggregator.GetEvent<AddFilmEvent>().Subscribe(async () => await RetrieveMovieListAsync());
+			_eventAggregator.GetEvent<AddFilmEvent>().Subscribe(async () => await RefreshMovieListAsync());
 			NavigateCommand = new DelegateCommand(async () => await OnNavigateAsync());
 			SearchCommand = new DelegateCommand(async () => await OnSearchAsync());
 			LanguageOptionsCommand = new DelegateCommand(async () => await OnLanguageOptionsAsync());
@@ -112,7 +112,6 @@ namespace FilmsManager.ViewModels
 		{
 			await base.RefreshMovieListAsync();
 			IsRefreshingMovieList = false;
-            UpdateMovieListLanguage();
 		}
 
 		public void LoadResources()
@@ -133,18 +132,6 @@ namespace FilmsManager.ViewModels
 			}
             RefreshGenreList();
 			UpdateMovieListLanguage();
-		}
-
-		public void UpdateMovieListLanguage()
-		{
-			foreach (MovieModel movie in MovieList)
-			{
-                if (GenreList.GetGenre(movie.Genre.Id, out GenreModel genre))
-                {
-                    movie.Genre = genre;
-                }
-			}
-            MovieList = new ObservableCollection<MovieModel>(MovieList);
 		}
 
 		private async Task OnLanguageOptionsAsync()
