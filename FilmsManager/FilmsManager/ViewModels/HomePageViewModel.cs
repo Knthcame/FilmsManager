@@ -83,7 +83,7 @@ namespace FilmsManager.ViewModels
             try
             {
 			_eventAggregator = eventAggregator;
-			_eventAggregator.GetEvent<SelectLanguageEvent>().Subscribe(async() => await UpdatePageLanguageAsync());
+			_eventAggregator.GetEvent<SelectLanguageEvent>().Subscribe(UpdatePageLanguage);
 			_eventAggregator.GetEvent<AddFilmEvent>().Subscribe(async () => await RefreshMovieListAsync());
 			NavigateCommand = new DelegateCommand(async () => await OnNavigateAsync());
 			SearchCommand = new DelegateCommand(async () => await OnSearchAsync());
@@ -121,7 +121,7 @@ namespace FilmsManager.ViewModels
             RefreshGenreList();
 		}
 
-        private async Task UpdatePageLanguageAsync()
+        private void UpdatePageLanguage()
         {
             LoadResources();
             UpdateMovieListLanguage();
