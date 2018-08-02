@@ -28,6 +28,7 @@ namespace FilmsManager.ViewModels
 		private bool _missingTitle;
 		private bool _missingGenre;
 		private Color _chooseFilmButtonBorderColor = Color.Black;
+        private bool _addingMovie = false;
 
 		public string BackgroundImage { get; set; } = AppImages.BackgroundImageAddFilm;
 
@@ -126,6 +127,11 @@ namespace FilmsManager.ViewModels
 
 		private async Task OnAddAsync()
 		{
+            if (_addingMovie)
+                return;
+
+            _addingMovie = true;
+
 			if (MovieTitle == null | SelectedGenre == null)
 			{
 				bool action = await _pageDialogService.DisplayAlertAsync(AppResources.MissingEntriesTitle, AppResources.MissingEntriesMessage, AppResources.MissingEntriesOkButton, AppResources.MissingEntriesCancelButton);
@@ -152,6 +158,8 @@ namespace FilmsManager.ViewModels
 			{
 				await SaveNewFilm();
 			}
+
+            _addingMovie = false;
 		}
 
 		private async Task SaveNewFilm()
