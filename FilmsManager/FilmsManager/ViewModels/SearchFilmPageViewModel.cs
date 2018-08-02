@@ -7,16 +7,15 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using FilmsManager.Models;
 using FilmsManager.Resources;
 using FilmsManager.Enums;
 using Models.ApiServices.Interfaces;
-using FilmsManager.Extensions;
 
 namespace FilmsManager.ViewModels
 {
     public class SearchFilmPageViewModel : MovieListContentViewModel
     {
+        #region Properties
         private string _textEntry;
         private string _searchTypeButtonText = AppResources.SearchTypeButtonText + AppResources.GenreColumn;
         private int _searchType = (int)SearchTypeEnum.Title;
@@ -76,35 +75,22 @@ namespace FilmsManager.ViewModels
 
         public ICommand SwapSearchCommand { get; set; }
 
+        #endregion
+
         public SearchFilmPageViewModel(INavigationService navigationService, IGenreModelManager genreModelManager, IRestService restService) : base(navigationService, restService, genreModelManager)
         {
             Title = AppResources.SearchFilmPageTitle;
             SearchFilmCommand = new DelegateCommand(OnSearchFilm);
             SwapSearchCommand = new DelegateCommand(OnSwapSearch);
+            FilteredMovieList = MovieList;
         }
 
-        //public override void OnNavigatedTo(NavigationParameters parameters)
-        //{
-        //	if (parameters == null || parameters.Count == 0)
-        //		return;
-
-        //	ObservableCollection<MovieModel> movieList;
-        //	parameters.TryGetValue("movieList", out movieList);
-        //	if ( movieList != null )
-        //		_movieList = movieList;
-
-        //	FilteredMovieList = new ObservableCollection<MovieModel>(movieList);
-
-        //	IList<GenreModel> genreList;
-        //	if(parameters.TryGetValue("genreList", out genreList))
-        //	{
-        //		GenreModel[] genres = new GenreModel[genreList.Count];
-        //		genreList.CopyTo(genres, 0);
-        //		GenreList = new ObservableCollection<GenreModel>(genres);
-        //		GenreList.Insert(0, _genreModelManager.FindByID(GenreKeys.AllGenres));
-        //	}
-
-        //}
+        public override void RefreshGenreList()
+        {
+            var genres = base.GetGenresInChosenAppLanguage();
+            genres.Insert(0, _genreModelManager.FindByID(GenreKeys.AllGenres));
+            GenreList = new ObservableCollection<GenreModel>(genres);
+        }
 
         private void OnSwapSearch()
         {
@@ -150,13 +136,6 @@ namespace FilmsManager.ViewModels
                     }
                     break;
             }
-        }
-
-        protected override Task RefreshMovieListAsync()
-        {
-            var aux = base.RefreshMovieListAsync();
-            FilteredMovieList = new ObservableCollection<MovieModel>(MovieList);
-            return aux;
         }
     }
 }
