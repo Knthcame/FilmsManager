@@ -23,16 +23,25 @@ namespace FilmsManager.ViewModels
         #region Properties
 
         protected MovieModel _selectedMovie;
-        private GenreResponse GenreResponse;
-        private ObservableCollection<MovieModel> _movieList = new ObservableCollection<MovieModel>();
-        private bool _movieListDownloaded;
+
+        protected GenreResponse GenreResponse;
+
+        protected ObservableCollection<MovieModel> _movieList = new ObservableCollection<MovieModel>();
+
+        protected bool _isRefreshingMovieList;
+
+        public bool IsRefreshingMovieList
+        {
+            get => _isRefreshingMovieList;
+            set { SetProperty(ref _isRefreshingMovieList, value); }
+        }
 
         public string BackgroundImage { get; set; } = AppImages.BackgroundImageHome;
 
         public ObservableCollection<MovieModel> MovieList
         {
             get => _movieList;
-            set { SetProperty( ref _movieList, value); }
+            set { SetProperty(ref _movieList, value); }
         }
 
         public ObservableCollection<GenreModel> GenreList { get; set; } = new ObservableCollection<GenreModel>();
@@ -62,6 +71,7 @@ namespace FilmsManager.ViewModels
                 DeleteFilmCommand = new DelegateCommand<MovieModel>(async (movie) => await OnDeleteFilmAsync(movie));
                 ShowDetailsCommand = new DelegateCommand<MovieModel>(async (movie) => await OnShowDetailAsync(movie));
                 RefreshCommand = new DelegateCommand(async () => await RefreshMovieListAsync());
+                IsRefreshingMovieList = true;
                 InitializationNotifier = NotifyTaskCompletion.Create(RefreshMovieListAsync());
                 InitializationNotifier = NotifyTaskCompletion.Create(GetGenresAsync());
             }
@@ -85,7 +95,8 @@ namespace FilmsManager.ViewModels
             var movies = await _restService.RefreshDataAsync<MovieModel, IList<MovieModel>>();
             MovieList.Clear();
             MovieList.AddRange(movies);
-            _movieListDownloaded = true;
+            IsRefreshingMovieList = false;
+            return;
         }
 
         protected async Task OnShowDetailAsync(MovieModel movie)
@@ -102,10 +113,13 @@ namespace FilmsManager.ViewModels
         protected virtual async Task RefreshMovieListAsync()
         {
             await RetrieveMovieListAsync();
-            while (!_movieListDownloaded) ;
 
+            while (IsRefreshingMovieList)
+                Task.Delay(100).Wait();
+
+            IsRefreshingMovieList = false;
             UpdateMovieListLanguage();
-            _movieListDownloaded = false;
+            return;
         }
 
         public async Task GetGenresAsync()
@@ -126,14 +140,18 @@ namespace FilmsManager.ViewModels
 
         public void UpdateMovieListLanguage()
         {
+            var movies = new List<MovieModel>();
             foreach (MovieModel movie in MovieList)
             {
                 if (GenreList.GetGenre(movie.Genre.Id, out GenreModel genre))
                 {
                     movie.Genre = genre;
                 }
+                movies.Add(new MovieModel(movie.Id,movie.Title, movie.Genre, movie.Image));
             }
-            MovieList = new ObservableCollection<MovieModel>(MovieList);
+            MovieList.Clear();
+            MovieList.AddRange(movies);
+            return;
         }
     }
 }

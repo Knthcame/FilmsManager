@@ -7,20 +7,15 @@ using Prism.Events;
 using Xamarin.Forms;
 using Models.ApiServices.Interfaces;
 using Models.Managers.Interfaces;
-using Models.Classes;
 using FilmsManager.Resources;
 using FilmsManager.Views;
-using Nito.AsyncEx;
 using FilmsManager.Events;
-using System.Linq;
-using FilmsManager.Extensions;
 using System;
 using System.Diagnostics;
-using System.Collections.ObjectModel;
 
 namespace FilmsManager.ViewModels
 {
-	public class HomePageViewModel : MovieListContentViewModel
+    public class HomePageViewModel : MovieListContentViewModel
 	{
         #region properties
         private string _titleColumn;
@@ -34,8 +29,6 @@ namespace FilmsManager.ViewModels
 		private string _languageAbreviation;
 
 		private string _genreColumn;
-
-		private bool _isRefreshingMovieList = false;
 
 		public string SearchToolbarIcon { get; set; } = AppImages.MagnifyingGlass;
 
@@ -83,11 +76,6 @@ namespace FilmsManager.ViewModels
 			set { SetProperty(ref _genreColumn, value); }
 		}
 
-		public bool IsRefreshingMovieList
-		{
-			get => _isRefreshingMovieList;
-			set { SetProperty(ref _isRefreshingMovieList, value); }
-		}
         #endregion properties
 
         public HomePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IGenreModelManager genreModelManager, IRestService restService) : base(navigationService, restService, genreModelManager)
@@ -95,7 +83,7 @@ namespace FilmsManager.ViewModels
             try
             {
 			_eventAggregator = eventAggregator;
-			_eventAggregator.GetEvent<SelectLanguageEvent>().Subscribe(LoadResources);
+			_eventAggregator.GetEvent<SelectLanguageEvent>().Subscribe(async() => await UpdatePageLanguageAsync());
 			_eventAggregator.GetEvent<AddFilmEvent>().Subscribe(async () => await RefreshMovieListAsync());
 			NavigateCommand = new DelegateCommand(async () => await OnNavigateAsync());
 			SearchCommand = new DelegateCommand(async () => await OnSearchAsync());
@@ -131,8 +119,14 @@ namespace FilmsManager.ViewModels
 					break;
 			}
             RefreshGenreList();
-			UpdateMovieListLanguage();
 		}
+
+        private async Task UpdatePageLanguageAsync()
+        {
+            LoadResources();
+            UpdateMovieListLanguage();
+            return;
+        }
 
 		private async Task OnLanguageOptionsAsync()
 		{
