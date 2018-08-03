@@ -12,6 +12,7 @@ using FilmsManager.Views;
 using FilmsManager.Events;
 using System;
 using System.Diagnostics;
+using Prism.Services;
 
 namespace FilmsManager.ViewModels
 {
@@ -38,7 +39,9 @@ namespace FilmsManager.ViewModels
 
 		public ICommand LanguageOptionsCommand { get; set; }
 
-		private readonly IEventAggregator _eventAggregator;
+        private readonly IPageDialogService _pageDialogService;
+
+        private readonly IEventAggregator _eventAggregator;
 
 		public string LanguageAbreviation
 		{
@@ -78,25 +81,26 @@ namespace FilmsManager.ViewModels
 
         #endregion properties
 
-        public HomePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IGenreModelManager genreModelManager, IRestService restService) : base(navigationService, restService, genreModelManager)
+        public HomePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IGenreModelManager genreModelManager, IRestService restService, IPageDialogService pageDialogService) : base(navigationService, restService, genreModelManager)
 		{
-            try
-            {
+            _pageDialogService = pageDialogService;
 			_eventAggregator = eventAggregator;
 			_eventAggregator.GetEvent<SelectLanguageEvent>().Subscribe(UpdatePageLanguage);
 			_eventAggregator.GetEvent<AddFilmEvent>().Subscribe(async () => await RefreshMovieListAsync());
+            _eventAggregator.GetEvent<ConnectionErrorEvent>().Subscribe(async () => await NotifyConnectionErrorAsync());
 			NavigateCommand = new DelegateCommand(async () => await OnNavigateAsync());
 			SearchCommand = new DelegateCommand(async () => await OnSearchAsync());
 			LanguageOptionsCommand = new DelegateCommand(async () => await OnLanguageOptionsAsync());
 			LoadResources();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("@@@@             ERROR: " + ex.Message);
-            }
-		}
+        }
 
-		protected override async Task RefreshMovieListAsync()
+        private async Task NotifyConnectionErrorAsync()
+        {
+            await _pageDialogService.DisplayAlertAsync("Connection error", "Could not connect with the server at this time", "ok");
+            IsRefreshingMovieList = false;
+        }
+
+        protected override async Task RefreshMovieListAsync()
 		{
 			await base.RefreshMovieListAsync();
 			IsRefreshingMovieList = false;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using FilmsManager.Extensions;
@@ -14,6 +15,7 @@ using Models.Resources;
 using Nito.AsyncEx;
 using Prism.Commands;
 using Prism.Navigation;
+using Prism.Services;
 using Xamarin.Forms;
 
 namespace FilmsManager.ViewModels
@@ -30,7 +32,10 @@ namespace FilmsManager.ViewModels
 
         protected ObservableCollection<GenreModel> _genreList = new ObservableCollection<GenreModel>();
 
-        protected bool _isRefreshingMovieList;
+        protected bool _isRefreshingMovieList = false;
+
+        protected Task MyTask;
+        private bool _connectionError = false;
 
         public bool IsRefreshingMovieList
         {
@@ -70,21 +75,14 @@ namespace FilmsManager.ViewModels
 
         public MovieListContentViewModel(INavigationService navigationService, IRestService restService, IGenreModelManager genreModelManager) : base(navigationService)
         {
-            try
-            {
-                _restService = restService;
-                _genreModelManager = genreModelManager;
-                DeleteFilmCommand = new DelegateCommand<MovieModel>(async (movie) => await OnDeleteFilmAsync(movie));
-                ShowDetailsCommand = new DelegateCommand<MovieModel>(async (movie) => await OnShowDetailAsync(movie));
-                RefreshCommand = new DelegateCommand(async () => await RefreshMovieListAsync());
-                IsRefreshingMovieList = true;
-                InitializationNotifier = NotifyTaskCompletion.Create(RefreshMovieListAsync());
-                InitializationNotifier = NotifyTaskCompletion.Create(GetGenresAsync());
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("              ERROR {0}", ex.Message);
-            }
+            _restService = restService;
+            _genreModelManager = genreModelManager;
+            DeleteFilmCommand = new DelegateCommand<MovieModel>(async (movie) => await OnDeleteFilmAsync(movie));
+            ShowDetailsCommand = new DelegateCommand<MovieModel>(async (movie) => await OnShowDetailAsync(movie));
+            RefreshCommand = new DelegateCommand(async () => await RefreshMovieListAsync());
+            IsRefreshingMovieList = true;
+            InitializationNotifier = NotifyTaskCompletion.Create(RefreshMovieListAsync());
+            InitializationNotifier = NotifyTaskCompletion.Create(GetGenresAsync());
         }
 
         protected virtual async Task OnDeleteFilmAsync(MovieModel movie)
@@ -121,7 +119,7 @@ namespace FilmsManager.ViewModels
             await RetrieveMovieListAsync();
 
             while (IsRefreshingMovieList)
-                Task.Delay(100).Wait();
+                await Task.Delay(100);
 
             IsRefreshingMovieList = false;
             UpdateMovieListLanguage();
@@ -145,7 +143,7 @@ namespace FilmsManager.ViewModels
 
         public virtual IList<GenreModel> GetGenresInChosenAppLanguage()
         {
-            string culture = DependencyService.Get<ILocalize>().GetCurrentCultureInfo().EnglishName;
+            string culture = Xamarin.Forms.DependencyService.Get<ILocalize>().GetCurrentCultureInfo().EnglishName;
             GenresCultureDictionary.GenresCulture.TryGetValue(culture, out IList<GenreModel> genres);
             return genres;
         }

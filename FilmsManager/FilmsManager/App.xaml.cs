@@ -49,7 +49,7 @@ namespace FilmsManager
 			containerRegistry.RegisterForNavigation<HomePage>();
 			containerRegistry.RegisterForNavigation<LanguageSelectionPage>();
 			containerRegistry.RegisterInstance<IGenreModelManager>(new GenreModelManager());
-			containerRegistry.RegisterInstance<IRestService>(new RestService());
+			containerRegistry.Register<IRestService, RestService>();
 		}
     }
 }

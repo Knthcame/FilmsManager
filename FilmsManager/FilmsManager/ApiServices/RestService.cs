@@ -9,12 +9,16 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using FilmsManager.Constants;
+using Prism.Events;
+using FilmsManager.Events;
 
 namespace Models.ApiServices
 {
     public class RestService : IRestService
     {
-		HttpClient _client;
+        private readonly IEventAggregator _eventAggregator;
+
+        HttpClient _client;
 
         private Dictionary<Type, string> _controller = new Dictionary<Type, string>
         {
@@ -22,8 +26,9 @@ namespace Models.ApiServices
             {typeof(GenreModel), ApiConstants.GenreController }
         };
 
-		public RestService()
+		public RestService(IEventAggregator eventAggregator)
 		{
+            _eventAggregator = eventAggregator;
 			_client = new HttpClient
 			{
 				MaxResponseContentBufferSize = 256000
@@ -42,7 +47,7 @@ namespace Models.ApiServices
 
 			try
 			{
-				var response = await _client.GetAsync(uri);
+                var response = _client.GetAsync(uri).Result;
 				if (response.IsSuccessStatusCode)
 				{
 					var content = await response.Content.ReadAsStringAsync();
@@ -52,8 +57,8 @@ namespace Models.ApiServices
 			catch (Exception ex)
 			{
 				Debug.WriteLine(@"				ERROR {0}", ex.Message);
+                _eventAggregator.GetEvent<ConnectionErrorEvent>().Publish();
 			}
-
 			return result;
 		}
 
@@ -119,4 +124,8 @@ namespace Models.ApiServices
 			}
 		}
 	}
+
+    internal class _eventAggregator
+    {
+    }
 }

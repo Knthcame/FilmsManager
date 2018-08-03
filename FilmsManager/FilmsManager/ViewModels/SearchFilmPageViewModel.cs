@@ -10,6 +10,7 @@ using System.Windows.Input;
 using FilmsManager.Resources;
 using FilmsManager.Enums;
 using Models.ApiServices.Interfaces;
+using Prism.Services;
 
 namespace FilmsManager.ViewModels
 {
@@ -77,7 +78,7 @@ namespace FilmsManager.ViewModels
 
         #endregion
 
-        public SearchFilmPageViewModel(INavigationService navigationService, IGenreModelManager genreModelManager, IRestService restService) : base(navigationService, restService, genreModelManager)
+        public SearchFilmPageViewModel(INavigationService navigationService, IGenreModelManager genreModelManager, IRestService restService, IPageDialogService pageDialogService) : base(navigationService, restService, genreModelManager)
         {
             Title = AppResources.SearchFilmPageTitle;
             SearchFilmCommand = new DelegateCommand(OnSearchFilm);
@@ -134,6 +135,9 @@ namespace FilmsManager.ViewModels
                         else
                             FilteredMovieList = new ObservableCollection<MovieModel>(MovieList.Where(movie => movie.Genre.Name.Equals(SelectedGenre.Name)));
                     }
+                    break;
+                default:
+                    FilteredMovieList = new ObservableCollection<MovieModel>(MovieList);
                     break;
             }
         }
