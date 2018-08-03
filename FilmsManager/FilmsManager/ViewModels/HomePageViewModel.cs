@@ -10,8 +10,6 @@ using Models.Managers.Interfaces;
 using FilmsManager.Resources;
 using FilmsManager.Views;
 using FilmsManager.Events;
-using System;
-using System.Diagnostics;
 using Prism.Services;
 
 namespace FilmsManager.ViewModels
@@ -98,6 +96,7 @@ namespace FilmsManager.ViewModels
         {
             await _pageDialogService.DisplayAlertAsync("Connection error", "Could not connect with the server at this time", "ok");
             IsRefreshingMovieList = false;
+            IsMovieListEmpty = true;
         }
 
         protected override async Task RefreshMovieListAsync()
@@ -113,6 +112,7 @@ namespace FilmsManager.ViewModels
 			GenreColumn = AppResources.GenreColumn;
 			TitleColumn = AppResources.TitleColumn;
 			AddText = AppResources.HomePageAddButton;
+            Labeltext = AppResources.NoMoviesLabeltext;
 			switch (Device.RuntimePlatform)
 			{
 				case Device.Android:
@@ -139,6 +139,12 @@ namespace FilmsManager.ViewModels
 
 		private async Task OnSearchAsync()
 		{
+            if (IsMovieListEmpty)
+            {
+                await _pageDialogService.DisplayAlertAsync("Error", "There are no movies to search for", "ok");
+                return;
+            }
+                
 			await NavigationService.NavigateAsync(nameof(SearchFilmPage));
 		}
 

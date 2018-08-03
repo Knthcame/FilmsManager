@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using FilmsManager.Extensions;
+using FilmsManager.Resources;
 using FilmsManager.ResxLocalization;
 using FilmsManager.Views;
 using Models.ApiServices.Interfaces;
@@ -35,7 +36,10 @@ namespace FilmsManager.ViewModels
         protected bool _isRefreshingMovieList = false;
 
         protected Task MyTask;
-        private bool _connectionError = false;
+
+        private bool _isMovieListEmpty;
+
+        private string _labeltext = AppResources.NoMoviesLabeltext;
 
         public bool IsRefreshingMovieList
         {
@@ -44,6 +48,12 @@ namespace FilmsManager.ViewModels
         }
 
         public string BackgroundImage { get; set; } = AppImages.BackgroundImageHome;
+
+        public string Labeltext
+        {
+            get => _labeltext;
+            set { SetProperty(ref _labeltext, value); }
+        }
 
         public ObservableCollection<MovieModel> MovieList
         {
@@ -71,6 +81,12 @@ namespace FilmsManager.ViewModels
 
         public Task Initialization => InitializationNotifier.Task;
 
+        public bool IsMovieListEmpty
+        {
+            get => _isMovieListEmpty;
+            set { SetProperty(ref _isMovieListEmpty, value); }
+        }
+
         #endregion Properties
 
         public MovieListContentViewModel(INavigationService navigationService, IRestService restService, IGenreModelManager genreModelManager) : base(navigationService)
@@ -92,6 +108,8 @@ namespace FilmsManager.ViewModels
 
             await _restService.DeleteToDoItemAsync<MovieModel>(movie.Id);
             await RetrieveMovieListAsync();
+            if (MovieList.Count == 0)
+                IsMovieListEmpty = true;
         }
 
         protected virtual async Task RetrieveMovieListAsync()
@@ -123,7 +141,12 @@ namespace FilmsManager.ViewModels
 
             IsRefreshingMovieList = false;
             UpdateMovieListLanguage();
-            return;
+
+            if (MovieList.Count > 0)
+                IsMovieListEmpty = false;
+
+            else if (MovieList.Count == 0)
+                IsMovieListEmpty = true;
         }
 
         public virtual async Task GetGenresAsync()

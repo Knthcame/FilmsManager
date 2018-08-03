@@ -228,6 +228,9 @@
   <data name="MissingEntriesTitle" xml:space="preserve">
     <value>Faltan entradas</value>
   </data>
+  <data name="NoMoviesLabeltext" xml:space="preserve">
+    <value>No hay películas en la lista actualmente. Prueba a añadir una.</value>
+  </data>
   <data name="OpenGalleryButton" xml:space="preserve">
     <value>Seleccionar una imagen</value>
   </data>

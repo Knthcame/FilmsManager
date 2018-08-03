@@ -2,7 +2,7 @@
 {
 	public static class AppImages
     {
-		public const string BackgroundImageHome = "Back6.jpg";
+		public const string BackgroundImageHome = "Back11.jpg";
 		public const string Shrek = "Shrek.jpg";
 		public const string Shrek2 = "Shrek2.jpg";
 		public const string Shrek3 = "Shrek3.jpg";

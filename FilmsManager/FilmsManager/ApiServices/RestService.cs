@@ -47,7 +47,8 @@ namespace Models.ApiServices
 
 			try
 			{
-                var response = _client.GetAsync(uri).Result;
+                var response = await _client.GetAsync(uri);
+                //_client.GetAsync(uri); Should fix the crash, but just stays eternally loading...
 				if (response.IsSuccessStatusCode)
 				{
 					var content = await response.Content.ReadAsStringAsync();

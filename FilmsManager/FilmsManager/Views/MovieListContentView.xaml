@@ -8,13 +8,27 @@
                        x:Name="MyContentView">
 
     <ContentView.Content>
-        <StackLayout>
+        <Grid>
+
+            <Label Text="{Binding LabelText, Source={x:Reference MyContentView}}"
+                   IsVisible="{Binding IsLabelVisible, Source={x:Reference MyContentView}}"
+                   BackgroundColor="Transparent"
+                   TextColor="Black"
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   HeightRequest="100"
+                   WidthRequest="100"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"
+                   />
+
             <ListView x:Name="MyListView"
                       ItemsSource="{Binding MoviesSource, Source={x:Reference MyContentView}}" 
                       IsRefreshing="{Binding IsRefreshingMovieList, Source={x:Reference MyContentView}, Mode=TwoWay}"
                       RefreshCommand="{Binding RefreshCommand, Source={x:Reference MyContentView}}"
                       HasUnevenRows="True"
                       BackgroundColor="Transparent"
+                      IsVisible="{Binding IsListViewVisible, Source={x:Reference MyContentView}}"
                       IsPullToRefreshEnabled="{Binding IsPullToRefreshEnabled, Source={x:Reference MyContentView}}"
                       CachingStrategy="RecycleElement">
 
@@ -111,6 +125,6 @@
                 </ListView.ItemTemplate>
 
             </ListView>
-        </StackLayout>
+        </Grid>
     </ContentView.Content>
 </views:BaseContentView>

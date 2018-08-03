@@ -394,6 +394,15 @@ namespace FilmsManager.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MovieList is currently empty, Try adding one..
+        /// </summary>
+        internal static string NoMoviesLabeltext {
+            get {
+                return ResourceManager.GetString("NoMoviesLabeltext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose an image.
         /// </summary>
         internal static string OpenGalleryButton {

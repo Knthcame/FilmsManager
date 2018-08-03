@@ -234,6 +234,9 @@
   <data name="MissingEntriesTitle" xml:space="preserve">
     <value>Missing entries</value>
   </data>
+  <data name="NoMoviesLabeltext" xml:space="preserve">
+    <value>MovieList is currently empty, Try adding one.</value>
+  </data>
   <data name="OpenGalleryButton" xml:space="preserve">
     <value>Choose an image</value>
     <comment>Text for the button that opens the PickImagePage</comment>

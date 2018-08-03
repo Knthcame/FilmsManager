@@ -4,12 +4,19 @@
                 xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
                 xmlns:views="clr-namespace:FilmsManager.Views"
                 xmlns:Localization="clr-namespace:FilmsManager.ResxLocalization"
+                xmlns:Converters="clr-namespace:FilmsManager.Converters"
                 xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
                 prism:ViewModelLocator.AutowireViewModel="True"
                 x:Class="FilmsManager.Views.HomePage"
                 Title="{Binding Title}"
                 x:Name="MyView">
 
+    <ContentPage.Resources>
+
+        <Converters:NegateBooleanConverter x:Key="BooleanInverter"/>
+
+    </ContentPage.Resources>
+    
     <ContentPage.Content>
 
         <Grid>
@@ -22,8 +29,7 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="7.5*"/>
-                <RowDefinition Height="80*"/>
-                <RowDefinition Height="5*"/>
+                <RowDefinition Height="85*"/>
                 <RowDefinition Height="7.5*"/>
             </Grid.RowDefinitions>
 
@@ -75,7 +81,10 @@
             </Frame>
 
 
-            <views:MovieListContentView MoviesSource="{Binding MovieList}"
+            <views:MovieListContentView LabelText="{Binding Labeltext}"
+                                        IsLabelVisible="{Binding IsMovieListEmpty}"
+                                        IsListViewVisible="{Binding IsMovieListEmpty, Converter={StaticResource BooleanInverter}}"
+                                        MoviesSource="{Binding MovieList}"
                                         RefreshCommand="{Binding RefreshCommand}"
                                         DeleteCommand="{Binding DeleteFilmCommand}"
                                         IsRefreshingMovieList="{Binding IsRefreshingMovieList, Mode=TwoWay}"
@@ -95,7 +104,7 @@
                     BackgroundColor="LightGray"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
-                    Grid.Row="3"/>
+                    Grid.Row="2"/>
         </Grid>
 
     </ContentPage.Content>
