@@ -5,7 +5,7 @@ namespace FilmsManager.Extensions
 {
 	public static class IListExtensions
 	{
-		public static void AddRange(this IList<MovieModel> list, IList<MovieModel> newList)
+		public static void AddRange<TEntity>(this IList<TEntity> list, IList<TEntity> newList) where TEntity : IEntity
 		{
 			foreach (var item in newList)
 			{

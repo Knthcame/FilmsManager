@@ -5,12 +5,12 @@ using Prism.Commands;
 using Prism.Navigation;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using FilmsManager.Resources;
 using FilmsManager.Enums;
 using Models.ApiServices.Interfaces;
 using Prism.Services;
+using FilmsManager.Extensions;
 
 namespace FilmsManager.ViewModels
 {
@@ -88,9 +88,9 @@ namespace FilmsManager.ViewModels
 
         public override void RefreshGenreList()
         {
-            var genres = base.GetGenresInChosenAppLanguage();
-            genres.Insert(0, _genreModelManager.FindByID(GenreKeys.AllGenres));
-            GenreList = new ObservableCollection<GenreModel>(genres);
+            GenreList.Clear();
+            GenreList.Add( _genreModelManager.FindByID(GenreKeys.AllGenres));
+            GenreList.AddRange(base.GetGenresInChosenAppLanguage());
         }
 
         private void OnSwapSearch()

@@ -108,6 +108,7 @@ namespace FilmsManager.ViewModels
 
             await _restService.DeleteToDoItemAsync<MovieModel>(movie.Id);
             await RetrieveMovieListAsync();
+
             if (MovieList.Count == 0)
                 IsMovieListEmpty = true;
         }
@@ -117,8 +118,8 @@ namespace FilmsManager.ViewModels
             var movies = await _restService.RefreshDataAsync<MovieModel, IList<MovieModel>>();
             MovieList.Clear();
             MovieList.AddRange(movies);
+            UpdateMovieListLanguage();
             IsRefreshingMovieList = false;
-            return;
         }
 
         protected virtual async Task OnShowDetailAsync(MovieModel movie)
@@ -140,7 +141,6 @@ namespace FilmsManager.ViewModels
                 await Task.Delay(100);
 
             IsRefreshingMovieList = false;
-            UpdateMovieListLanguage();
 
             if (MovieList.Count > 0)
                 IsMovieListEmpty = false;
@@ -153,7 +153,6 @@ namespace FilmsManager.ViewModels
         {
             GenreResponse = await _restService.RefreshDataAsync<GenreModel, GenreResponse>();
             RefreshGenreList();
-            return;
         }
 
         public virtual void RefreshGenreList()
@@ -184,7 +183,6 @@ namespace FilmsManager.ViewModels
             }
             MovieList.Clear();
             MovieList.AddRange(movies);
-            return;
         }
     }
 }

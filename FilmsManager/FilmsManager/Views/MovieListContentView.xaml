@@ -59,7 +59,7 @@
 
                             </ViewCell.ContextActions>
 
-                            <Frame BorderColor="White"
+                            <Frame BorderColor="Black"
                                    Margin="0,3"
                                    Padding="0"
                                    BackgroundColor="Transparent"
@@ -85,15 +85,15 @@
                                         <RowDefinition Height="100*"/>
                                     </Grid.RowDefinitions>
 
-                                    <Frame  BorderColor="LightGray"
-                                        CornerRadius="0"
-                                        Grid.Column="1"
-                                        BackgroundColor="Transparent"
-                                        Padding="0"
-                                        Margin="0">
+                                    <Frame BorderColor="Gray"
+                                           CornerRadius="0"
+                                           Grid.Column="1"
+                                           BackgroundColor="Transparent"
+                                           Padding="0"
+                                           Margin="0">
 
                                         <Label Text="{Binding Title}"
-                                               TextColor="White"
+                                               TextColor="Blue"
                                                FontSize="Large"
                                                Grid.Column="1"
                                                VerticalOptions="CenterAndExpand"
@@ -101,7 +101,7 @@
                                     </Frame>
 
                                     <Label Text="{Binding Genre.Name}"
-                                           TextColor="LightGray"
+                                           TextColor="DarkBlue"
                                            FontSize="Medium"
                                            Grid.Column="2"
                                            VerticalOptions="CenterAndExpand"
