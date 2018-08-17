@@ -63,7 +63,7 @@ namespace Models.ApiServices
 			return result;
 		}
 
-		public async Task SaveToDoItemAsync<TEntity>(MovieModel item, bool isNewItem) where TEntity : IEntity
+		public async Task SaveModelAsync<TEntity>(MovieModel item, bool isNewItem) where TEntity : IEntity
 		{
             var type = typeof(TEntity);
 
@@ -89,7 +89,7 @@ namespace Models.ApiServices
 
 				if (response.IsSuccessStatusCode)
 				{
-					Debug.WriteLine(@"				TodoItem successfully saved.");
+					Debug.WriteLine($"				{typeof(TEntity).Name} successfully saved.");
 				}
 
 			}
@@ -99,7 +99,7 @@ namespace Models.ApiServices
 			}
 		}
 
-		public async Task DeleteToDoItemAsync<TEntity>(string id) where TEntity : IEntity
+		public async Task DeleteModelAsync<TEntity>(string id) where TEntity : IEntity
 
         {
             var type = typeof(TEntity);
@@ -115,7 +115,7 @@ namespace Models.ApiServices
 
 				if (response.IsSuccessStatusCode)
 				{
-					Debug.WriteLine(@"				TodoItem successfully deleted.");
+					Debug.WriteLine($"				{typeof(TEntity).Name} successfully deleted.");
 				}
 
 			}

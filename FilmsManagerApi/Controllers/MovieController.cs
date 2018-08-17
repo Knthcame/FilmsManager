@@ -28,12 +28,12 @@ namespace FilmsManagerApi.Controllers
 		public IActionResult Create([FromBody] MovieModel item)
 		{
 			if (item == null || !ModelState.IsValid)
-				return BadRequest(ErrorCodeEnum.ToDoItemNameAndDescriptionRequired.ToString());
+				return BadRequest(ErrorCodeEnum.ModelNameAndDescriptionRequired.ToString());
 
 			try
 			{
 				if (_movieRepository.DoesItemExist(item.Id))
-					return StatusCode(StatusCodes.Status409Conflict, ErrorCodeEnum.ToDoItemIdInUse.ToString());
+					return StatusCode(StatusCodes.Status409Conflict, ErrorCodeEnum.ModelIdInUse.ToString());
 
 				item.Id = GenerateId();
 				_movieRepository.Insert(item);
@@ -51,7 +51,7 @@ namespace FilmsManagerApi.Controllers
 		public IActionResult Modify([FromBody] MovieModel item)
 		{
 			if (item == null || !ModelState.IsValid)
-				return BadRequest(ErrorCodeEnum.ToDoItemNameAndDescriptionRequired.ToString());
+				return BadRequest(ErrorCodeEnum.ModelNameAndDescriptionRequired.ToString());
 
 			try
 			{

@@ -1,4 +1,6 @@
-﻿using FilmsManager.iOS.ResxLocalization;
+﻿using FilmsManager.iOS.Logging;
+using FilmsManager.iOS.ResxLocalization;
+using FilmsManager.Logging;
 using FilmsManager.ResxLocalization;
 using Foundation;
 using Prism;
@@ -41,6 +43,7 @@ namespace FilmsManager.iOS
         public void RegisterTypes(IContainerRegistry container)
         {
 			container.Register<ILocalize, Localize_iOS>();
+            container.Register<ILogger, MyiOSLogger>();
         }
     }
 }

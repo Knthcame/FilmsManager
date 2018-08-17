@@ -9,6 +9,8 @@ using Plugin.Permissions;
 using Android.Runtime;
 using FilmsManager.Droid.ResxLocalization;
 using FilmsManager.ResxLocalization;
+using FilmsManager.Logging;
+using FilmsManager.Droid.Logging;
 
 namespace FilmsManager.Droid
 {
@@ -60,6 +62,7 @@ namespace FilmsManager.Droid
 		public void RegisterTypes(IContainerRegistry container)
 		{
 			container.Register<ILocalize, Localize_Android>();
+            container.Register<ILogger, MyAndroidLogger>();
 		}
 	}
 }

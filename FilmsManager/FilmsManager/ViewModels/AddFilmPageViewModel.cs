@@ -15,6 +15,9 @@ using FilmsManager.Views;
 using Models.ApiServices.Interfaces;
 using FilmsManager.Events;
 using System;
+using FilmsManager.Logging;
+using System.Reflection;
+using Newtonsoft.Json;
 
 namespace FilmsManager.ViewModels
 {
@@ -31,6 +34,7 @@ namespace FilmsManager.ViewModels
         private bool _isAddingMovie = false;
 		private Color _chooseFilmButtonBorderColor = Color.Black;
         private object _addingMovieLock = new Object();
+        private readonly ILogger _log;
 
 		public string BackgroundImage { get; set; } = AppImages.BackgroundImageAddFilm;
 
@@ -96,12 +100,13 @@ namespace FilmsManager.ViewModels
 		}
         #endregion
 
-        public AddFilmPageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IPageDialogService pageDialogService, IRestService restService) : base(navigationService)
+        public AddFilmPageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IPageDialogService pageDialogService, IRestService restService, ILogger logger) : base(navigationService)
 		{
 			Title = AppResources.AddFilmPageTitle;
 			_movieImage = _defaultMovieImage;
 			_eventAggregator = eventAggregator;
 			_restService = restService;
+            _log = logger;
 			AddCommand = new DelegateCommand(async () => await OnAddAsync());
 			OpenGalleryCommand = new DelegateCommand(async () => await OnOpenGalleryAsync());
 			_eventAggregator.GetEvent<PickImageEvent>().Subscribe(OnPickImage);
@@ -136,6 +141,8 @@ namespace FilmsManager.ViewModels
 
                 _isAddingMovie = true;
             }
+            //_log.SaveLogFile(MethodBase.GetCurrentMethod(), "Add film button pressed");
+            _log.LogMessage("Add film button pressed");
 
             if (MovieTitle == null | SelectedGenre == null)
             {
@@ -148,6 +155,9 @@ namespace FilmsManager.ViewModels
                         MissingTitle = true;
                     if (SelectedGenre == null)
                         MissingGenre = true;
+
+                    //_log.SaveLogFile(MethodBase.GetCurrentMethod(), "Missing inputs");
+                    _log.LogMessage("Missing inputs");
                 }
             }
             else if (MovieImage as string == _defaultMovieImage)
@@ -163,12 +173,15 @@ namespace FilmsManager.ViewModels
             {
                 await SaveNewFilm();
             }
+            _isAddingMovie = false;
 		}
 
 		private async Task SaveNewFilm()
 		{
-			global::Models.Classes.MovieModel item = new global::Models.Classes.MovieModel(null, MovieTitle, SelectedGenre, MovieImage);
-			await _restService.SaveToDoItemAsync<MovieModel>(item, true);
+            MovieModel item = new MovieModel(null, MovieTitle, SelectedGenre, MovieImage);
+            //_log.SaveLogFile(MethodBase.GetCurrentMethod(), $"Added new film: {JsonConvert.SerializeObject(item)}");
+            _log.LogObject(item, "Added new film");
+			await _restService.SaveModelAsync<MovieModel>(item, true);
 			_eventAggregator.GetEvent<AddFilmEvent>().Publish();
 			await NavigationService.GoBackAsync();
 		}

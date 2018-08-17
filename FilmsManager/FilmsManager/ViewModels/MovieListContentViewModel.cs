@@ -106,7 +106,7 @@ namespace FilmsManager.ViewModels
             if (movie == null)
                 return;
 
-            await _restService.DeleteToDoItemAsync<MovieModel>(movie.Id);
+            await _restService.DeleteModelAsync<MovieModel>(movie.Id);
             await RetrieveMovieListAsync();
 
             if (MovieList.Count == 0)

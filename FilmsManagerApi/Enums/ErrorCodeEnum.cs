@@ -2,8 +2,8 @@
 {
     public enum ErrorCodeEnum
     {
-        ToDoItemNameAndDescriptionRequired,
-        ToDoItemIdInUse,
+        ModelNameAndDescriptionRequired,
+        ModelIdInUse,
         RecordNotFound,
         CouldNotCreateItem,
         CouldNotUpdateItem,
