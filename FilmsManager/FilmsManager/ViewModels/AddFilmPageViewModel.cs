@@ -14,6 +14,7 @@ using FilmsManager.Models;
 using FilmsManager.Views;
 using Models.ApiServices.Interfaces;
 using FilmsManager.Events;
+using System;
 
 namespace FilmsManager.ViewModels
 {
@@ -27,8 +28,9 @@ namespace FilmsManager.ViewModels
 		private GenreModel _selectedGenre;
 		private bool _missingTitle;
 		private bool _missingGenre;
+        private bool _isAddingMovie = false;
 		private Color _chooseFilmButtonBorderColor = Color.Black;
-        private bool _addingMovie = false;
+        private object _addingMovieLock = new Object();
 
 		public string BackgroundImage { get; set; } = AppImages.BackgroundImageAddFilm;
 
@@ -127,39 +129,40 @@ namespace FilmsManager.ViewModels
 
 		private async Task OnAddAsync()
 		{
-            if (_addingMovie)
-                return;
+            lock (_addingMovieLock)
+            {
+                if (_isAddingMovie)
+                    return;
 
-            _addingMovie = true;
+                _isAddingMovie = true;
+            }
 
-			if (MovieTitle == null | SelectedGenre == null)
-			{
-				bool action = await _pageDialogService.DisplayAlertAsync(AppResources.MissingEntriesTitle, AppResources.MissingEntriesMessage, AppResources.MissingEntriesOkButton, AppResources.MissingEntriesCancelButton);
-				if (action)
-					await NavigationService.GoBackAsync();
-				else
-				{
-					if (MovieTitle == null)
-						MissingTitle = true;
-					if (SelectedGenre == null)
-						MissingGenre = true;
-				}
-			}
-			else if (MovieImage as string == _defaultMovieImage)
-			{
-				bool action = await _pageDialogService.DisplayAlertAsync(AppResources.AddFilmDefaultImageTitle, AppResources.AddFilmDefaultImageMessage, AppResources.AddFilmDefaultImageOkButton, AppResources.AddFilmDefaultImageCancelButton);
-				if (action)
-				{
-					await SaveNewFilm();
-				}
-				else ChooseFilmButtonBorderColor = Color.Red;
-			}
-			else
-			{
-				await SaveNewFilm();
-			}
-
-            _addingMovie = false;
+            if (MovieTitle == null | SelectedGenre == null)
+            {
+                bool action = await _pageDialogService.DisplayAlertAsync(AppResources.MissingEntriesTitle, AppResources.MissingEntriesMessage, AppResources.MissingEntriesOkButton, AppResources.MissingEntriesCancelButton);
+                if (action)
+                    await NavigationService.GoBackAsync();
+                else
+                {
+                    if (MovieTitle == null)
+                        MissingTitle = true;
+                    if (SelectedGenre == null)
+                        MissingGenre = true;
+                }
+            }
+            else if (MovieImage as string == _defaultMovieImage)
+            {
+                bool action = await _pageDialogService.DisplayAlertAsync(AppResources.AddFilmDefaultImageTitle, AppResources.AddFilmDefaultImageMessage, AppResources.AddFilmDefaultImageOkButton, AppResources.AddFilmDefaultImageCancelButton);
+                if (action)
+                {
+                    await SaveNewFilm();
+                }
+                else ChooseFilmButtonBorderColor = Color.Red;
+            }
+            else
+            {
+                await SaveNewFilm();
+            }
 		}
 
 		private async Task SaveNewFilm()
