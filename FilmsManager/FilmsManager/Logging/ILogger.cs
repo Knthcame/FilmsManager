@@ -8,7 +8,7 @@ namespace FilmsManager.Logging
     {
         void LogObject(object obj, string message = "");
 
-        void LogError(string message);
+        void LogError(Exception error);
 
         void LogMessage(string message);
     }

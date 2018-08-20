@@ -1,6 +1,7 @@
 ﻿using Android.Util;
 using FilmsManager.Logging;
 using Newtonsoft.Json;
+using System;
 
 namespace FilmsManager.Droid.Logging
 {
@@ -8,9 +9,9 @@ namespace FilmsManager.Droid.Logging
     {
         private string _tag = "FilmsManager"; 
 
-        public void LogError(string message)
+        public void LogError(Exception error)
         {
-            Log.Error(_tag, message);
+            Log.Error(_tag, error.ToString());
         }
 
         public void LogMessage(string message)
