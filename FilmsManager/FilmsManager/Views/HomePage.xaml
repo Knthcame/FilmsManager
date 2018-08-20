@@ -122,23 +122,6 @@
                      Order="Primary"
                      Priority="1"
                      Command="{Binding LanguageOptionsCommand}">
-
-            <!--<ToolbarItem.Icon>
-                
-                <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="Android" Value="{Binding Flag}"/>
-                </OnPlatform>
-                
-            </ToolbarItem.Icon>
-
-            <ToolbarItem.Text>
-                
-                <OnPlatform x:TypeArguments="x:String">
-                    <On Platform="iOS" Value="{Binding LanguageAbreviation}"/>
-                </OnPlatform>
-                
-            </ToolbarItem.Text>-->
-            
         </ToolbarItem>
     </ContentPage.ToolbarItems>
 </views:BasePage>
