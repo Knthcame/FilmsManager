@@ -103,12 +103,6 @@ namespace FilmsManager.ViewModels
             IsMovieListEmpty = true;
         }
 
-        protected override async Task RefreshMovieListAsync()
-		{
-			await base.RefreshMovieListAsync();
-			IsRefreshingMovieList = false;
-		}
-
 		public void LoadResources()
 		{
 			Title = AppResources.HomePageTitle;

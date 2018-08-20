@@ -96,6 +96,8 @@ namespace FilmsManager.ViewModels
 
         private void OnSwapSearch()
         {
+            _logger.Log("Swapping search type", Category.Info, Priority.Low);
+
             switch ((SearchTypeEnum)SearchType)
             {
                 case SearchTypeEnum.Title: //Title to Genre
@@ -118,6 +120,8 @@ namespace FilmsManager.ViewModels
                     break;
             }
             FilteredMovieList = new ObservableCollection<MovieModel>(MovieList);
+
+            _logger.Log($"Succesfully changed search type to {SearchType}", Category.Info, Priority.Low);
         }
 
         private void OnSearchFilm()

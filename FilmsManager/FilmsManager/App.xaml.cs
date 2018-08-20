@@ -10,6 +10,8 @@ using Models.ApiServices.Interfaces;
 using FilmsManager.ResxLocalization;
 using FilmsManager.Resources;
 using FilmsManager.Views;
+using Prism.Logging;
+using FilmsManager.Logging;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace FilmsManager
@@ -50,6 +52,7 @@ namespace FilmsManager
 			containerRegistry.RegisterForNavigation<LanguageSelectionPage>();
 			containerRegistry.RegisterInstance<IGenreModelManager>(new GenreModelManager());
 			containerRegistry.Register<IRestService, RestService>();
-		}
+            containerRegistry.Register<ILoggerFacade, CustomLogger>();
+        }
     }
 }
