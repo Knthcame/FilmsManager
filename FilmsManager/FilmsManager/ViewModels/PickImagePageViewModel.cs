@@ -2,11 +2,13 @@
 using FilmsManager.Models;
 using FilmsManager.Resources;
 using Models.Resources;
+using Newtonsoft.Json;
 using Plugin.Media;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using Prism.Commands;
 using Prism.Events;
+using Prism.Logging;
 using Prism.Navigation;
 using Prism.Services;
 using System.Collections.ObjectModel;
@@ -18,8 +20,9 @@ namespace FilmsManager.ViewModels
 {
 	public class PickImagePageViewModel : BaseViewModel
 	{
+        #region Properties
 
-		public double ScreenHeight = Application.Current.MainPage.Height;
+        public double ScreenHeight = Application.Current.MainPage.Height;
 		private bool _listViewVisible = false;
 		private bool _buttonsVisible = true;
 
@@ -27,7 +30,9 @@ namespace FilmsManager.ViewModels
 
 		private readonly IPageDialogService _pageDialogService;
 
-		private PickImageModel _selectedImage;
+        private readonly ILoggerFacade _logger;
+
+        private PickImageModel _selectedImage;
 
 		public string PreloadedImagesCover { get; set; } = AppImages.Shrek;
 
@@ -61,11 +66,14 @@ namespace FilmsManager.ViewModels
 			set { SetProperty(ref _buttonsVisible, value); }
 		}
 
-		public PickImagePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IPageDialogService pageDialogService) : base(navigationService)
+        #endregion
+
+        public PickImagePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IPageDialogService pageDialogService, ILoggerFacade logger) : base(navigationService)
 		{
 			Title = AppResources.PickImagePageTitle;
 			_eventAggregator = eventAggregator;
 			_pageDialogService = pageDialogService;
+            _logger = logger;
 			PickImageCommand = new DelegateCommand(async () => await OnPickImageAsync());
 			PreloadedPhotoCommand = new DelegateCommand(OnPreloadedPhoto);
 			MobileGalleryCommand = new DelegateCommand(async () => await PickGalleryPhotoAsync());
@@ -75,6 +83,7 @@ namespace FilmsManager.ViewModels
 
 		private async Task OnGoBackAsync()
 		{
+            _logger.Log("User cancelled selecting a photo", Category.Info, Priority.Low);
 			await OnBackButtonPressedAsync();
 		}
 
@@ -86,6 +95,7 @@ namespace FilmsManager.ViewModels
 
 		private async Task PickGalleryPhotoAsync()
 		{
+            _logger.Log("Selecting image from mobile gallery", Category.Info, Priority.Low);
 			Permission permission = Permission.Unknown;
 			switch (Device.RuntimePlatform)
 			{
@@ -115,7 +125,12 @@ namespace FilmsManager.ViewModels
 				
 			}
 			if (status == PermissionStatus.Denied)
+            {
+                _logger.Log("User denied storage permision", Category.Info, Priority.Medium);
 				return;
+            }
+
+            _logger.Log("Storage permission granted", Category.Info, Priority.Medium);
 
 			var photo = await CrossMedia.Current.PickPhotoAsync();
 			PickImageModel model = new PickImageModel
@@ -126,8 +141,14 @@ namespace FilmsManager.ViewModels
 					return stream;
 				})
 			};
-			if (photo != null)
-				_eventAggregator.GetEvent<PickImageEvent>().Publish(model);
+            if (photo != null)
+            {
+                _logger.Log($"Image selected from gallery: {JsonConvert.SerializeObject(model)}", Category.Info, Priority.Medium);
+                _eventAggregator.GetEvent<PickImageEvent>().Publish(model);
+            }
+            else
+                _logger.Log("Image is null", Category.Exception, Priority.High);
+
 			await NavigationService.GoBackAsync();
 		}
 
@@ -136,7 +157,8 @@ namespace FilmsManager.ViewModels
 			if (SelectedImage == null)
 				return;
 
-			_eventAggregator.GetEvent<PickImageEvent>().Publish(SelectedImage);
+            _logger.Log($"Selecetd preloaded image: {SelectedImage.ImageName}", Category.Info, Priority.Medium);
+            _eventAggregator.GetEvent<PickImageEvent>().Publish(SelectedImage);
 			await NavigationService.GoBackAsync();
 		}
 
