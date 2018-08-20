@@ -178,6 +178,27 @@
   <data name="AllGenres" xml:space="preserve">
     <value>All</value>
   </data>
+  <data name="ConnectionErrorMessage" xml:space="preserve">
+    <value>Could not connect with the server at this time</value>
+  </data>
+  <data name="ConnectionErrorOkButton" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="ConnectionErrorTitle" xml:space="preserve">
+    <value>Connection error</value>
+  </data>
+  <data name="DeleteFilmConfirmationCancelButton" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="DeleteFilmConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to delete the following film?</value>
+  </data>
+  <data name="DeleteFilmConfirmationOkButton" xml:space="preserve">
+    <value>Yes, delete it</value>
+  </data>
+  <data name="DeleteFilmConfirmationTitle" xml:space="preserve">
+    <value>Delete film?</value>
+  </data>
   <data name="DeleteMenuItemText" xml:space="preserve">
     <value>Delete</value>
   </data>
@@ -252,6 +273,15 @@
   </data>
   <data name="ScienceFictionGenre" xml:space="preserve">
     <value>ScienceFiction</value>
+  </data>
+  <data name="SearchEmptyListCancelButton" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="SearchEmptyListMessage" xml:space="preserve">
+    <value>You cannot search movies because the are none to search for</value>
+  </data>
+  <data name="SearchEmptyListTitle" xml:space="preserve">
+    <value>Empty list</value>
   </data>
   <data name="SearchFilmPagePickerPlaceholder" xml:space="preserve">
     <value>Select movie genre to filter by</value>

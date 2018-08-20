@@ -37,8 +37,6 @@ namespace FilmsManager.ViewModels
 
 		public ICommand LanguageOptionsCommand { get; set; }
 
-        private readonly IPageDialogService _pageDialogService;
-
         private readonly IEventAggregator _eventAggregator;
 
 		public string LanguageAbreviation
@@ -79,9 +77,8 @@ namespace FilmsManager.ViewModels
 
         #endregion properties
 
-        public HomePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IGenreModelManager genreModelManager, IRestService restService, IPageDialogService pageDialogService) : base(navigationService, restService, genreModelManager)
+        public HomePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IGenreModelManager genreModelManager, IRestService restService, IPageDialogService pageDialogService) : base(navigationService, restService, genreModelManager, pageDialogService)
 		{
-            _pageDialogService = pageDialogService;
 			_eventAggregator = eventAggregator;
 			_eventAggregator.GetEvent<SelectLanguageEvent>().Subscribe(UpdatePageLanguage);
 			_eventAggregator.GetEvent<AddFilmEvent>().Subscribe(async () => await RefreshMovieListAsync());
@@ -94,7 +91,7 @@ namespace FilmsManager.ViewModels
 
         private async Task NotifyConnectionErrorAsync()
         {
-            await _pageDialogService.DisplayAlertAsync("Connection error", "Could not connect with the server at this time", "ok");
+            await _pageDialogService.DisplayAlertAsync(AppResources.ConnectionErrorTitle, AppResources.ConnectionErrorMessage, AppResources.ConnectionErrorOkButton);
             IsRefreshingMovieList = false;
             IsMovieListEmpty = true;
         }
@@ -141,7 +138,7 @@ namespace FilmsManager.ViewModels
 		{
             if (IsMovieListEmpty)
             {
-                await _pageDialogService.DisplayAlertAsync("Error", "There are no movies to search for", "ok");
+                await _pageDialogService.DisplayAlertAsync(AppResources.SearchEmptyListTitle, AppResources.SearchEmptyListMessage, AppResources.SearchEmptyListCancelButton);
                 return;
             }
                 

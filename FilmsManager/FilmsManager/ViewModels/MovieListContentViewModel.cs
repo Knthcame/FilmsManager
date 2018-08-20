@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using FilmsManager.Extensions;
@@ -17,7 +14,6 @@ using Nito.AsyncEx;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
-using Xamarin.Forms;
 
 namespace FilmsManager.ViewModels
 {
@@ -71,6 +67,8 @@ namespace FilmsManager.ViewModels
 
         protected readonly IGenreModelManager _genreModelManager;
 
+        protected readonly IPageDialogService _pageDialogService;
+
         public ICommand DeleteFilmCommand { get; set; }
 
         public ICommand RefreshCommand { get; set; }
@@ -89,10 +87,11 @@ namespace FilmsManager.ViewModels
 
         #endregion Properties
 
-        public MovieListContentViewModel(INavigationService navigationService, IRestService restService, IGenreModelManager genreModelManager) : base(navigationService)
+        public MovieListContentViewModel(INavigationService navigationService, IRestService restService, IGenreModelManager genreModelManager, IPageDialogService pageDialogService) : base(navigationService)
         {
             _restService = restService;
             _genreModelManager = genreModelManager;
+            _pageDialogService = pageDialogService;
             DeleteFilmCommand = new DelegateCommand<MovieModel>(async (movie) => await OnDeleteFilmAsync(movie));
             ShowDetailsCommand = new DelegateCommand<MovieModel>(async (movie) => await OnShowDetailAsync(movie));
             RefreshCommand = new DelegateCommand(async () => await RefreshMovieListAsync());
@@ -104,6 +103,9 @@ namespace FilmsManager.ViewModels
         protected virtual async Task OnDeleteFilmAsync(MovieModel movie)
         {
             if (movie == null)
+                return;
+
+            if (!await _pageDialogService.DisplayAlertAsync(AppResources.DeleteFilmConfirmationTitle, $"{AppResources.DeleteFilmConfirmationMessage} {movie.Title}", AppResources.DeleteFilmConfirmationOkButton, AppResources.DeleteFilmConfirmationCancelButton))
                 return;
 
             await _restService.DeleteModelAsync<MovieModel>(movie.Id);

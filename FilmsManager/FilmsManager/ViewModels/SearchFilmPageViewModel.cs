@@ -78,7 +78,7 @@ namespace FilmsManager.ViewModels
 
         #endregion
 
-        public SearchFilmPageViewModel(INavigationService navigationService, IGenreModelManager genreModelManager, IRestService restService, IPageDialogService pageDialogService) : base(navigationService, restService, genreModelManager)
+        public SearchFilmPageViewModel(INavigationService navigationService, IGenreModelManager genreModelManager, IRestService restService, IPageDialogService pageDialogService) : base(navigationService, restService, genreModelManager, pageDialogService)
         {
             Title = AppResources.SearchFilmPageTitle;
             SearchFilmCommand = new DelegateCommand(OnSearchFilm);

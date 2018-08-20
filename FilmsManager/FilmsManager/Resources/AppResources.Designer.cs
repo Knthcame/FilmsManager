@@ -232,6 +232,69 @@ namespace FilmsManager.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not connect with the server at this time.
+        /// </summary>
+        internal static string ConnectionErrorMessage {
+            get {
+                return ResourceManager.GetString("ConnectionErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        internal static string ConnectionErrorOkButton {
+            get {
+                return ResourceManager.GetString("ConnectionErrorOkButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connection error.
+        /// </summary>
+        internal static string ConnectionErrorTitle {
+            get {
+                return ResourceManager.GetString("ConnectionErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        internal static string DeleteFilmConfirmationCancelButton {
+            get {
+                return ResourceManager.GetString("DeleteFilmConfirmationCancelButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete the following film?.
+        /// </summary>
+        internal static string DeleteFilmConfirmationMessage {
+            get {
+                return ResourceManager.GetString("DeleteFilmConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes, delete it.
+        /// </summary>
+        internal static string DeleteFilmConfirmationOkButton {
+            get {
+                return ResourceManager.GetString("DeleteFilmConfirmationOkButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete film?.
+        /// </summary>
+        internal static string DeleteFilmConfirmationTitle {
+            get {
+                return ResourceManager.GetString("DeleteFilmConfirmationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         internal static string DeleteMenuItemText {
@@ -444,6 +507,33 @@ namespace FilmsManager.Resources {
         internal static string ScienceFictionGenre {
             get {
                 return ResourceManager.GetString("ScienceFictionGenre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        internal static string SearchEmptyListCancelButton {
+            get {
+                return ResourceManager.GetString("SearchEmptyListCancelButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You cannot search movies because the are none to search for.
+        /// </summary>
+        internal static string SearchEmptyListMessage {
+            get {
+                return ResourceManager.GetString("SearchEmptyListMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empty list.
+        /// </summary>
+        internal static string SearchEmptyListTitle {
+            get {
+                return ResourceManager.GetString("SearchEmptyListTitle", resourceCulture);
             }
         }
         
