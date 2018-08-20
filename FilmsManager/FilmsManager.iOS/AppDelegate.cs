@@ -1,6 +1,4 @@
-﻿using FilmsManager.iOS.Logging;
-using FilmsManager.iOS.ResxLocalization;
-using FilmsManager.Logging;
+﻿using FilmsManager.iOS.ResxLocalization;
 using FilmsManager.ResxLocalization;
 using Foundation;
 using Prism;
@@ -10,10 +8,10 @@ using Xamarin.Forms;
 
 namespace FilmsManager.iOS
 {
-	// The UIApplicationDelegate for the application. This class is responsible for launching the 
-	// User Interface of the application, as well as listening (and optionally responding) to 
-	// application events from iOS.
-	[Register("AppDelegate")]
+    // The UIApplicationDelegate for the application. This class is responsible for launching the 
+    // User Interface of the application, as well as listening (and optionally responding) to 
+    // application events from iOS.
+    [Register("AppDelegate")]
     public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
     {
         //
@@ -43,7 +41,6 @@ namespace FilmsManager.iOS
         public void RegisterTypes(IContainerRegistry container)
         {
 			container.Register<ILocalize, Localize_iOS>();
-            container.Register<ILogger, MyiOSLogger>();
         }
     }
 }

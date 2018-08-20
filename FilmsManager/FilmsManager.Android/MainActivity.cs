@@ -9,12 +9,10 @@ using Plugin.Permissions;
 using Android.Runtime;
 using FilmsManager.Droid.ResxLocalization;
 using FilmsManager.ResxLocalization;
-using FilmsManager.Logging;
-using FilmsManager.Droid.Logging;
 
 namespace FilmsManager.Droid
 {
-	[Activity(Label = "FilmsManager", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "FilmsManager", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
@@ -62,7 +60,6 @@ namespace FilmsManager.Droid
 		public void RegisterTypes(IContainerRegistry container)
 		{
 			container.Register<ILocalize, Localize_Android>();
-            container.Register<ILogger, MyAndroidLogger>();
 		}
 	}
 }
