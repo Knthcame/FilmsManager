@@ -164,8 +164,6 @@ namespace FilmsManager.ViewModels
             while (IsRefreshingMovieList)
                 await Task.Delay(100);
 
-            IsRefreshingMovieList = false;
-
             if (MovieList.Count > 0)
                 IsMovieListEmpty = false;
 

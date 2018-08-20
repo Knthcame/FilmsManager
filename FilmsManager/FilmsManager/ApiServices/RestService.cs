@@ -53,6 +53,10 @@ namespace Models.ApiServices
 					var content = await response.Content.ReadAsStringAsync();
 					result = JsonConvert.DeserializeObject<JEntity>(content);
 				}
+                if (typeof(JEntity) == typeof(IList<MovieModel>))
+                {
+                    _eventAggregator.GetEvent<MovieListRefreshedEvent>().Publish();
+                }
 			}
 			catch (Exception ex)
 			{
