@@ -11,7 +11,6 @@ using Models.ApiServices.Interfaces;
 using Models.Classes;
 using Models.Managers.Interfaces;
 using Models.Resources;
-using Newtonsoft.Json;
 using Nito.AsyncEx;
 using Prism.Commands;
 using Prism.Logging;

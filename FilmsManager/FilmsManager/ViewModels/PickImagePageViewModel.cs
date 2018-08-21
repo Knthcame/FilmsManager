@@ -3,7 +3,6 @@ using FilmsManager.Logging.Interfaces;
 using FilmsManager.Models;
 using FilmsManager.Resources;
 using Models.Resources;
-using Newtonsoft.Json;
 using Plugin.Media;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
@@ -19,7 +18,7 @@ using Xamarin.Forms;
 
 namespace FilmsManager.ViewModels
 {
-	public class PickImagePageViewModel : BaseViewModel
+    public class PickImagePageViewModel : BaseViewModel
 	{
         #region Properties
 
@@ -127,7 +126,7 @@ namespace FilmsManager.ViewModels
 			}
 			if (status == PermissionStatus.Denied)
             {
-                _logger.Log("User denied storage permision", Category.Info, Priority.Medium);
+                _logger.Log("User denied storage permission", Category.Info, Priority.Medium);
 				return;
             }
 
@@ -158,7 +157,7 @@ namespace FilmsManager.ViewModels
 			if (SelectedImage == null)
 				return;
 
-            _logger.Log($"Selecetd preloaded image: {SelectedImage.ImageName}", Category.Info, Priority.Medium);
+            _logger.Log($"Selected preloaded image: {SelectedImage.ImageName}", Category.Info, Priority.Medium);
             _eventAggregator.GetEvent<PickImageEvent>().Publish(SelectedImage);
 			await NavigationService.GoBackAsync();
 		}

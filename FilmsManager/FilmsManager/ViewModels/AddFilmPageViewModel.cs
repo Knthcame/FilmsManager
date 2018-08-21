@@ -16,7 +16,6 @@ using Models.ApiServices.Interfaces;
 using FilmsManager.Events;
 using System;
 using Prism.Logging;
-using Newtonsoft.Json;
 using FilmsManager.Logging.Interfaces;
 
 namespace FilmsManager.ViewModels

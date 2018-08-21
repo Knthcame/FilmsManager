@@ -11,7 +11,6 @@ using FilmsManager.Resources;
 using FilmsManager.Views;
 using FilmsManager.Events;
 using Prism.Services;
-using Prism.Logging;
 using FilmsManager.Logging.Interfaces;
 
 namespace FilmsManager.ViewModels
