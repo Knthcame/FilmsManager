@@ -188,7 +188,7 @@ namespace FilmsManager.ViewModels
             MovieModel item = new MovieModel(null, MovieTitle, SelectedGenre, MovieImage);
             //_log.SaveLogFile(MethodBase.GetCurrentMethod(), $"Added new film: {JsonConvert.SerializeObject(item)}");
             _logger.Log($"Added new film: {JsonConvert.SerializeObject(item)}", Category.Info, Priority.Medium);
-			await _restService.SaveModelAsync<MovieModel>(item, true);
+			await _restService.SaveEntityAsync<MovieModel>(item, true);
 			_eventAggregator.GetEvent<AddFilmEvent>().Publish();
 			await NavigationService.GoBackAsync();
 		}

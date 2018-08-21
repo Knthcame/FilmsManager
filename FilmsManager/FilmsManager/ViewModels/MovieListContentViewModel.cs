@@ -120,7 +120,7 @@ namespace FilmsManager.ViewModels
                 return;
             }
 
-            await _restService.DeleteModelAsync<MovieModel>(movie.Id);
+            await _restService.DeleteEntityAsync<MovieModel>(movie.Id);
             await RefreshMovieListAsync();
 
             _logger.Log($"Succesfully deleted film: {JsonConvert.SerializeObject(movie)}", Category.Info, Priority.Medium);

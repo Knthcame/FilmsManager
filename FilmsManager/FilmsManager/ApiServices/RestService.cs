@@ -66,7 +66,7 @@ namespace Models.ApiServices
 			return result;
 		}
 
-		public async Task SaveModelAsync<TEntity>(MovieModel item, bool isNewItem) where TEntity : IEntity
+		public async Task SaveEntityAsync<TEntity>(MovieModel item, bool isNewItem) where TEntity : IEntity
 		{
             var type = typeof(TEntity);
 
@@ -102,7 +102,7 @@ namespace Models.ApiServices
 			}
 		}
 
-		public async Task DeleteModelAsync<TEntity>(string id) where TEntity : IEntity
+		public async Task DeleteEntityAsync<TEntity>(string id) where TEntity : IEntity
 
         {
             var type = typeof(TEntity);
