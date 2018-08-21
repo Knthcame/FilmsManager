@@ -65,7 +65,7 @@ namespace Models.ApiServices
 			}
 			catch (Exception ex)
 			{
-				_logger.Log($"				ERROR {ex.Message}", Category.Exception, Priority.);
+				_logger.Log($"				ERROR {ex.Message}", Category.Exception, Priority.High);
                 _eventAggregator.GetEvent<ConnectionErrorEvent>().Publish();
 			}
 			return result;
