@@ -10,12 +10,15 @@ using System.Threading.Tasks;
 using FilmsManager.Constants;
 using Prism.Events;
 using FilmsManager.Events;
+using Prism.Logging;
 
 namespace Models.ApiServices
 {
     public class RestService : IRestService
     {
         private readonly IEventAggregator _eventAggregator;
+
+        private readonly ILoggerFacade _logger;
 
         HttpClient _client;
 
@@ -25,9 +28,10 @@ namespace Models.ApiServices
             {typeof(GenreModel), ApiConstants.GenreController }
         };
 
-		public RestService(IEventAggregator eventAggregator)
+		public RestService(IEventAggregator eventAggregator, ILoggerFacade logger)
 		{
             _eventAggregator = eventAggregator;
+            _logger = logger;
 			_client = new HttpClient
 			{
 				MaxResponseContentBufferSize = 256000
@@ -92,13 +96,13 @@ namespace Models.ApiServices
 
 				if (response.IsSuccessStatusCode)
 				{
-					Debug.WriteLine($"				{typeof(TEntity).Name} successfully saved.");
+					_logger.Log($"				{typeof(TEntity).Name} successfully saved.", Category.Info, Priority.Medium);
 				}
 
 			}
 			catch (Exception ex)
 			{
-				Debug.WriteLine(@"				ERROR {0}", ex.Message);
+				_logger.Log($"				ERROR {ex.Message}", Category.Exception, Priority.High);
 			}
 		}
 
@@ -118,18 +122,14 @@ namespace Models.ApiServices
 
 				if (response.IsSuccessStatusCode)
 				{
-					Debug.WriteLine($"				{typeof(TEntity).Name} successfully deleted.");
+					_logger.Log($"				{typeof(TEntity).Name} successfully deleted.", Category.Info, Priority.Medium);
 				}
 
 			}
 			catch (Exception ex)
 			{
-				Debug.WriteLine(@"				ERROR {0}", ex.Message);
-			}
+                _logger.Log($"				ERROR {ex.Message}", Category.Exception, Priority.High);
+            }
 		}
 	}
-
-    internal class _eventAggregator
-    {
-    }
 }
