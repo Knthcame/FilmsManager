@@ -187,13 +187,13 @@
     <value>No</value>
   </data>
   <data name="DeleteFilmConfirmationMessage" xml:space="preserve">
-    <value>Estas seguro de que deseas eliminar la siguiente película?</value>
+    <value>¿Estás seguro de que deseas eliminar la siguiente película?</value>
   </data>
   <data name="DeleteFilmConfirmationOkButton" xml:space="preserve">
     <value>Sí, eliminar</value>
   </data>
   <data name="DeleteFilmConfirmationTitle" xml:space="preserve">
-    <value>Borrar película?</value>
+    <value>¿Borrar película?</value>
   </data>
   <data name="DeleteMenuItemText" xml:space="preserve">
     <value>Eliminar</value>
