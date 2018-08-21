@@ -148,7 +148,7 @@ namespace FilmsManager.ViewModels
 
                 _isAddingMovie = true;
             }
-            //_log.SaveLogFile(MethodBase.GetCurrentMethod(), "Add film button pressed");
+
             _logger.Log("Add film button pressed", Category.Info, Priority.Low);
 
             if (MovieTitle == null | SelectedGenre == null)
@@ -162,8 +162,7 @@ namespace FilmsManager.ViewModels
                         MissingTitle = true;
                     if (SelectedGenre == null)
                         MissingGenre = true;
-
-                    //_log.SaveLogFile(MethodBase.GetCurrentMethod(), "Missing inputs");
+                    
                     _logger.Log("Missing inputs", Category.Warn, Priority.Medium);
                 }
             }
@@ -186,7 +185,6 @@ namespace FilmsManager.ViewModels
 		private async Task SaveNewFilm()
 		{
             MovieModel item = new MovieModel(null, MovieTitle, SelectedGenre, MovieImage);
-            //_log.SaveLogFile(MethodBase.GetCurrentMethod(), $"Added new film: {JsonConvert.SerializeObject(item)}");
             _logger.Log($"Added new film:", item, Category.Info, Priority.Medium);
 			await _restService.SaveEntityAsync<MovieModel>(item, true);
 			_eventAggregator.GetEvent<AddFilmEvent>().Publish();
