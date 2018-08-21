@@ -22,7 +22,18 @@ namespace FilmsManager.Logging
 
         public void Log(string message, object obj, Category category, Priority priority)
         {
-            Log($"{message} {JsonConvert.SerializeObject(obj)}", category, priority);
+            try
+            {
+                Log($"{message} {JsonConvert.SerializeObject(obj)}", category, priority);
+            }
+            catch (JsonSerializationException ex)
+            {
+                if (ex.Message.Contains("loop"))
+                    Log($"{message} {JsonConvert.SerializeObject(obj, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })}", category, priority);
+                else
+                    Log(message, category, priority);
+            }
+            
         }
     }
 
