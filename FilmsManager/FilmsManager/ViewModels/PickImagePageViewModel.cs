@@ -30,7 +30,7 @@ namespace FilmsManager.ViewModels
 
 		private readonly IPageDialogService _pageDialogService;
 
-        private readonly ILoggerFacade _logger;
+        private readonly ICustomLogger_logger;
 
         private PickImageModel _selectedImage;
 
@@ -68,7 +68,7 @@ namespace FilmsManager.ViewModels
 
         #endregion
 
-        public PickImagePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IPageDialogService pageDialogService, ILoggerFacade logger) : base(navigationService)
+        public PickImagePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IPageDialogService pageDialogService, ICustomLoggerlogger) : base(navigationService)
 		{
 			Title = AppResources.PickImagePageTitle;
 			_eventAggregator = eventAggregator;
@@ -143,7 +143,7 @@ namespace FilmsManager.ViewModels
 			};
             if (photo != null)
             {
-                _logger.Log($"Image selected from gallery: {JsonConvert.SerializeObject(model)}", Category.Info, Priority.Medium);
+                _logger.Log($"Image selected from gallery:", model, Category.Info, Priority.Medium);
                 _eventAggregator.GetEvent<PickImageEvent>().Publish(model);
             }
             else

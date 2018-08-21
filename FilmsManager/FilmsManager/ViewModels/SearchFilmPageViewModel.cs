@@ -12,6 +12,7 @@ using Models.ApiServices.Interfaces;
 using Prism.Services;
 using FilmsManager.Extensions;
 using Prism.Logging;
+using FilmsManager.Logging.Interfaces;
 
 namespace FilmsManager.ViewModels
 {
@@ -79,7 +80,7 @@ namespace FilmsManager.ViewModels
 
         #endregion
 
-        public SearchFilmPageViewModel(INavigationService navigationService, IGenreModelManager genreModelManager, IRestService restService, IPageDialogService pageDialogService, ILoggerFacade logger) : base(navigationService, restService, genreModelManager, pageDialogService, logger)
+        public SearchFilmPageViewModel(INavigationService navigationService, IGenreModelManager genreModelManager, IRestService restService, IPageDialogService pageDialogService, ICustomLogger logger) : base(navigationService, restService, genreModelManager, pageDialogService, logger)
         {
             Title = AppResources.SearchFilmPageTitle;
             SearchFilmCommand = new DelegateCommand(OnSearchFilm);

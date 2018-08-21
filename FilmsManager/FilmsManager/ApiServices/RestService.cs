@@ -11,6 +11,7 @@ using FilmsManager.Constants;
 using Prism.Events;
 using FilmsManager.Events;
 using Prism.Logging;
+using FilmsManager.Logging.Interfaces;
 
 namespace Models.ApiServices
 {
@@ -18,7 +19,7 @@ namespace Models.ApiServices
     {
         private readonly IEventAggregator _eventAggregator;
 
-        private readonly ILoggerFacade _logger;
+        private readonly ICustomLogger _logger;
 
         HttpClient _client;
 
@@ -28,7 +29,7 @@ namespace Models.ApiServices
             {typeof(GenreModel), ApiConstants.GenreController }
         };
 
-		public RestService(IEventAggregator eventAggregator, ILoggerFacade logger)
+		public RestService(IEventAggregator eventAggregator, ICustomLogger logger)
 		{
             _eventAggregator = eventAggregator;
             _logger = logger;
@@ -64,7 +65,7 @@ namespace Models.ApiServices
 			}
 			catch (Exception ex)
 			{
-				Debug.WriteLine(@"				ERROR {0}", ex.Message);
+				_logger.Log($"				ERROR {ex.Message}", Category.Exception, Priority.);
                 _eventAggregator.GetEvent<ConnectionErrorEvent>().Publish();
 			}
 			return result;

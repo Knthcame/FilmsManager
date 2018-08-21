@@ -17,6 +17,7 @@ using FilmsManager.Events;
 using System;
 using Prism.Logging;
 using Newtonsoft.Json;
+using FilmsManager.Logging.Interfaces;
 
 namespace FilmsManager.ViewModels
 {
@@ -33,7 +34,7 @@ namespace FilmsManager.ViewModels
         private bool _isAddingMovie = false;
 		private Color _chooseFilmButtonBorderColor = Color.Black;
         private object _addingMovieLock = new Object();
-        private readonly ILoggerFacade _logger;
+        private readonly ICustomLogger _logger;
 
 		public string BackgroundImage { get; set; } = AppImages.BackgroundImageAddFilm;
 
@@ -99,7 +100,7 @@ namespace FilmsManager.ViewModels
 		}
         #endregion
 
-        public AddFilmPageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IPageDialogService pageDialogService, IRestService restService, ILoggerFacade logger) : base(navigationService)
+        public AddFilmPageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IPageDialogService pageDialogService, IRestService restService, ICustomLogger logger) : base(navigationService)
 		{
 			Title = AppResources.AddFilmPageTitle;
 			_movieImage = _defaultMovieImage;

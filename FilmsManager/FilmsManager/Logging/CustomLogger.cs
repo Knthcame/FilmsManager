@@ -1,9 +1,11 @@
-﻿using Prism.Logging;
+﻿using FilmsManager.Logging.Interfaces;
+using Newtonsoft.Json;
+using Prism.Logging;
 using System;
 
 namespace FilmsManager.Logging
 {
-    public class CustomLogger : ILoggerFacade
+    public class CustomLogger : ICustomLogger
     {
         public void Log(string message, Category category, Priority priority)
         {
@@ -16,6 +18,11 @@ namespace FilmsManager.Logging
                     priority.ToString());
 
             Console.WriteLine(messageToLog);
+        }
+
+        public void Log(string str, object obj, Category category, Priority priority)
+        {
+            Log($"{str} {JsonConvert.SerializeObject(obj)}", category, priority);
         }
     }
 

@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using FilmsManager.Extensions;
+using FilmsManager.Logging.Interfaces;
 using FilmsManager.Resources;
 using FilmsManager.ResxLocalization;
 using FilmsManager.Views;
@@ -71,7 +72,7 @@ namespace FilmsManager.ViewModels
 
         protected readonly IPageDialogService _pageDialogService;
 
-        protected readonly ILoggerFacade _logger;
+        protected readonly ICustomLogger _logger;
 
         public ICommand DeleteFilmCommand { get; set; }
 
@@ -91,7 +92,7 @@ namespace FilmsManager.ViewModels
 
         #endregion Properties
 
-        public MovieListContentViewModel(INavigationService navigationService, IRestService restService, IGenreModelManager genreModelManager, IPageDialogService pageDialogService, ILoggerFacade logger) : base(navigationService)
+        public MovieListContentViewModel(INavigationService navigationService, IRestService restService, IGenreModelManager genreModelManager, IPageDialogService pageDialogService, ICustomLogger logger) : base(navigationService)
         {
             _restService = restService;
             _genreModelManager = genreModelManager;
@@ -123,7 +124,7 @@ namespace FilmsManager.ViewModels
             await _restService.DeleteEntityAsync<MovieModel>(movie.Id);
             await RefreshMovieListAsync();
 
-            _logger.Log($"Succesfully deleted film: {JsonConvert.SerializeObject(movie)}", Category.Info, Priority.Medium);
+            _logger.Log($"Succesfully deleted film:", movie, Category.Info, Priority.Medium);
 
             if (MovieList.Count == 0)
             {
