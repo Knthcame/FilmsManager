@@ -20,9 +20,9 @@ namespace FilmsManager.Logging
             Console.WriteLine(messageToLog);
         }
 
-        public void Log(string str, object obj, Category category, Priority priority)
+        public void Log(string message, object obj, Category category, Priority priority)
         {
-            Log($"{str} {JsonConvert.SerializeObject(obj)}", category, priority);
+            Log($"{message} {JsonConvert.SerializeObject(obj)}", category, priority);
         }
     }
 
