@@ -2,8 +2,8 @@
 {
     public enum ErrorCodeEnum
     {
-        ModelNameAndDescriptionRequired,
-        ModelIdInUse,
+        EntityNameAndDescriptionRequired,
+        EntityIdInUse,
         RecordNotFound,
         CouldNotCreateItem,
         CouldNotUpdateItem,
