@@ -35,7 +35,7 @@
                 <Label Text="{Binding Movie.Title}"
                        HorizontalOptions="Center"
                        VerticalOptions="Center"
-                       TextColor="White"
+                       TextColor="Blue"
                        FontSize="Large"/>
 
             </Frame>
@@ -51,7 +51,7 @@
                 <Label Text="{Binding Movie.Genre.Name}"
                        HorizontalOptions="Center"
                        VerticalOptions="Center"
-                       TextColor="White"
+                       TextColor="DarkBlue"
                        FontSize="Large"/>
 
             </Frame>

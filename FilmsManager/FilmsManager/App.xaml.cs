@@ -10,11 +10,13 @@ using Models.ApiServices.Interfaces;
 using FilmsManager.ResxLocalization;
 using FilmsManager.Resources;
 using FilmsManager.Views;
+using FilmsManager.Logging;
+using FilmsManager.Logging.Interfaces;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace FilmsManager
 {
-	public partial class App : PrismApplication
+    public partial class App : PrismApplication
     {
 		/// <summary>
 		/// The Xamarin Forms XAML Previewer in Visual Studio uses System.Activator.CreateInstance.
@@ -50,6 +52,7 @@ namespace FilmsManager
 			containerRegistry.RegisterForNavigation<LanguageSelectionPage>();
 			containerRegistry.RegisterInstance<IGenreModelManager>(new GenreModelManager());
 			containerRegistry.Register<IRestService, RestService>();
-		}
+            containerRegistry.Register<ICustomLogger, CustomLogger>();
+        }
     }
 }

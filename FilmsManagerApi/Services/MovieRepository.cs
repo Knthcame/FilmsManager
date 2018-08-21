@@ -32,8 +32,8 @@ namespace FilmsManagerApi.Services
 
         public void Update(MovieModel item)
         {
-            var ToDoItem = Find(item.Id);
-            var index = _toDoList.IndexOf(ToDoItem);
+            var model = Find(item.Id);
+            var index = _toDoList.IndexOf(model);
             _toDoList.RemoveAt(index);
             _toDoList.Insert(index, item);
         }

@@ -11,6 +11,7 @@ using FilmsManager.Resources;
 using FilmsManager.Views;
 using FilmsManager.Events;
 using Prism.Services;
+using FilmsManager.Logging.Interfaces;
 
 namespace FilmsManager.ViewModels
 {
@@ -36,8 +37,6 @@ namespace FilmsManager.ViewModels
 		public ICommand SearchCommand { get; set; }
 
 		public ICommand LanguageOptionsCommand { get; set; }
-
-        private readonly IPageDialogService _pageDialogService;
 
         private readonly IEventAggregator _eventAggregator;
 
@@ -79,31 +78,30 @@ namespace FilmsManager.ViewModels
 
         #endregion properties
 
-        public HomePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IGenreModelManager genreModelManager, IRestService restService, IPageDialogService pageDialogService) : base(navigationService, restService, genreModelManager)
+        public HomePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IGenreModelManager genreModelManager, IRestService restService, IPageDialogService pageDialogService, ICustomLogger logger) : base(navigationService, restService, genreModelManager, pageDialogService, logger)
 		{
-            _pageDialogService = pageDialogService;
 			_eventAggregator = eventAggregator;
 			_eventAggregator.GetEvent<SelectLanguageEvent>().Subscribe(UpdatePageLanguage);
 			_eventAggregator.GetEvent<AddFilmEvent>().Subscribe(async () => await RefreshMovieListAsync());
             _eventAggregator.GetEvent<ConnectionErrorEvent>().Subscribe(async () => await NotifyConnectionErrorAsync());
+            _eventAggregator.GetEvent<MovieListRefreshedEvent>().Subscribe(NotifyMovieListRefreshed);
 			NavigateCommand = new DelegateCommand(async () => await OnNavigateAsync());
 			SearchCommand = new DelegateCommand(async () => await OnSearchAsync());
 			LanguageOptionsCommand = new DelegateCommand(async () => await OnLanguageOptionsAsync());
 			LoadResources();
         }
 
+        private void NotifyMovieListRefreshed()
+        {
+            IsRefreshingMovieList = false;
+        }
+
         private async Task NotifyConnectionErrorAsync()
         {
-            await _pageDialogService.DisplayAlertAsync("Connection error", "Could not connect with the server at this time", "ok");
+            await _pageDialogService.DisplayAlertAsync(AppResources.ConnectionErrorTitle, AppResources.ConnectionErrorMessage, AppResources.ConnectionErrorOkButton);
             IsRefreshingMovieList = false;
             IsMovieListEmpty = true;
         }
-
-        protected override async Task RefreshMovieListAsync()
-		{
-			await base.RefreshMovieListAsync();
-			IsRefreshingMovieList = false;
-		}
 
 		public void LoadResources()
 		{
@@ -141,7 +139,7 @@ namespace FilmsManager.ViewModels
 		{
             if (IsMovieListEmpty)
             {
-                await _pageDialogService.DisplayAlertAsync("Error", "There are no movies to search for", "ok");
+                await _pageDialogService.DisplayAlertAsync(AppResources.SearchEmptyListTitle, AppResources.SearchEmptyListMessage, AppResources.SearchEmptyListCancelButton);
                 return;
             }
                 

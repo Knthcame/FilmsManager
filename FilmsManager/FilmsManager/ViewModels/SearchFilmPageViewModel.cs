@@ -11,6 +11,8 @@ using FilmsManager.Enums;
 using Models.ApiServices.Interfaces;
 using Prism.Services;
 using FilmsManager.Extensions;
+using Prism.Logging;
+using FilmsManager.Logging.Interfaces;
 
 namespace FilmsManager.ViewModels
 {
@@ -78,7 +80,7 @@ namespace FilmsManager.ViewModels
 
         #endregion
 
-        public SearchFilmPageViewModel(INavigationService navigationService, IGenreModelManager genreModelManager, IRestService restService, IPageDialogService pageDialogService) : base(navigationService, restService, genreModelManager)
+        public SearchFilmPageViewModel(INavigationService navigationService, IGenreModelManager genreModelManager, IRestService restService, IPageDialogService pageDialogService, ICustomLogger logger) : base(navigationService, restService, genreModelManager, pageDialogService, logger)
         {
             Title = AppResources.SearchFilmPageTitle;
             SearchFilmCommand = new DelegateCommand(OnSearchFilm);
@@ -95,6 +97,8 @@ namespace FilmsManager.ViewModels
 
         private void OnSwapSearch()
         {
+            _logger.Log("Swapping search type", Category.Info, Priority.Low);
+
             switch ((SearchTypeEnum)SearchType)
             {
                 case SearchTypeEnum.Title: //Title to Genre
@@ -117,6 +121,8 @@ namespace FilmsManager.ViewModels
                     break;
             }
             FilteredMovieList = new ObservableCollection<MovieModel>(MovieList);
+
+            _logger.Log($"Succesfully changed search type to {SearchType}", Category.Info, Priority.Low);
         }
 
         private void OnSearchFilm()

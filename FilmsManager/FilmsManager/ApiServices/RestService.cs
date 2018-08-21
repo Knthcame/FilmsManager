@@ -1,22 +1,24 @@
 ﻿using Models.ApiServices.Interfaces;
-using Models.Constants;
 using Models.Classes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using FilmsManager.Constants;
 using Prism.Events;
 using FilmsManager.Events;
+using Prism.Logging;
+using FilmsManager.Logging.Interfaces;
 
 namespace Models.ApiServices
 {
     public class RestService : IRestService
     {
         private readonly IEventAggregator _eventAggregator;
+
+        private readonly ICustomLogger _logger;
 
         HttpClient _client;
 
@@ -26,9 +28,10 @@ namespace Models.ApiServices
             {typeof(GenreModel), ApiConstants.GenreController }
         };
 
-		public RestService(IEventAggregator eventAggregator)
+		public RestService(IEventAggregator eventAggregator, ICustomLogger logger)
 		{
             _eventAggregator = eventAggregator;
+            _logger = logger;
 			_client = new HttpClient
 			{
 				MaxResponseContentBufferSize = 256000
@@ -54,16 +57,20 @@ namespace Models.ApiServices
 					var content = await response.Content.ReadAsStringAsync();
 					result = JsonConvert.DeserializeObject<JEntity>(content);
 				}
+                if (typeof(JEntity) == typeof(IList<MovieModel>))
+                {
+                    _eventAggregator.GetEvent<MovieListRefreshedEvent>().Publish();
+                }
 			}
 			catch (Exception ex)
 			{
-				Debug.WriteLine(@"				ERROR {0}", ex.Message);
+				_logger.Log($"				ERROR {ex.Message}", Category.Exception, Priority.High);
                 _eventAggregator.GetEvent<ConnectionErrorEvent>().Publish();
 			}
 			return result;
 		}
 
-		public async Task SaveToDoItemAsync<TEntity>(MovieModel item, bool isNewItem) where TEntity : IEntity
+		public async Task SaveEntityAsync<TEntity>(MovieModel item, bool isNewItem) where TEntity : IEntity
 		{
             var type = typeof(TEntity);
 
@@ -89,17 +96,17 @@ namespace Models.ApiServices
 
 				if (response.IsSuccessStatusCode)
 				{
-					Debug.WriteLine(@"				TodoItem successfully saved.");
+					_logger.Log($"				{typeof(TEntity).Name} successfully saved.", Category.Info, Priority.Medium);
 				}
 
 			}
 			catch (Exception ex)
 			{
-				Debug.WriteLine(@"				ERROR {0}", ex.Message);
+				_logger.Log($"				ERROR {ex.Message}", Category.Exception, Priority.High);
 			}
 		}
 
-		public async Task DeleteToDoItemAsync<TEntity>(string id) where TEntity : IEntity
+		public async Task DeleteEntityAsync<TEntity>(string id) where TEntity : IEntity
 
         {
             var type = typeof(TEntity);
@@ -115,18 +122,14 @@ namespace Models.ApiServices
 
 				if (response.IsSuccessStatusCode)
 				{
-					Debug.WriteLine(@"				TodoItem successfully deleted.");
+					_logger.Log($"				{typeof(TEntity).Name} successfully deleted.", Category.Info, Priority.Medium);
 				}
 
 			}
 			catch (Exception ex)
 			{
-				Debug.WriteLine(@"				ERROR {0}", ex.Message);
-			}
+                _logger.Log($"				ERROR {ex.Message}", Category.Exception, Priority.High);
+            }
 		}
 	}
-
-    internal class _eventAggregator
-    {
-    }
 }
