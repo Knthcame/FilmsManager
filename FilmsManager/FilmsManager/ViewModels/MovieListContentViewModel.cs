@@ -140,6 +140,13 @@ namespace FilmsManager.ViewModels
             MovieList.AddRange(movies);
             UpdateMovieListLanguage();
             _logger.Log("Succesfully got movie list from server", Category.Info, Priority.Medium);
+            SaveLocalMovieList();
+        }
+
+        private void SaveLocalMovieList()
+        {
+            sqlConnection.CreateTable<MovieModel>();
+            sqlConnection.Insert(MovieList);
         }
 
         protected virtual async Task OnShowDetailAsync(MovieModel movie)

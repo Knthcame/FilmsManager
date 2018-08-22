@@ -1,12 +1,18 @@
 ﻿using Prism.Mvvm;
 using Prism.Navigation;
+using SQLite;
+using System;
+using System.IO;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace FilmsManager.ViewModels
 {
-	public class BaseViewModel : BindableBase, INavigationAware, IDestructible
+    public class BaseViewModel : BindableBase, INavigationAware, IDestructible
 	{
 		protected INavigationService NavigationService { get; private set; }
+
+        protected SQLiteConnection sqlConnection;
 
 		private string _title;
 
@@ -21,6 +27,25 @@ namespace FilmsManager.ViewModels
 		public BaseViewModel(INavigationService navigationService)
 		{
 			NavigationService = navigationService;
+
+            var sqliteFilename = "MyDatabase.db3";
+            string libraryPath;
+
+            if (Device.RuntimePlatform==Device.Android)
+                libraryPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            //Just use whatever directory SpecialFolder.Personal returns
+            
+            else
+            {
+                // we need to put in /Library/ on iOS5.1 to meet Apple's iCloud terms
+                // (they don't want non-user-generated data in Documents)
+                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal); // Documents folder
+                libraryPath = Path.Combine(documentsPath, "..", "Library"); // Library folder instead
+            }
+            
+            var path = Path.Combine(libraryPath, sqliteFilename);
+
+            sqlConnection = new SQLiteConnection(path);
 		}
 
 		public virtual void OnNavigatedFrom(NavigationParameters parameters) { }

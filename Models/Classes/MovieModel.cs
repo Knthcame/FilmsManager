@@ -1,7 +1,10 @@
-﻿namespace Models.Classes
+﻿using SQLite;
+
+namespace Models.Classes
 {
 	public class MovieModel : BaseModel, IEntity
     {
+        [PrimaryKey, Column("_id")]
 		public string Id { get; set; }
 
 		public string Title { get; set; }
