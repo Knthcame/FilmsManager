@@ -1,5 +1,7 @@
 ﻿using FilmsManager.iOS.ResxLocalization;
+using FilmsManager.iOS.Services;
 using FilmsManager.ResxLocalization;
+using FilmsManager.Services.Interfaces;
 using Foundation;
 using Prism;
 using Prism.Ioc;
@@ -41,6 +43,7 @@ namespace FilmsManager.iOS
         public void RegisterTypes(IContainerRegistry container)
         {
 			container.Register<ILocalize, Localize_iOS>();
+            container.Register<IDatabasePath, DatabasePath>();
         }
     }
 }

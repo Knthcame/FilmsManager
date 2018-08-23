@@ -11,5 +11,7 @@
 			Id = id;
 			Name = name;
 		}
+
+        public GenreModel() { }
 	}
 }

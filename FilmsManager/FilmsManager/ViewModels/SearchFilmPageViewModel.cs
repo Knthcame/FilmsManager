@@ -8,7 +8,7 @@ using System.Linq;
 using System.Windows.Input;
 using FilmsManager.Resources;
 using FilmsManager.Enums;
-using Models.ApiServices.Interfaces;
+using Models.Services.Interfaces;
 using Prism.Services;
 using FilmsManager.Extensions;
 using Prism.Logging;

@@ -5,7 +5,7 @@ using System.Windows.Input;
 using Models.Resources;
 using Prism.Events;
 using Xamarin.Forms;
-using Models.ApiServices.Interfaces;
+using Models.Services.Interfaces;
 using Models.Managers.Interfaces;
 using FilmsManager.Resources;
 using FilmsManager.Views;

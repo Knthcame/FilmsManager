@@ -7,7 +7,7 @@ using FilmsManager.Logging.Interfaces;
 using FilmsManager.Resources;
 using FilmsManager.ResxLocalization;
 using FilmsManager.Views;
-using Models.ApiServices.Interfaces;
+using Models.Services.Interfaces;
 using Models.Classes;
 using Models.Managers.Interfaces;
 using Models.Resources;

@@ -96,6 +96,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="ResxLocalization\Localize_iOS.cs" />
+    <Compile Include="Services\DatabasePath.cs" />
     <None Include="Entitlements.plist">
       <SubType>Designer</SubType>
     </None>
