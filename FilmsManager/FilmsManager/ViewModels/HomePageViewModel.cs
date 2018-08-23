@@ -5,13 +5,13 @@ using System.Windows.Input;
 using Models.Resources;
 using Prism.Events;
 using Xamarin.Forms;
-using Models.Services.Interfaces;
 using Models.Managers.Interfaces;
 using FilmsManager.Resources;
 using FilmsManager.Views;
 using FilmsManager.Events;
 using Prism.Services;
 using FilmsManager.Logging.Interfaces;
+using FilmsManager.Services.Interfaces;
 
 namespace FilmsManager.ViewModels
 {

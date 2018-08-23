@@ -12,11 +12,11 @@ using Xamarin.Forms;
 using FilmsManager.Resources;
 using FilmsManager.Models;
 using FilmsManager.Views;
-using Models.Services.Interfaces;
 using FilmsManager.Events;
 using System;
 using Prism.Logging;
 using FilmsManager.Logging.Interfaces;
+using FilmsManager.Services.Interfaces;
 
 namespace FilmsManager.ViewModels
 {

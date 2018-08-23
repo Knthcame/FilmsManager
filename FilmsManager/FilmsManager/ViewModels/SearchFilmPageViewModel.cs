@@ -8,11 +8,11 @@ using System.Linq;
 using System.Windows.Input;
 using FilmsManager.Resources;
 using FilmsManager.Enums;
-using Models.Services.Interfaces;
 using Prism.Services;
 using FilmsManager.Extensions;
 using Prism.Logging;
 using FilmsManager.Logging.Interfaces;
+using FilmsManager.Services.Interfaces;
 
 namespace FilmsManager.ViewModels
 {

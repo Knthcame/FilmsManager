@@ -1,10 +1,9 @@
 ﻿using Models.Classes;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Models.Services.Interfaces
+namespace FilmsManager.Services.Interfaces
 {
-	public interface IRestService
+    public interface IRestService
     {
         Task<TResponse> RefreshDataAsync<TEntity, TResponse>() where TEntity : IEntity;
 

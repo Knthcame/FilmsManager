@@ -5,8 +5,6 @@ using Xamarin.Forms.Xaml;
 using Prism.Unity;
 using Models.Managers.Interfaces;
 using Models.Managers;
-using Models.Services;
-using Models.Services.Interfaces;
 using FilmsManager.ResxLocalization;
 using FilmsManager.Resources;
 using FilmsManager.Views;

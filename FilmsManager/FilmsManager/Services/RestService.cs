@@ -1,5 +1,4 @@
-﻿using Models.Services.Interfaces;
-using Models.Classes;
+﻿using Models.Classes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,7 @@ using Prism.Logging;
 using FilmsManager.Logging.Interfaces;
 using FilmsManager.Services.Interfaces;
 
-namespace Models.Services
+namespace FilmsManager.Services
 {
     public class RestService : IRestService
     {
