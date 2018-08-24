@@ -11,7 +11,7 @@ using FilmsManager.Views;
 using FilmsManager.Events;
 using Prism.Services;
 using FilmsManager.Logging.Interfaces;
-using FilmsManager.Services.Interfaces;
+using FilmsManager.Managers.Interfaces;
 
 namespace FilmsManager.ViewModels
 {
@@ -78,7 +78,8 @@ namespace FilmsManager.ViewModels
 
         #endregion properties
 
-        public HomePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IGenreModelManager genreModelManager, IRestService restService, IPageDialogService pageDialogService, ICustomLogger logger) : base(navigationService, restService, genreModelManager, pageDialogService, logger)
+        public HomePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IGenreModelManager genreModelManager, IHttpManager httpManager, IPageDialogService pageDialogService, ICustomLogger logger) 
+            : base(navigationService, httpManager, genreModelManager, pageDialogService, logger)
 		{
 			_eventAggregator = eventAggregator;
 			_eventAggregator.GetEvent<SelectLanguageEvent>().Subscribe(UpdatePageLanguage);

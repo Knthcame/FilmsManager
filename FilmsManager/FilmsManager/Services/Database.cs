@@ -9,13 +9,13 @@ namespace FilmsManager.Services
 {
     public class Database : IDatabase
     {
-        private const string DatabaseName = "films_manager_databse.db3";
+        private const string DatabaseName = "films_manager_database.db3";
 
         private readonly SQLiteAsyncConnection _database;
 
-        public Database(string path)
+        public Database(IDatabasePath databasePath)
         {
-            _database = new SQLiteAsyncConnection(Path.Combine(path, DatabaseName));
+            _database = new SQLiteAsyncConnection(Path.Combine(databasePath.GetDatabasePath(), DatabaseName));
             _database.CreateTablesAsync<MovieModel, GenreModel>();
         }
 

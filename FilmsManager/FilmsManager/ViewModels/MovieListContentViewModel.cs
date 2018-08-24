@@ -15,7 +15,7 @@ using Prism.Commands;
 using Prism.Logging;
 using Prism.Navigation;
 using Prism.Services;
-using FilmsManager.Services.Interfaces;
+using FilmsManager.Managers.Interfaces;
 
 namespace FilmsManager.ViewModels
 {
@@ -65,7 +65,7 @@ namespace FilmsManager.ViewModels
             set { SetProperty(ref _genreList, value); }
         }
 
-        protected readonly IRestService _restService;
+        protected readonly IHttpManager _httpManager;
 
         protected readonly IGenreModelManager _genreModelManager;
 
@@ -91,9 +91,10 @@ namespace FilmsManager.ViewModels
 
         #endregion Properties
 
-        public MovieListContentViewModel(INavigationService navigationService, IRestService restService, IGenreModelManager genreModelManager, IPageDialogService pageDialogService, ICustomLogger logger) : base(navigationService)
+        public MovieListContentViewModel(INavigationService navigationService, IHttpManager httpManager, IGenreModelManager genreModelManager, IPageDialogService pageDialogService, ICustomLogger logger) 
+            : base(navigationService)
         {
-            _restService = restService;
+            _httpManager = httpManager;
             _genreModelManager = genreModelManager;
             _pageDialogService = pageDialogService;
             _logger = logger;
@@ -120,7 +121,7 @@ namespace FilmsManager.ViewModels
                 return;
             }
 
-            await _restService.DeleteEntityAsync<MovieModel>(movie.Id);
+            await _httpManager.DeleteEntityAsync(movie);
             await RefreshMovieListAsync();
 
             _logger.Log($"Succesfully deleted film:", movie, Category.Info, Priority.Medium);
@@ -135,7 +136,7 @@ namespace FilmsManager.ViewModels
         protected virtual async Task RetrieveMovieListAsync()
         {
             _logger.Log("Retrieving movie list from server", Category.Info, Priority.Medium);
-            var movies = await _restService.RefreshDataAsync<MovieModel, IList<MovieModel>>();
+            var movies = await _httpManager.RefreshDataAsync<MovieModel, IList<MovieModel>>();
             MovieList.Clear();
             MovieList.AddRange(movies);
             UpdateMovieListLanguage();
@@ -184,7 +185,7 @@ namespace FilmsManager.ViewModels
         public virtual async Task GetGenresAsync()
         {
             _logger.Log("Retrieving genres from server", Category.Info, Priority.Medium);
-            GenreResponse = await _restService.RefreshDataAsync<GenreModel, GenreResponse>();
+            GenreResponse = await _httpManager.RefreshDataAsync<GenreModel, GenreResponse>();
             RefreshGenreList();
             _logger.Log("Succesfully retrieved genres", Category.Info, Priority.Medium);
         }

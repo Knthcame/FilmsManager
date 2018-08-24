@@ -12,6 +12,8 @@ using FilmsManager.Logging;
 using FilmsManager.Logging.Interfaces;
 using FilmsManager.Services.Interfaces;
 using FilmsManager.Services;
+using FilmsManager.Managers.Interfaces;
+using FilmsManager.Managers;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace FilmsManager
@@ -50,13 +52,13 @@ namespace FilmsManager
 			containerRegistry.RegisterForNavigation<FilmDetailsPage>();
 			containerRegistry.RegisterForNavigation<HomePage>();
 			containerRegistry.RegisterForNavigation<LanguageSelectionPage>();
-            containerRegistry.RegisterInstance<IGenreModelManager>(new GenreModelManager());
+            containerRegistry.Register<IGenreModelManager, GenreModelManager>();
 			containerRegistry.Register<IRestService, RestService>();
             containerRegistry.Register<ICustomLogger, CustomLogger>();
             containerRegistry.Register<IUrlService, UrlService>();
             containerRegistry.Register<IHttpService, HttpService>();
-            //containerRegistry.Register<IDatabase, Database>();
-
+            containerRegistry.Register<IDatabase, Database>();
+            containerRegistry.Register<IHttpManager, HttpManager>();
         }
     }
 }

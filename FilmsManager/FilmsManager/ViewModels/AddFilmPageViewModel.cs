@@ -17,6 +17,7 @@ using System;
 using Prism.Logging;
 using FilmsManager.Logging.Interfaces;
 using FilmsManager.Services.Interfaces;
+using FilmsManager.Managers.Interfaces;
 
 namespace FilmsManager.ViewModels
 {
@@ -52,7 +53,7 @@ namespace FilmsManager.ViewModels
 
 		private readonly IEventAggregator _eventAggregator;
 
-		private readonly IRestService _restService;
+		private readonly IHttpManager _httpManager;
 
 		public string MovieTitle
 		{
@@ -99,12 +100,12 @@ namespace FilmsManager.ViewModels
 		}
         #endregion
 
-        public AddFilmPageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IPageDialogService pageDialogService, IRestService restService, ICustomLogger logger) : base(navigationService)
+        public AddFilmPageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IPageDialogService pageDialogService, IHttpManager httpManager, ICustomLogger logger) : base(navigationService)
 		{
 			Title = AppResources.AddFilmPageTitle;
 			_movieImage = _defaultMovieImage;
 			_eventAggregator = eventAggregator;
-			_restService = restService;
+			_httpManager = httpManager;
             _logger = logger;
 			AddCommand = new DelegateCommand(async () => await OnAddAsync());
 			OpenGalleryCommand = new DelegateCommand(async () => await OnOpenGalleryAsync());
@@ -184,9 +185,9 @@ namespace FilmsManager.ViewModels
 
 		private async Task SaveNewFilm()
 		{
-            MovieModel item = new MovieModel(null, MovieTitle, SelectedGenre, MovieImage);
+            var item = new MovieModel(null, MovieTitle, SelectedGenre, MovieImage);
             _logger.Log($"Added new film:", item, Category.Info, Priority.Medium);
-			await _restService.SaveEntityAsync<MovieModel>(item, true);
+			await _httpManager.SaveEntityAsync(item, true);
 			_eventAggregator.GetEvent<AddFilmEvent>().Publish();
 			await NavigationService.GoBackAsync();
 		}
