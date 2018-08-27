@@ -6,8 +6,6 @@ namespace FilmsManager.Services.Interfaces
     {
         string BaseUrl { get; set; }
 
-        //Uri GetUri<Tentity>(); Es podria implementar per evitar posar string.Empty
-
-        Uri GetUri<TEntity>(string routeExtension);
+        Uri GetUri<TEntity>(string routeExtension = "");
     }
 }

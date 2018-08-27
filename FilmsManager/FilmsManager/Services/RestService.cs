@@ -34,7 +34,7 @@ namespace FilmsManager.Services
         {
 			var result = default(TResponse);
 
-            var uri = _urlService.GetUri<TEntity>(string.Empty);
+            var uri = _urlService.GetUri<TEntity>();
 
             if (uri == null)
                 return result;
@@ -63,7 +63,7 @@ namespace FilmsManager.Services
 
 		public async Task SaveEntityAsync<TEntity>(TEntity entity, bool isNewItem) where TEntity : IEntity
 		{
-            var uri = _urlService.GetUri<TEntity>(string.Empty);
+            var uri = _urlService.GetUri<TEntity>();
             if (uri == null)
                 return;
 

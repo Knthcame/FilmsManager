@@ -15,8 +15,8 @@ namespace FilmsManager.Services
 
         public Database(IDatabasePath databasePath)
         {
-            _database = new SQLiteAsyncConnection(Path.Combine(databasePath.GetDatabasePath(), DatabaseName));
-            _database.CreateTablesAsync<MovieModel, GenreModel>();
+            _database = new SQLiteAsyncConnection(Path.Combine(databasePath.GetDatabasePath(), DatabaseName), SQLiteOpenFlags.Create);
+            _database.CreateTablesAsync<MovieModel, GenreModel>().Wait();
         }
 
         public async Task<bool> AddOrUpdateAsync<TEntity>(IEnumerable<TEntity> entities) where TEntity : IEntity, new()

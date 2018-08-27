@@ -15,7 +15,7 @@ namespace FilmsManager.Services.Interfaces
 
         public string BaseUrl { get; set; } = ApiConstants.RestUrl;
 
-        public Uri GetUri<TEntity>(string routeExtension)
+        public Uri GetUri<TEntity>(string routeExtension = "")
         {
             var type = typeof(TEntity);
             if (!_controller.TryGetValue(type, out string controller))
