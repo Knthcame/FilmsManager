@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Models.Classes
 {
-    public class GenreResponse : IEntity
+    public class GenreResponse
     {
         [JsonProperty("en-EN")]
         public IList<GenreModel> English { get; set; } = new List<GenreModel>()
@@ -29,6 +29,5 @@ namespace Models.Classes
             new GenreModel(GenreKeys.SuperHeroesGenre, "Super héroes"),
             new GenreModel(GenreKeys.TerrorGenre, "Miedo")
         };
-        public string Id { get; set; } = null;
     }
 }

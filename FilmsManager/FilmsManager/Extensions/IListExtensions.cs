@@ -3,20 +3,20 @@ using System.Collections.Generic;
 
 namespace FilmsManager.Extensions
 {
-	public static class IListExtensions
-	{
-		public static void AddRange<TEntity>(this IList<TEntity> list, IList<TEntity> newList) where TEntity : IEntity
-		{
+    public static class IListExtensions
+    {
+        public static void AddRange<TEntity>(this IList<TEntity> list, IList<TEntity> newList) where TEntity : IEntity
+        {
             if (list == null || newList == null)
                 return;
 
-			foreach (var item in newList)
-			{
-				list.Add(item);
-			}
-		}
+            foreach (var item in newList)
+            {
+                list.Add(item);
+            }
+        }
 
-        public static bool GetGenre(this IList<GenreModel> list, string id, out GenreModel genre)
+        public static bool GetGenre(this IList<GenreModel> list, int id, out GenreModel genre)
         {
             genre = null;
 
@@ -33,5 +33,5 @@ namespace FilmsManager.Extensions
             }
             return false;
         }
-	}
+    }
 }

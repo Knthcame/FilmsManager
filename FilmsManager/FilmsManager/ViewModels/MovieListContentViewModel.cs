@@ -91,7 +91,7 @@ namespace FilmsManager.ViewModels
 
         #endregion Properties
 
-        public MovieListContentViewModel(INavigationService navigationService, IHttpManager httpManager, IGenreModelManager genreModelManager, IPageDialogService pageDialogService, ICustomLogger logger) 
+        public MovieListContentViewModel(INavigationService navigationService, IHttpManager httpManager, IGenreModelManager genreModelManager, IPageDialogService pageDialogService, ICustomLogger logger)
             : base(navigationService)
         {
             _httpManager = httpManager;
@@ -137,18 +137,12 @@ namespace FilmsManager.ViewModels
         {
             _logger.Log("Retrieving movie list from server", Category.Info, Priority.Medium);
             var movies = await _httpManager.RefreshDataAsync<MovieModel, IList<MovieModel>>();
-            MovieList.Clear();
-            MovieList.AddRange(movies);
+            //MovieList.Clear();
+            MovieList = new ObservableCollection<MovieModel>(movies);
+            //MovieList.AddRange(movies);
             UpdateMovieListLanguage();
             _logger.Log("Succesfully got movie list from server", Category.Info, Priority.Medium);
-            //SaveLocalMovieList();
         }
-
-        //private void SaveLocalMovieList()
-        //{
-        //    sqlConnection.CreateTable<MovieModel>();
-        //    sqlConnection.Insert(MovieList);
-        //}
 
         protected virtual async Task OnShowDetailAsync(MovieModel movie)
         {
@@ -204,7 +198,7 @@ namespace FilmsManager.ViewModels
 
             string culture = Xamarin.Forms.DependencyService.Get<ILocalize>().GetCurrentCultureInfo().EnglishName;
 
-            if (GenresCultureDictionary.GenresCulture.TryGetValue(culture, out IList<GenreModel> genres)) 
+            if (GenresCultureDictionary.GenresCulture.TryGetValue(culture, out IList<GenreModel> genres))
             {
                 _logger.Log($"Genres translated to {culture}", Category.Info, Priority.Medium);
                 return genres;
@@ -227,7 +221,7 @@ namespace FilmsManager.ViewModels
                 {
                     movie.Genre = genre;
                 }
-                movies.Add(new MovieModel(movie.Id, movie.Title, movie.Genre, movie.Image));
+                movies.Add(new MovieModel(movie.Title, movie.Genre, movie.Image));
             }
             MovieList.Clear();
             MovieList.AddRange(movies);
@@ -236,4 +230,3 @@ namespace FilmsManager.ViewModels
         }
     }
 }
-;

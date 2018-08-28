@@ -6,7 +6,7 @@ namespace FilmsManager.Services.Interfaces
 {
     public interface IDatabase
     {
-        Task<TEntity> FindAsync<TEntity>(string id) where TEntity : IEntity, new();
+        Task<TEntity> FindAsync<TEntity>(int id) where TEntity : IEntity, new();
 
         Task<IEnumerable<TEntity>> FindAllAsync<TEntity>() where TEntity : new();
 

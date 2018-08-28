@@ -22,126 +22,126 @@ using FilmsManager.Managers.Interfaces;
 namespace FilmsManager.ViewModels
 {
     public class AddFilmPageViewModel : BaseViewModel
-	{
+    {
         #region Properties
         private IList<GenreModel> _genreList;
-		private string _defaultMovieImage = AppImages.Movie;
-		private object _movieImage;
-		private string _movieTitle;
-		private GenreModel _selectedGenre;
-		private bool _missingTitle;
-		private bool _missingGenre;
+        private string _defaultMovieImage = AppImages.Movie;
+        private object _movieImage;
+        private string _movieTitle;
+        private GenreModel _selectedGenre;
+        private bool _missingTitle;
+        private bool _missingGenre;
         private bool _isAddingMovie = false;
-		private Color _chooseFilmButtonBorderColor = Color.Black;
+        private Color _chooseFilmButtonBorderColor = Color.Black;
         private object _addingMovieLock = new Object();
         private readonly ICustomLogger _logger;
 
-		public string BackgroundImage { get; set; } = AppImages.BackgroundImageAddFilm;
+        public string BackgroundImage { get; set; } = AppImages.BackgroundImageAddFilm;
 
-		public string CheckButonIcon { get; set; } = AppImages.Check;
+        public string CheckButonIcon { get; set; } = AppImages.Check;
 
-		public ICommand AddCommand { get; set; }
-		public ICommand OpenGalleryCommand { get; set; }
+        public ICommand AddCommand { get; set; }
+        public ICommand OpenGalleryCommand { get; set; }
 
-		public IList<GenreModel> GenreList
-		{
-			get => _genreList;
-			set { SetProperty(ref _genreList, value); }
-		}
+        public IList<GenreModel> GenreList
+        {
+            get => _genreList;
+            set { SetProperty(ref _genreList, value); }
+        }
 
-		private readonly IPageDialogService _pageDialogService;
+        private readonly IPageDialogService _pageDialogService;
 
-		private readonly IEventAggregator _eventAggregator;
+        private readonly IEventAggregator _eventAggregator;
 
-		private readonly IHttpManager _httpManager;
+        private readonly IHttpManager _httpManager;
 
-		public string MovieTitle
-		{
-			get => _movieTitle;
-			set
-			{
-				SetProperty(ref _movieTitle, value);
-				MissingTitle = false;
-			}
-		}
+        public string MovieTitle
+        {
+            get => _movieTitle;
+            set
+            {
+                SetProperty(ref _movieTitle, value);
+                MissingTitle = false;
+            }
+        }
 
-		public GenreModel SelectedGenre
-		{
-			get => _selectedGenre;
-			set
-			{
-				SetProperty(ref _selectedGenre, value);
-				MissingGenre = false;
-			}
-		}
+        public GenreModel SelectedGenre
+        {
+            get => _selectedGenre;
+            set
+            {
+                SetProperty(ref _selectedGenre, value);
+                MissingGenre = false;
+            }
+        }
 
-		public object MovieImage
-		{
-			get => _movieImage;
-			set { SetProperty(ref _movieImage, value); }
-		}
+        public object MovieImage
+        {
+            get => _movieImage;
+            set { SetProperty(ref _movieImage, value); }
+        }
 
-		public bool MissingTitle
-		{
-			get => _missingTitle;
-			set { SetProperty(ref _missingTitle, value); }
-		}
+        public bool MissingTitle
+        {
+            get => _missingTitle;
+            set { SetProperty(ref _missingTitle, value); }
+        }
 
-		public bool MissingGenre
-		{
-			get => _missingGenre;
-			set { SetProperty(ref _missingGenre, value); }
-		}
+        public bool MissingGenre
+        {
+            get => _missingGenre;
+            set { SetProperty(ref _missingGenre, value); }
+        }
 
-		public Color ChooseFilmButtonBorderColor
-		{
-			get => _chooseFilmButtonBorderColor;
-			set { SetProperty(ref _chooseFilmButtonBorderColor, value); }
-		}
+        public Color ChooseFilmButtonBorderColor
+        {
+            get => _chooseFilmButtonBorderColor;
+            set { SetProperty(ref _chooseFilmButtonBorderColor, value); }
+        }
         #endregion
 
         public AddFilmPageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IPageDialogService pageDialogService, IHttpManager httpManager, ICustomLogger logger) : base(navigationService)
-		{
-			Title = AppResources.AddFilmPageTitle;
-			_movieImage = _defaultMovieImage;
-			_eventAggregator = eventAggregator;
-			_httpManager = httpManager;
+        {
+            Title = AppResources.AddFilmPageTitle;
+            _movieImage = _defaultMovieImage;
+            _eventAggregator = eventAggregator;
+            _httpManager = httpManager;
             _logger = logger;
-			AddCommand = new DelegateCommand(async () => await OnAddAsync());
-			OpenGalleryCommand = new DelegateCommand(async () => await OnOpenGalleryAsync());
-			_eventAggregator.GetEvent<PickImageEvent>().Subscribe(OnPickImage);
-			_pageDialogService = pageDialogService;
-		}
+            AddCommand = new DelegateCommand(async () => await OnAddAsync());
+            OpenGalleryCommand = new DelegateCommand(async () => await OnOpenGalleryAsync());
+            _eventAggregator.GetEvent<PickImageEvent>().Subscribe(OnPickImage);
+            _pageDialogService = pageDialogService;
+        }
 
-		public override void OnNavigatedTo(NavigationParameters parameters)
-		{
-			if (parameters == null || parameters.Count == 0)
-				return;
+        public override void OnNavigatedTo(NavigationParameters parameters)
+        {
+            if (parameters == null || parameters.Count == 0)
+                return;
 
-			GenreList = GetNavigationParameter(parameters, "genreList", GenreList) as ObservableCollection<GenreModel>;
-		}
+            GenreList = GetNavigationParameter(parameters, "genreList", GenreList) as ObservableCollection<GenreModel>;
+        }
 
-		private void OnPickImage(PickImageModel imageModel)
-		{
+        private void OnPickImage(PickImageModel imageModel)
+        {
             if (imageModel == null)
             {
                 _logger.Log("Picked image is null", Category.Exception, Priority.High);
                 return;
             }
 
-			ChooseFilmButtonBorderColor = Color.Black;
-			MovieImage = imageModel.ImageName;
+            ChooseFilmButtonBorderColor = Color.Black;
+            MovieImage = imageModel.ImageName;
             _logger.Log($"Image succesfully picked {MovieImage}", Category.Info, Priority.Low);
-		}
+        }
 
-		private async Task OnOpenGalleryAsync()
-		{
+        private async Task OnOpenGalleryAsync()
+        {
             _logger.Log("Opening Gallery to choose an image", Category.Info, Priority.Low);
-			await NavigationService.NavigateAsync(nameof(PickImagePage), useModalNavigation: true);
-		}
+            await NavigationService.NavigateAsync(nameof(PickImagePage), useModalNavigation: true);
+        }
 
-		private async Task OnAddAsync()
-		{
+        private async Task OnAddAsync()
+        {
             lock (_addingMovieLock)
             {
                 if (_isAddingMovie)
@@ -163,7 +163,7 @@ namespace FilmsManager.ViewModels
                         MissingTitle = true;
                     if (SelectedGenre == null)
                         MissingGenre = true;
-                    
+
                     _logger.Log("Missing inputs", Category.Warn, Priority.Medium);
                 }
             }
@@ -181,23 +181,23 @@ namespace FilmsManager.ViewModels
                 await SaveNewFilm();
             }
             _isAddingMovie = false;
-		}
+        }
 
-		private async Task SaveNewFilm()
-		{
-            var item = new MovieModel(null, MovieTitle, SelectedGenre, MovieImage);
+        private async Task SaveNewFilm()
+        {
+            var item = new MovieModel(MovieTitle, SelectedGenre, MovieImage);
             _logger.Log($"Added new film:", item, Category.Info, Priority.Medium);
-			await _httpManager.SaveEntityAsync(item, true);
-			_eventAggregator.GetEvent<AddFilmEvent>().Publish();
-			await NavigationService.GoBackAsync();
-		}
+            await _httpManager.SaveEntityAsync(item, true);
+            _eventAggregator.GetEvent<AddFilmEvent>().Publish();
+            await NavigationService.GoBackAsync();
+        }
 
-		public override async Task<bool> OnBackButtonPressedAsync()
-		{
-			bool action = await _pageDialogService.DisplayAlertAsync(AppResources.AddFilmAbortTitle, AppResources.AddFilmAbortMessage, AppResources.AddFilmAbortOkButton, AppResources.AddFilmAbortCancelButton);
-			if (action) await NavigationService.GoBackAsync();
-			return action;
-		}
+        public override async Task<bool> OnBackButtonPressedAsync()
+        {
+            bool action = await _pageDialogService.DisplayAlertAsync(AppResources.AddFilmAbortTitle, AppResources.AddFilmAbortMessage, AppResources.AddFilmAbortOkButton, AppResources.AddFilmAbortCancelButton);
+            if (action) await NavigationService.GoBackAsync();
+            return action;
+        }
 
-	}
+    }
 }

@@ -1,9 +1,10 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using SQLite;
 
 namespace Models.Classes
 {
-	public class BaseModel
-	{
-	}
+    public class BaseModel : IEntity
+    {
+        [PrimaryKey]
+        public int Id { get; set; }
+    }
 }

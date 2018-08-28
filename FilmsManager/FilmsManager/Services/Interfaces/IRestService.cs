@@ -9,6 +9,6 @@ namespace FilmsManager.Services.Interfaces
 
         Task SaveEntityAsync<TEntity>(TEntity entity, bool isNewItem) where TEntity : IEntity;
 
-		Task DeleteEntityAsync<TEntity>(string id) where TEntity : IEntity;
-	}
+        Task DeleteEntityAsync<TEntity>(int id) where TEntity : IEntity;
+    }
 }

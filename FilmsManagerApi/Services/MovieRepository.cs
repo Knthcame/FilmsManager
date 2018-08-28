@@ -7,7 +7,7 @@ using Models.Resources;
 
 namespace FilmsManagerApi.Services
 {
-	public class MovieRepository : IRepository<MovieModel, IEnumerable<MovieModel>>
+    public class MovieRepository : IRepository<MovieModel, IEnumerable<MovieModel>>
     {
         private List<MovieModel> _toDoList;
 
@@ -21,9 +21,9 @@ namespace FilmsManagerApi.Services
             get { return _toDoList; }
         }
 
-        public bool DoesItemExist(string id) => _toDoList.Any(item => item.Id == id);
+        public bool DoesItemExist(int id) => _toDoList.Any(item => item.Id == id);
 
-        public MovieModel Find(string id) => _toDoList.FirstOrDefault(item => item.Id == id);
+        public MovieModel Find(int id) => _toDoList.FirstOrDefault(item => item.Id == id);
 
         public void Insert(MovieModel item)
         {
@@ -38,15 +38,15 @@ namespace FilmsManagerApi.Services
             _toDoList.Insert(index, item);
         }
 
-        public void Delete(string id) => _toDoList.Remove(Find(id));
+        public void Delete(int id) => _toDoList.Remove(Find(id));
 
         private void InitializeData()
         {
-			_toDoList = new List<MovieModel>
-			{
-				new MovieModel ( "6bb8a868-dba1-4f1a-93b7-24ebce87e243", "Infinity war", new GenreModel(GenreKeys.SuperHeroesGenre, "Super heroes"), AppImages.InfinityWar),
-                new MovieModel ( "b94afb54-a1cb-4313-8af3-b7511551b33b", "Shrek", new GenreModel(GenreKeys.HumourGenre, "Humour"), AppImages.Shrek),             
-                new MovieModel ( "ecfa6f80-3671-4911-aabe-63cc442c1ecf", "Shrek 2", new GenreModel(GenreKeys.HumourGenre, "Humour"), AppImages.Shrek2)
+            _toDoList = new List<MovieModel>
+            {
+                new MovieModel ("Infinity war", new GenreModel(GenreKeys.SuperHeroesGenre, "Super heroes"), AppImages.InfinityWar),
+                new MovieModel ("Shrek", new GenreModel(GenreKeys.HumourGenre, "Humour"), AppImages.Shrek),
+                new MovieModel ("Shrek 2", new GenreModel(GenreKeys.HumourGenre, "Humour"), AppImages.Shrek2)
             };
         }
     }

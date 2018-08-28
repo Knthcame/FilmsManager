@@ -1,15 +1,14 @@
-﻿using System.Collections.Generic;
-using Models.Classes;
+﻿using Models.Classes;
 
 namespace FilmsManagerApi.Services.Interfaces
 {
-	public interface IRepository<TEntity, JEntity> where TEntity : IEntity //, new()
+    public interface IRepository<TEntity, JEntity> where TEntity : IEntity
     {
-        bool DoesItemExist(string id);
+        bool DoesItemExist(int id);
         JEntity All { get; }
-        TEntity Find(string id);
+        TEntity Find(int id);
         void Insert(TEntity item);
         void Update(TEntity item);
-        void Delete(string id);
+        void Delete(int id);
     }
 }

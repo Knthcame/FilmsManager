@@ -2,8 +2,8 @@
 
 namespace Models.Managers.Interfaces
 {
-	public interface IGenreModelManager
+    public interface IGenreModelManager
     {
-		GenreModel FindByID(string id);
+        GenreModel FindByID(int id);
     }
 }

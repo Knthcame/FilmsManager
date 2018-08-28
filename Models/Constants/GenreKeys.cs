@@ -1,14 +1,14 @@
 ﻿namespace Models.Constants
 {
-	public static class GenreKeys
+    public static class GenreKeys
     {
-		public const string AllGenres = "All";
-        public const string FantasyGenre = "Fantasy";
-		public const string TerrorGenre = "Terror";
-		public const string DramaGenre = "Drama";
-		public const string HumourGenre = "Humour";
-		public const string ScienceFictionGenre = "Science fiction";
-		public const string ActionGenre = "Action";
-		public const string SuperHeroesGenre = "Super heroes";
-	}
+        public const int AllGenres = 1;
+        public const int FantasyGenre = 2;
+        public const int TerrorGenre = 3;
+        public const int DramaGenre = 4;
+        public const int HumourGenre = 5;
+        public const int ScienceFictionGenre = 6;
+        public const int ActionGenre = 7;
+        public const int SuperHeroesGenre = 8;
+    }
 }

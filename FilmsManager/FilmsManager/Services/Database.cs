@@ -4,6 +4,8 @@ using SQLite;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using FilmsManager.Logging.Interfaces;
+using Prism.Logging;
 
 namespace FilmsManager.Services
 {
@@ -13,9 +15,12 @@ namespace FilmsManager.Services
 
         private readonly SQLiteAsyncConnection _database;
 
-        public Database(IDatabasePath databasePath)
+        public Database(IDatabasePath databasePath, ICustomLogger logger)
         {
-            _database = new SQLiteAsyncConnection(Path.Combine(databasePath.GetDatabasePath(), DatabaseName), SQLiteOpenFlags.Create);
+            var path = Path.Combine(databasePath.GetDatabasePath(), DatabaseName);
+            logger.Log(path, Category.Debug, Priority.Medium);
+
+            _database = new SQLiteAsyncConnection(path);
             _database.CreateTablesAsync<MovieModel, GenreModel>().Wait();
         }
 
@@ -34,7 +39,7 @@ namespace FilmsManager.Services
         public async Task<bool> AddOrUpdateAsync<TEntity>(TEntity entity) where TEntity : IEntity, new()
         {
             int i;
-            if (string.IsNullOrEmpty(entity.Id))
+            if (entity.Id == 0)
                 i = await _database.InsertAsync(entity);
             else
                 i = await _database.UpdateAsync(entity);
@@ -46,9 +51,9 @@ namespace FilmsManager.Services
             return await _database.Table<TEntity>().ToListAsync();
         }
 
-        public async Task<TEntity> FindAsync<TEntity>(string id) where TEntity : IEntity, new()
+        public async Task<TEntity> FindAsync<TEntity>(int id) where TEntity : IEntity, new()
         {
-            return await _database.Table<TEntity>().Where(entity=> entity.Id == id).FirstOrDefaultAsync();
+            return await _database.Table<TEntity>().Where(entity => entity.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<bool> RemoveAllAsync<TEntity>() where TEntity : new()
@@ -56,7 +61,7 @@ namespace FilmsManager.Services
             var result = true;
 
             var entities = await FindAllAsync<TEntity>();
-            foreach( TEntity entity in entities)
+            foreach (TEntity entity in entities)
             {
                 if (!await RemoveAsync(entity))
                     result = false;

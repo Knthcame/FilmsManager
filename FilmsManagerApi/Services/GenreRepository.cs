@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using FilmsManagerApi.Services.Interfaces;
 using Models.Classes;
 
@@ -13,17 +10,17 @@ namespace FilmsManagerApi.Services
 
         public GenreResponse All => new GenreResponse();
 
-        public void Delete(string id)
+        public void Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public bool DoesItemExist(string id)
+        public bool DoesItemExist(int id)
         {
             throw new NotImplementedException();
         }
 
-        public GenreModel Find(string id)
+        public GenreModel Find(int id)
         {
             throw new NotImplementedException();
         }
