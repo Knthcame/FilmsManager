@@ -34,7 +34,6 @@ namespace FilmsManager.ViewModels
         private bool _isAddingMovie = false;
         private Color _chooseFilmButtonBorderColor = Color.Black;
         private object _addingMovieLock = new Object();
-        private readonly ICustomLogger _logger;
 
         public string BackgroundImage { get; set; } = AppImages.BackgroundImageAddFilm;
 
@@ -54,6 +53,8 @@ namespace FilmsManager.ViewModels
         private readonly IEventAggregator _eventAggregator;
 
         private readonly IHttpManager _httpManager;
+
+        private readonly ICustomLogger _logger;
 
         public string MovieTitle
         {

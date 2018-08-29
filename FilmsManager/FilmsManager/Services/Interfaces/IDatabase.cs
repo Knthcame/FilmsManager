@@ -8,7 +8,7 @@ namespace FilmsManager.Services.Interfaces
     {
         Task<TEntity> FindAsync<TEntity>(int id) where TEntity : IEntity, new();
 
-        Task<IEnumerable<TEntity>> FindAllAsync<TEntity>() where TEntity : new();
+        Task<TResponse> FindAllAsync<TEntity, TResponse>() where TEntity : new() where TResponse : class, new();
 
         Task<bool> AddOrUpdateAsync<TEntity>(IEnumerable<TEntity> models) where TEntity : IEntity, new();
 

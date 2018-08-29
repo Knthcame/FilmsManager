@@ -1,12 +1,16 @@
 ﻿using Models.Constants;
 using Newtonsoft.Json;
+using SQLite;
+using SQLiteNetExtensions.Attributes;
 using System.Collections.Generic;
 
 namespace Models.Classes
 {
-    public class GenreResponse
+    [Table(nameof(GenreResponse))]
+    public class GenreResponse : IEntity
     {
         [JsonProperty("en-EN")]
+        [TextBlob(nameof(EnglishGenresBlobbed))]
         public IList<GenreModel> English { get; set; } = new List<GenreModel>()
         {
             new GenreModel(GenreKeys.ActionGenre, "Action"),
@@ -18,7 +22,10 @@ namespace Models.Classes
             new GenreModel(GenreKeys.TerrorGenre, "Terror")
         };
 
+        public string EnglishGenresBlobbed { get; set; }
+
         [JsonProperty("es-ES")]
+        [TextBlob(nameof(SpanishGenresBlobbed))]
         public IList<GenreModel> Spanish { get; set; } = new List<GenreModel>()
         {
             new GenreModel(GenreKeys.ActionGenre, "Acción"),
@@ -29,5 +36,9 @@ namespace Models.Classes
             new GenreModel(GenreKeys.SuperHeroesGenre, "Super héroes"),
             new GenreModel(GenreKeys.TerrorGenre, "Miedo")
         };
+
+        public string SpanishGenresBlobbed { get; set; }
+
+        public int Id { get; set; }
     }
 }

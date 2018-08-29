@@ -136,7 +136,7 @@ namespace FilmsManager.ViewModels
         protected virtual async Task RetrieveMovieListAsync()
         {
             _logger.Log("Retrieving movie list from server", Category.Info, Priority.Medium);
-            var movies = await _httpManager.RefreshDataAsync<MovieModel, IList<MovieModel>>();
+            var movies = await _httpManager.RefreshDataAsync<MovieModel, List<MovieModel>>();
             //MovieList.Clear();
             MovieList = new ObservableCollection<MovieModel>(movies);
             //MovieList.AddRange(movies);
@@ -198,16 +198,10 @@ namespace FilmsManager.ViewModels
 
             string culture = Xamarin.Forms.DependencyService.Get<ILocalize>().GetCurrentCultureInfo().EnglishName;
 
-            if (GenresCultureDictionary.GenresCulture.TryGetValue(culture, out IList<GenreModel> genres))
-            {
-                _logger.Log($"Genres translated to {culture}", Category.Info, Priority.Medium);
-                return genres;
-            }
-            else
-            {
-                _logger.Log($"Couldn't translate genres to {culture}", Category.Exception, Priority.High);
-                return GenreList;
-            }
+            var genres = GenreResponse.GetGenresInChosenLanguage(culture);
+
+            _logger.Log($"Genres translated to {culture}", Category.Info, Priority.Medium);
+            return genres;
         }
 
         public virtual void UpdateMovieListLanguage()
@@ -223,8 +217,7 @@ namespace FilmsManager.ViewModels
                 }
                 movies.Add(new MovieModel(movie.Title, movie.Genre, movie.Image));
             }
-            MovieList.Clear();
-            MovieList.AddRange(movies);
+            MovieList = new ObservableCollection<MovieModel>(movies);
 
             _logger.Log("Movie list language updated", Category.Info, Priority.Medium);
         }

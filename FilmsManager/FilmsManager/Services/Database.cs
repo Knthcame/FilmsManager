@@ -21,7 +21,7 @@ namespace FilmsManager.Services
             logger.Log(path, Category.Debug, Priority.Medium);
 
             _database = new SQLiteAsyncConnection(path);
-            _database.CreateTablesAsync<MovieModel, GenreModel>().Wait();
+            _database.CreateTablesAsync<MovieModel, GenreResponse>().Wait();
         }
 
         public async Task<bool> AddOrUpdateAsync<TEntity>(IEnumerable<TEntity> entities) where TEntity : IEntity, new()
@@ -46,9 +46,18 @@ namespace FilmsManager.Services
             return true;
         }
 
-        public async Task<IEnumerable<TEntity>> FindAllAsync<TEntity>() where TEntity : new()
+        public async Task<TResponse> FindAllAsync<TEntity, TResponse>() where TEntity : new() where TResponse : class, new()
         {
-            return await _database.Table<TEntity>().ToListAsync();
+            var response = default(TResponse);
+
+            if (typeof(TResponse) == typeof(GenreResponse))
+            {
+                response = await _database.Table<TResponse>().FirstOrDefaultAsync();
+            }
+            else
+                response = await _database.Table<TEntity>().ToListAsync() as TResponse;
+
+            return response;
         }
 
         public async Task<TEntity> FindAsync<TEntity>(int id) where TEntity : IEntity, new()
@@ -60,12 +69,14 @@ namespace FilmsManager.Services
         {
             var result = true;
 
-            var entities = await FindAllAsync<TEntity>();
-            foreach (TEntity entity in entities)
-            {
-                if (!await RemoveAsync(entity))
-                    result = false;
-            }
+            await _database.DropTableAsync<TEntity>();
+
+            //var entities = await FindAllAsync<TEntity>();
+            //foreach (TEntity entity in entities)
+            //{
+            //    if (!await RemoveAsync(entity))
+            //        result = false;
+            //}
 
             return result;
         }

@@ -1,5 +1,4 @@
-﻿using FilmsManager.Constants;
-using FilmsManager.Managers.Interfaces;
+﻿using FilmsManager.Managers.Interfaces;
 using FilmsManager.Services.Interfaces;
 using Models.Classes;
 using Plugin.Connectivity;
@@ -24,7 +23,7 @@ namespace FilmsManager.Managers
             _urlService = urlService;
         }
 
-        public async Task<TResponse> RefreshDataAsync<TEntity, TResponse>() where TEntity : IEntity, new() where TResponse : class
+        public async Task<TResponse> RefreshDataAsync<TEntity, TResponse>() where TEntity : IEntity, new() where TResponse : class, new()
         {
             try
             {
@@ -34,7 +33,15 @@ namespace FilmsManager.Managers
                 }
                 else
                 {
-                    return await _database.FindAllAsync<TEntity>() as TResponse;
+                    var response = await _database.FindAllAsync<TEntity, TResponse>();
+
+                    if (typeof(TEntity) == typeof(GenreModel) && response == null)
+                    {
+                        var genres = GetDefaultGenres();
+                        response = GetDefaultGenres() as TResponse;
+                    }
+
+                    return response;
                 }
             }catch (Exception ex)
             {
@@ -64,6 +71,13 @@ namespace FilmsManager.Managers
         {
             var url = _urlService.GetUri<TEntity>(string.Empty).AbsoluteUri;
             return await CrossConnectivity.Current.IsReachable(url, 3000);
+        }
+
+        public GenreResponse GetDefaultGenres()
+        {
+            var response = new GenreResponse();
+            _database.AddOrUpdateAsync(response);
+            return response;
         }
     }
 }
