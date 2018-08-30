@@ -5,9 +5,9 @@ namespace FilmsManager.Models
 {
 	public class PickImageModel : BindableBase 
 	{
-		private object _imageName;
+		private string _imageName;
 
-		public object ImageName
+		public string ImageName
 		{
 			get => _imageName;
 			set { SetProperty(ref _imageName, value); }

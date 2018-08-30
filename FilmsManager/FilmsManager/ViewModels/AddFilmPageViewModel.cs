@@ -26,7 +26,7 @@ namespace FilmsManager.ViewModels
         #region Properties
         private IList<GenreModel> _genreList;
         private string _defaultMovieImage = AppImages.Movie;
-        private object _movieImage;
+        private string _movieImage;
         private string _movieTitle;
         private GenreModel _selectedGenre;
         private bool _missingTitle;
@@ -76,7 +76,7 @@ namespace FilmsManager.ViewModels
             }
         }
 
-        public object MovieImage
+        public string MovieImage
         {
             get => _movieImage;
             set { SetProperty(ref _movieImage, value); }

@@ -70,8 +70,8 @@
                         <ViewCell>
                                 
                             <Image Source="{Binding ImageName}"
-                                    Aspect="AspectFit"
-                                    HeightRequest="{Binding ScreenHeight}"/>
+                                   Aspect="AspectFit"
+                                   HeightRequest="{Binding ScreenHeight}"/>
                                 
                         </ViewCell>
                             

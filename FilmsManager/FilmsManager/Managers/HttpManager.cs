@@ -8,6 +8,7 @@ using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FilmsManager.Managers
@@ -42,7 +43,7 @@ namespace FilmsManager.Managers
                 {
                     var response = await _database.FindAllAsync<TEntity, TResponse>();
 
-                    if (typeof(TEntity) == typeof(GenreModel) && response == null)
+                    if (typeof(TEntity) == typeof(GenreModel) && IsGenresNullOrEmpty(response as GenreResponse))
                     {
                         var genres = GetDefaultGenres();
                         response = GetDefaultGenres() as TResponse;
@@ -59,6 +60,16 @@ namespace FilmsManager.Managers
                 Debug.WriteLine(ex.Message);
                 return default(TResponse);
             }
+        }
+
+        private bool IsGenresNullOrEmpty(GenreResponse response)
+        {
+            if (response == null)
+                return true;
+            if (response.English == null || response.Spanish == null)
+                return true;
+            else
+                return !response.English.Any() && !response.Spanish.Any();
         }
 
         public async Task SaveEntityAsync<TEntity>(TEntity entity, bool isNewItem) where TEntity : IEntity, new()

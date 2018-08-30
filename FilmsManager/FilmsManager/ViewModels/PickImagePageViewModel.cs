@@ -133,13 +133,9 @@ namespace FilmsManager.ViewModels
             _logger.Log("Storage permission granted", Category.Info, Priority.Medium);
 
 			var photo = await CrossMedia.Current.PickPhotoAsync();
-			PickImageModel model = new PickImageModel
-			{
-				ImageName = FileImageSource.FromStream(() =>
-				{
-					var stream = photo.GetStream();
-					return stream;
-				})
+            PickImageModel model = new PickImageModel
+            {
+                ImageName = photo.Path
 			};
             if (photo != null)
             {
@@ -162,33 +158,8 @@ namespace FilmsManager.ViewModels
 			await NavigationService.GoBackAsync();
 		}
 
-		private void LoadImages() => ImageList = new ObservableCollection<PickImageModel>()
-		{
-			new PickImageModel()
-			{
-				ImageName = AppImages.Shrek
-			},
-			new PickImageModel()
-			{
-				ImageName = AppImages.Shrek2
-			},
-			new PickImageModel()
-			{
-				ImageName = AppImages.Shrek3
-			},
-			new PickImageModel()
-			{
-				ImageName = AppImages.InfinityWar
-			},
-			new PickImageModel()
-			{
-				ImageName = AppImages.HarryPotter
-			},
-			new PickImageModel()
-			{
-				ImageName = AppImages.LOTR
-			}
-		};
+        private void LoadImages() => ImageList = PickImageGallery.DefaultGalleryImages as ObservableCollection<PickImageModel>;
+
 		public override async Task<bool> OnBackButtonPressedAsync()
 		{
 			bool action = await _pageDialogService.DisplayAlertAsync(AppResources.AbortPickImageTitle, AppResources.AbortPickImageMessage, AppResources.AbortPickImageOkText, AppResources.AbortPickImageCancelText);

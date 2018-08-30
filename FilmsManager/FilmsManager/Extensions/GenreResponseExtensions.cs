@@ -14,9 +14,9 @@ namespace FilmsManager.Extensions
 
             switch (culture)
             {
-                case "en":
+                case "English":
                     return response.English;
-                case "es":
+                case "Spanish":
                     return response.Spanish;
                 default:
                     return response.English;
