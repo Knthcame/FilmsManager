@@ -211,11 +211,14 @@ namespace FilmsManager.ViewModels
 
             foreach (MovieModel movie in MovieList)
             {
-                if (GenreList.GetGenre(movie.Genre.Id, out GenreModel genre))
+                if (movie.Genre != null)
                 {
-                    movie.Genre = genre;
+                    if (GenreList.GetGenre(movie.Genre.Id, out GenreModel genre))
+                    {
+                        movie.Genre = genre;
+                    }
                 }
-                movies.Add(new MovieModel(movie.Title, movie.Genre, movie.Image));
+                movies.Add(movie);
             }
             MovieList = new ObservableCollection<MovieModel>(movies);
 
