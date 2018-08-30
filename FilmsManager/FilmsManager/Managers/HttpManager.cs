@@ -1,6 +1,7 @@
 ﻿using FilmsManager.Managers.Interfaces;
 using FilmsManager.Services.Interfaces;
 using Models.Classes;
+using Models.Constants;
 using Plugin.Connectivity;
 using System;
 using System.Diagnostics;
@@ -75,7 +76,7 @@ namespace FilmsManager.Managers
 
         public GenreResponse GetDefaultGenres()
         {
-            var response = new GenreResponse();
+            var response = GenreConstants.DefaultGenres;
             _database.AddOrUpdateAsync(response);
             return response;
         }
