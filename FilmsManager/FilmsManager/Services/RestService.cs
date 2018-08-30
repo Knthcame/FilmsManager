@@ -48,10 +48,6 @@ namespace FilmsManager.Services
                     var content = await response.Content.ReadAsStringAsync();
                     result = JsonConvert.DeserializeObject<TResponse>(content);
                 }
-                if (typeof(TResponse) == typeof(IList<MovieModel>))
-                {
-                    _eventAggregator.GetEvent<MovieListRefreshedEvent>().Publish(); //Sometimes the refreshing icon sray on anyway 
-                }
             }
             catch (Exception ex)
             {

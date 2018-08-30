@@ -16,6 +16,7 @@ using Prism.Logging;
 using Prism.Navigation;
 using Prism.Services;
 using FilmsManager.Managers.Interfaces;
+using System.Linq;
 
 namespace FilmsManager.ViewModels
 {
@@ -165,12 +166,9 @@ namespace FilmsManager.ViewModels
 
             while (IsRefreshingMovieList)
                 await Task.Delay(100);
+         
+            IsMovieListEmpty = !MovieList.Any();
 
-            if (MovieList.Count > 0)
-                IsMovieListEmpty = false;
-
-            else if (MovieList.Count == 0)
-                IsMovieListEmpty = true;
 
             _logger.Log("Movie List succesfully refreshed", Category.Info, Priority.Medium);
             _logger.Log($"IsMovieListEmpty = {_isMovieListEmpty}", Category.Info, Priority.Medium);

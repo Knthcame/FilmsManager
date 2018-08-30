@@ -1,9 +1,12 @@
-﻿using FilmsManager.Managers.Interfaces;
+﻿using FilmsManager.Events;
+using FilmsManager.Managers.Interfaces;
 using FilmsManager.Services.Interfaces;
 using Models.Classes;
 using Models.Constants;
 using Plugin.Connectivity;
+using Prism.Events;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -17,11 +20,14 @@ namespace FilmsManager.Managers
 
         private readonly IUrlService _urlService;
 
-        public HttpManager(IDatabase database, IRestService restService, IUrlService urlService)
+        private readonly IEventAggregator _eventAggregator;
+
+        public HttpManager(IDatabase database, IRestService restService, IUrlService urlService, IEventAggregator eventAggregator)
         {
             _database = database;
             _restService = restService;
             _urlService = urlService;
+            _eventAggregator = eventAggregator;
         }
 
         public async Task<TResponse> RefreshDataAsync<TEntity, TResponse>() where TEntity : IEntity, new() where TResponse : class, new()
@@ -40,6 +46,10 @@ namespace FilmsManager.Managers
                     {
                         var genres = GetDefaultGenres();
                         response = GetDefaultGenres() as TResponse;
+                    }
+                    if (typeof(TResponse) == typeof(List<MovieModel>))
+                    {
+                        _eventAggregator.GetEvent<MovieListRefreshedEvent>().Publish(); //Sometimes the refreshing icon stays on anyway 
                     }
 
                     return response;
