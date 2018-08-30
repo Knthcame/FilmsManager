@@ -70,13 +70,7 @@ namespace FilmsManager.Services
             var result = true;
 
             await _database.DropTableAsync<TEntity>();
-
-            //var entities = await FindAllAsync<TEntity>();
-            //foreach (TEntity entity in entities)
-            //{
-            //    if (!await RemoveAsync(entity))
-            //        result = false;
-            //}
+            await _database.CreateTableAsync<TEntity>();
 
             return result;
         }

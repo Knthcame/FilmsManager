@@ -1,14 +1,15 @@
 ﻿using System;
 using FilmsManagerApi.Services.Interfaces;
 using Models.Classes;
+using Models.Constants;
 
 namespace FilmsManagerApi.Services
 {
     public class GenreRepository : IRepository<GenreModel, GenreResponse>
     {
-        public string Culture = "en-EN";
+        private GenreResponse _genreLists = GenreConstants.DefaultGenres; 
 
-        public GenreResponse All => new GenreResponse();
+        public GenreResponse All => _genreLists;
 
         public void Delete(int id)
         {

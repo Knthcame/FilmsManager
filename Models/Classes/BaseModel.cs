@@ -4,7 +4,7 @@ namespace Models.Classes
 {
     public class BaseModel : IEntity
     {
-        [PrimaryKey]
+        [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
     }
 }
