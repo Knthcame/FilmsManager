@@ -24,7 +24,8 @@ namespace FilmsManager.Services
             _database.CreateTablesAsync<MovieModel, GenreResponse>().Wait();
         }
 
-        public async Task<bool> AddOrUpdateAsync<TEntity>(IEnumerable<TEntity> entities) where TEntity : IEntity, new()
+        public async Task<bool> AddOrUpdateAsync<TEntity>(IEnumerable<TEntity> entities) 
+            where TEntity : IEntity, new()
         {
             foreach (TEntity entity in entities)
             {
@@ -36,7 +37,8 @@ namespace FilmsManager.Services
             return true;
         }
 
-        public async Task<bool> AddOrUpdateAsync<TEntity>(TEntity entity) where TEntity : IEntity, new()
+        public async Task<bool> AddOrUpdateAsync<TEntity>(TEntity entity) 
+            where TEntity : IEntity, new()
         {
             int i;
             if (entity.Id == 0)
@@ -46,7 +48,9 @@ namespace FilmsManager.Services
             return true;
         }
 
-        public async Task<TResponse> FindAllAsync<TEntity, TResponse>() where TEntity : new() where TResponse : class, new()
+        public async Task<TResponse> FindAllAsync<TEntity, TResponse>() 
+            where TEntity : new() 
+            where TResponse : class, new()
         {
             var response = default(TResponse);
 
@@ -60,12 +64,14 @@ namespace FilmsManager.Services
             return response;
         }
 
-        public async Task<TEntity> FindAsync<TEntity>(int id) where TEntity : IEntity, new()
+        public async Task<TEntity> FindAsync<TEntity>(int id) 
+            where TEntity : IEntity, new()
         {
             return await _database.Table<TEntity>().Where(entity => entity.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<bool> RemoveAllAsync<TEntity>() where TEntity : new()
+        public async Task<bool> RemoveAllAsync<TEntity>() 
+            where TEntity : new()
         {
             var result = true;
 
@@ -75,7 +81,8 @@ namespace FilmsManager.Services
             return result;
         }
 
-        public async Task<bool> RemoveAsync<TEntity>(TEntity entity) where TEntity : new()
+        public async Task<bool> RemoveAsync<TEntity>(TEntity entity) 
+            where TEntity : new()
         {
             return (await _database.DeleteAsync(entity) > 0);
         }

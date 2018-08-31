@@ -58,6 +58,7 @@ namespace FilmsManager
             containerRegistry.Register<IUrlService, UrlService>();
             containerRegistry.Register<IHttpService, HttpService>();
             containerRegistry.Register<IDatabase, Database>();
+            containerRegistry.Register<IDatabaseManager, DatabaseManager>();
             containerRegistry.Register<IHttpManager, HttpManager>();
         }
     }

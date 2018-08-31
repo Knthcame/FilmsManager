@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using SQLite;
-using SQLiteNetExtensions.Attributes;
+﻿using SQLite;
 
 namespace Models.Classes
 {
@@ -11,7 +9,7 @@ namespace Models.Classes
         
         public string GenreBlobbed { get; set; }
 
-        [TextBlob(nameof(GenreBlobbed))]
+        [Ignore]
         public GenreModel Genre { get; set; }
 
         public string Image { get; set; }

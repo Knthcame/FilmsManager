@@ -15,7 +15,7 @@ namespace FilmsManager.Managers
 {
     public class HttpManager : IHttpManager
     {
-        private readonly IDatabase _database;
+        private readonly IDatabaseManager _databaseManager;
 
         private readonly IRestService _restService;
 
@@ -23,15 +23,17 @@ namespace FilmsManager.Managers
 
         private readonly IEventAggregator _eventAggregator;
 
-        public HttpManager(IDatabase database, IRestService restService, IUrlService urlService, IEventAggregator eventAggregator)
+        public HttpManager(IDatabaseManager databaseManager, IRestService restService, IUrlService urlService, IEventAggregator eventAggregator)
         {
-            _database = database;
+            _databaseManager = databaseManager;
             _restService = restService;
             _urlService = urlService;
             _eventAggregator = eventAggregator;
         }
 
-        public async Task<TResponse> RefreshDataAsync<TEntity, TResponse>() where TEntity : IEntity, new() where TResponse : class, new()
+        public async Task<TResponse> RefreshDataAsync<TEntity, TResponse>() 
+            where TEntity : class, IEntity, new() 
+            where TResponse : class, new()
         {
             try
             {
@@ -41,7 +43,7 @@ namespace FilmsManager.Managers
                 }
                 else
                 {
-                    var response = await _database.FindAllAsync<TEntity, TResponse>();
+                    var response = await _databaseManager.FindAllAsync<TEntity, TResponse>();
 
                     if (typeof(TEntity) == typeof(GenreModel) && IsGenresNullOrEmpty(response as GenreResponse))
                     {
@@ -62,31 +64,23 @@ namespace FilmsManager.Managers
             }
         }
 
-        private bool IsGenresNullOrEmpty(GenreResponse response)
-        {
-            if (response == null)
-                return true;
-            if (response.English == null || response.Spanish == null)
-                return true;
-            else
-                return !response.English.Any() && !response.Spanish.Any();
-        }
-
-        public async Task SaveEntityAsync<TEntity>(TEntity entity, bool isNewItem) where TEntity : IEntity, new()
+        public async Task SaveEntityAsync<TEntity>(TEntity entity, bool isNewItem)
+            where TEntity : class, IEntity, new()
         {
             if(await IsApiReachableAsync<TEntity>())
             {
                 _restService.SaveEntityAsync(entity, isNewItem);
             }
-            _database.AddOrUpdateAsync(entity);
+            _databaseManager.AddOrUpdateAsync(entity);
         }
-        public async Task DeleteEntityAsync<TEntity>(TEntity entity) where TEntity : IEntity, new()
+        public async Task DeleteEntityAsync<TEntity>(TEntity entity) 
+            where TEntity : IEntity, new()
         {
             if(await IsApiReachableAsync<TEntity>())
             {
                 _restService.DeleteEntityAsync<TEntity>(entity.Id);
             }
-            _database.RemoveAsync(entity);
+            _databaseManager.RemoveAsync(entity);
         }
 
         public async Task<bool> IsApiReachableAsync<TEntity>()
@@ -98,8 +92,18 @@ namespace FilmsManager.Managers
         public GenreResponse GetDefaultGenres()
         {
             var response = GenreConstants.DefaultGenres;
-            _database.AddOrUpdateAsync(response);
+            _databaseManager.AddOrUpdateAsync(response);
             return response;
+        }
+
+        private bool IsGenresNullOrEmpty(GenreResponse response)
+        {
+            if (response == null)
+                return true;
+            if (response.English == null || response.Spanish == null)
+                return true;
+            else
+                return !response.English.Any() && !response.Spanish.Any();
         }
     }
 }
