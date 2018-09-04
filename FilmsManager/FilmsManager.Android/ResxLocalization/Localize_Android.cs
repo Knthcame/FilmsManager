@@ -1,4 +1,5 @@
-﻿using FilmsManager.Droid.ResxLocalization;
+﻿using FilmsManager.Constants;
+using FilmsManager.Droid.ResxLocalization;
 using FilmsManager.ResxLocalization;
 using System.Globalization;
 using System.Threading;
@@ -37,14 +38,14 @@ namespace FilmsManager.Droid.ResxLocalization
 		}
 		public CultureInfo GetMobileCultureInfo()
 		{
-			var netLanguage = "en";
+			var netLanguage = LanguageConstants.DefaultCulture;
 			var androidLocale = Java.Util.Locale.Default;
 			netLanguage = AndroidToDotnetLanguage(androidLocale.ToString().Replace("_", "-"));
 			// this gets called a lot - try/catch can be expensive so consider caching or something
 			System.Globalization.CultureInfo ci = null;
 			try
 			{
-				ci = new System.Globalization.CultureInfo(netLanguage);
+				ci = new CultureInfo(netLanguage);
 			}
 			catch (CultureNotFoundException e1)
 			{
@@ -53,12 +54,12 @@ namespace FilmsManager.Droid.ResxLocalization
 				try
 				{
 					var fallback = ToDotnetFallbackLanguage(new PlatformCulture(netLanguage));
-					ci = new System.Globalization.CultureInfo(fallback);
+					ci = new CultureInfo(fallback);
 				}
 				catch (CultureNotFoundException e2)
 				{
 					// iOS language not valid .NET culture, falling back to English
-					ci = new System.Globalization.CultureInfo("en");
+					ci = new CultureInfo(LanguageConstants.DefaultCulture);
 				}
 			}
 			return ci;

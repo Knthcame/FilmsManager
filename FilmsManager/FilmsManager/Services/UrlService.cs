@@ -18,10 +18,10 @@ namespace FilmsManager.Services.Interfaces
         public Uri GetUri<TEntity>(string routeExtension = "")
         {
             var type = typeof(TEntity);
-            if (!_controller.TryGetValue(type, out string controller))
-                return null;
-
-            return new Uri(string.Format(ApiConstants.RestUrl + controller, routeExtension));
+            if (_controller.TryGetValue(type, out string controller))
+                return new Uri(string.Format(ApiConstants.RestUrl + controller, routeExtension));
+            else
+                return new Uri(string.Format(ApiConstants.RestUrl, routeExtension));
         }
     }
 }

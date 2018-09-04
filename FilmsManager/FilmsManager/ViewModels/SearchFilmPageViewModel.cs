@@ -13,6 +13,7 @@ using FilmsManager.Extensions;
 using Prism.Logging;
 using FilmsManager.Logging.Interfaces;
 using FilmsManager.Managers.Interfaces;
+using FilmsManager.Constants;
 
 namespace FilmsManager.ViewModels
 {
@@ -147,6 +148,12 @@ namespace FilmsManager.ViewModels
                     FilteredMovieList = new ObservableCollection<MovieModel>(MovieList);
                     break;
             }
+        }
+
+        public override void OnNavigatedTo(NavigationParameters parameters)
+        {
+            MovieList = GetNavigationParameter(parameters, NavigationConstants.MovieList) as ObservableCollection<MovieModel>;
+            GenreList = GetNavigationParameter(parameters, NavigationConstants.GenreList) as ObservableCollection<GenreModel>;
         }
     }
 }

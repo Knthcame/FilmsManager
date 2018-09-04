@@ -103,8 +103,6 @@ namespace FilmsManager.ViewModels
             ShowDetailsCommand = new DelegateCommand<MovieModel>(async (movie) => await OnShowDetailAsync(movie));
             RefreshCommand = new DelegateCommand(async () => await RefreshMovieListAsync());
             IsRefreshingMovieList = false;
-            InitializationNotifier = NotifyTaskCompletion.Create(RefreshMovieListAsync());
-            InitializationNotifier = NotifyTaskCompletion.Create(GetGenresAsync());
         }
 
         protected virtual async Task OnDeleteFilmAsync(MovieModel movie)

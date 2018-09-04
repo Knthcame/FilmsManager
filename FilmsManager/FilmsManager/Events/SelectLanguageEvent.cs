@@ -1,8 +1,9 @@
-﻿using Prism.Events;
+﻿using FilmsManager.Models;
+using Prism.Events;
 
 namespace FilmsManager.Events
 { 
-	class SelectLanguageEvent : PubSubEvent
+	public class SelectLanguageEvent : PubSubEvent<LanguageModel>
     {
     }
 }

@@ -12,6 +12,11 @@ using FilmsManager.Events;
 using Prism.Services;
 using FilmsManager.Logging.Interfaces;
 using FilmsManager.Managers.Interfaces;
+using FilmsManager.Models;
+using FilmsManager.ResxLocalization;
+using System.Globalization;
+using Nito.AsyncEx;
+using FilmsManager.Constants;
 
 namespace FilmsManager.ViewModels
 {
@@ -30,17 +35,16 @@ namespace FilmsManager.ViewModels
 
 		private string _genreColumn;
 
+        private readonly IEventAggregator _eventAggregator;
 		public string SearchToolbarIcon { get; set; } = AppImages.MagnifyingGlass;
 
-		public ICommand NavigateCommand { get; set; }
+		public ICommand AddFilmCommand { get; set; }
 
 		public ICommand SearchCommand { get; set; }
 
 		public ICommand LanguageOptionsCommand { get; set; }
 
-        private readonly IEventAggregator _eventAggregator;
-
-		public string LanguageAbreviation
+        public string LanguageAbreviation
 		{
 			get { return _languageAbreviation; }
 			set { SetProperty(ref _languageAbreviation, value); }
@@ -82,14 +86,22 @@ namespace FilmsManager.ViewModels
             : base(navigationService, httpManager, genreModelManager, pageDialogService, logger)
 		{
 			_eventAggregator = eventAggregator;
-			_eventAggregator.GetEvent<SelectLanguageEvent>().Subscribe(UpdatePageLanguage);
+			_eventAggregator.GetEvent<SelectLanguageEvent>().Subscribe(async (language) => await UpdatePageLanguage(language));
 			_eventAggregator.GetEvent<AddFilmEvent>().Subscribe(async () => await RefreshMovieListAsync());
             _eventAggregator.GetEvent<ConnectionErrorEvent>().Subscribe(async () => await NotifyConnectionErrorAsync());
             _eventAggregator.GetEvent<MovieListRefreshedEvent>().Subscribe(NotifyMovieListRefreshed);
-			NavigateCommand = new DelegateCommand(async () => await OnNavigateAsync());
+            InitializationNotifier = NotifyTaskCompletion.Create(async () => await InitializeHomePageAsync());
+			AddFilmCommand = new DelegateCommand(async () => await OnAddButtonClickedAsync());
 			SearchCommand = new DelegateCommand(async () => await OnSearchAsync());
 			LanguageOptionsCommand = new DelegateCommand(async () => await OnLanguageOptionsAsync());
-			LoadResources();
+        }
+
+        private async Task InitializeHomePageAsync()
+        {
+            await InitializeAppLanguageAsync();
+            LoadResources();
+            await GetGenresAsync();
+            await RefreshMovieListAsync();
         }
 
         private void NotifyMovieListRefreshed()
@@ -124,11 +136,32 @@ namespace FilmsManager.ViewModels
             RefreshGenreList();
 		}
 
-        private void UpdatePageLanguage()
+        private async Task UpdatePageLanguage(LanguageModel language)
         {
+            SetAppLanguage(language);
             LoadResources();
             UpdateMovieListLanguage();
-            return;
+        }
+
+        private void SetAppLanguage(LanguageModel language)
+        {
+            _httpManager.SaveEntityAsync(language, false);
+            var ci = new CultureInfo(language.Abreviation);
+            AppResources.Culture = ci;
+            Xamarin.Forms.DependencyService.Get<ILocalize>().SetCurrentCultureInfo(ci);
+
+        }
+
+        private async Task InitializeAppLanguageAsync()
+        {
+            var language = await _httpManager.RefreshDataAsync<LanguageModel, LanguageModel>();
+            if (language == null)
+            {
+                var culture = Xamarin.Forms.DependencyService.Get<ILocalize>().GetMobileCultureInfo();
+                if (!LanguageConstants.SupportedCultures.TryGetValue(culture.Name, out language))
+                    language = LanguageConstants.DefaultLanguage;
+            }
+            SetAppLanguage(language);
         }
 
 		private async Task OnLanguageOptionsAsync()
@@ -143,16 +176,20 @@ namespace FilmsManager.ViewModels
                 await _pageDialogService.DisplayAlertAsync(AppResources.SearchEmptyListTitle, AppResources.SearchEmptyListMessage, AppResources.SearchEmptyListCancelButton);
                 return;
             }
-                
-			await NavigationService.NavigateAsync(nameof(SearchFilmPage));
+            var parameters = new NavigationParameters()
+            {
+                {NavigationConstants.MovieList, MovieList },
+                {NavigationConstants.GenreList, GenreList }
+            };    
+			await NavigationService.NavigateAsync(nameof(SearchFilmPage), parameters);
 		}
 
-		private async Task OnNavigateAsync()
+		private async Task OnAddButtonClickedAsync()
 		{
 			var parameters = new NavigationParameters
 			{
-				{ "movieList", MovieList },
-				{ "genreList", GenreList }
+				{ NavigationConstants.MovieList, MovieList },
+				{ NavigationConstants.GenreList, GenreList }
 			};
 			await NavigationService.NavigateAsync(nameof(AddFilmPage), parameters);
 		}

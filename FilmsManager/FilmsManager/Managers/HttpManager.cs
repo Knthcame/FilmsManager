@@ -1,5 +1,6 @@
 ﻿using FilmsManager.Events;
 using FilmsManager.Managers.Interfaces;
+using FilmsManager.Models;
 using FilmsManager.Services.Interfaces;
 using Models.Classes;
 using Models.Constants;
@@ -37,6 +38,9 @@ namespace FilmsManager.Managers
         {
             try
             {
+                if (typeof(TEntity) == typeof(LanguageModel))
+                    return await _databaseManager.FindAllAsync<TEntity, TResponse>();
+
                 if (await IsApiReachableAsync<TEntity>())
                 {
                     return await _restService.RefreshDataAsync<TEntity, TResponse>();
@@ -49,6 +53,7 @@ namespace FilmsManager.Managers
                     {
                         var genres = GetDefaultGenres();
                         response = GetDefaultGenres() as TResponse;
+                        _databaseManager.AddOrUpdateAsync(genres);
                     }
                     if (typeof(TResponse) == typeof(List<MovieModel>))
                     {

@@ -15,7 +15,7 @@ namespace FilmsManager.Services.Interfaces
         Task<bool> AddOrUpdateAsync<TEntity>(IEnumerable<TEntity> entities) 
             where TEntity : IEntity, new();
 
-        Task<bool> AddOrUpdateAsync<TEntity>(TEntity entity) 
+        Task<bool> AddOrUpdateAsync<TEntity>(TEntity entity, bool isSingular = false) 
             where TEntity : IEntity, new();
 
         Task<bool> RemoveAsync<TEntity>(TEntity entity) 

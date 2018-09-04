@@ -37,7 +37,7 @@ namespace FilmsManager.iOS.ResxLocalization
 		}
 		public CultureInfo GetMobileCultureInfo()
 		{
-			var netLanguage = "en";
+			var netLanguage = LanguageConstants.DefaultCulture;
 			if (NSLocale.PreferredLanguages.Length > 0)
 			{
 				var pref = NSLocale.PreferredLanguages[0];
@@ -61,7 +61,7 @@ namespace FilmsManager.iOS.ResxLocalization
 				catch (CultureNotFoundException e2)
 				{
 					// iOS language not valid .NET culture, falling back to English
-					ci = new CultureInfo("en");
+					ci = new CultureInfo(LanguageConstants.DefaultCulture);
 				}
 			}
 			return ci;

@@ -100,7 +100,7 @@
                     HorizontalOptions="Fill"
                     Text="{Binding AddText}"
                     TextColor="Black"
-                    Command="{Binding NavigateCommand}"
+                    Command="{Binding AddFilmCommand}"
                     BackgroundColor="LightGray"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"

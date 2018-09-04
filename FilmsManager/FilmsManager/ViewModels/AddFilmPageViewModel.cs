@@ -18,6 +18,7 @@ using Prism.Logging;
 using FilmsManager.Logging.Interfaces;
 using FilmsManager.Services.Interfaces;
 using FilmsManager.Managers.Interfaces;
+using FilmsManager.Constants;
 
 namespace FilmsManager.ViewModels
 {
@@ -119,7 +120,7 @@ namespace FilmsManager.ViewModels
             if (parameters == null || parameters.Count == 0)
                 return;
 
-            GenreList = GetNavigationParameter(parameters, "genreList", GenreList) as ObservableCollection<GenreModel>;
+            GenreList = GetNavigationParameter(parameters, NavigationConstants.GenreList) as ObservableCollection<GenreModel>;
         }
 
         private void OnPickImage(PickImageModel imageModel)

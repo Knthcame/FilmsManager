@@ -33,13 +33,6 @@ namespace FilmsManager
         {
             InitializeComponent();
 
-			if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
-			{
-				var ci = DependencyService.Get<ILocalize>().GetMobileCultureInfo();
-				DependencyService.Get<ILocalize>().SetCurrentCultureInfo(ci); // set the Thread for locale-aware methods
-				AppResources.Culture = ci; // set the RESX for resource localization
-			}
-
 			await NavigationService.NavigateAsync("NavigationPage/"+ nameof(HomePage));
         }
 

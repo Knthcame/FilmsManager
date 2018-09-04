@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading.Tasks;
 using FilmsManager.Logging.Interfaces;
 using Prism.Logging;
+using FilmsManager.Models;
 
 namespace FilmsManager.Services
 {
@@ -21,31 +22,7 @@ namespace FilmsManager.Services
             logger.Log(path, Category.Debug, Priority.Medium);
 
             _database = new SQLiteAsyncConnection(path);
-            _database.CreateTablesAsync<MovieModel, GenreResponse>().Wait();
-        }
-
-        public async Task<bool> AddOrUpdateAsync<TEntity>(IEnumerable<TEntity> entities) 
-            where TEntity : IEntity, new()
-        {
-            foreach (TEntity entity in entities)
-            {
-                if (!await AddOrUpdateAsync(entity))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        public async Task<bool> AddOrUpdateAsync<TEntity>(TEntity entity) 
-            where TEntity : IEntity, new()
-        {
-            int i;
-            if (entity.Id == 0)
-                i = await _database.InsertAsync(entity);
-            else
-                i = await _database.UpdateAsync(entity);
-            return true;
+            _database.CreateTablesAsync<MovieModel, GenreResponse, LanguageModel>().Wait();
         }
 
         public async Task<TResponse> FindAllAsync<TEntity, TResponse>() 
@@ -55,9 +32,11 @@ namespace FilmsManager.Services
             var response = default(TResponse);
 
             if (typeof(TResponse) == typeof(GenreResponse))
-            {
                 response = await _database.Table<TResponse>().FirstOrDefaultAsync();
-            }
+
+            else if (typeof(TResponse) == typeof(LanguageModel))
+                response = await _database.Table<TResponse>().FirstOrDefaultAsync();
+
             else
                 response = await _database.Table<TEntity>().ToListAsync() as TResponse;
 
@@ -68,6 +47,37 @@ namespace FilmsManager.Services
             where TEntity : IEntity, new()
         {
             return await _database.Table<TEntity>().Where(entity => entity.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> AddOrUpdateAsync<TEntity>(IEnumerable<TEntity> entities) 
+            where TEntity : IEntity, new()
+        {
+            foreach (TEntity entity in entities)
+            {
+                if (!await AddOrUpdateAsync(entity, entity.Id > 0))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public async Task<bool> AddOrUpdateAsync<TEntity>(TEntity entity, bool isSingular = false) 
+            where TEntity : IEntity, new()
+        {
+            if (isSingular)
+            {
+                await _database.DropTableAsync<TEntity>();
+                await _database.CreateTableAsync<TEntity>();
+                return await _database.InsertAsync(entity) > 0;
+            }
+            else
+            {
+                if (entity.Id == 0)
+                    return await _database.InsertAsync(entity) > 0;
+                else
+                    return await _database.UpdateAsync(entity) > 0;
+            }
         }
 
         public async Task<bool> RemoveAllAsync<TEntity>() 
