@@ -66,8 +66,6 @@ namespace FilmsManager.ViewModels
             set { SetProperty(ref _genreList, value); }
         }
 
-        protected readonly IHttpManager _httpManager;
-
         protected readonly IGenreModelManager _genreModelManager;
 
         protected readonly IPageDialogService _pageDialogService;
@@ -93,16 +91,14 @@ namespace FilmsManager.ViewModels
         #endregion Properties
 
         public MovieListContentViewModel(INavigationService navigationService, IHttpManager httpManager, IGenreModelManager genreModelManager, IPageDialogService pageDialogService, ICustomLogger logger)
-            : base(navigationService)
+            : base(navigationService, httpManager)
         {
-            _httpManager = httpManager;
             _genreModelManager = genreModelManager;
             _pageDialogService = pageDialogService;
             _logger = logger;
             DeleteFilmCommand = new DelegateCommand<MovieModel>(async (movie) => await OnDeleteFilmAsync(movie));
             ShowDetailsCommand = new DelegateCommand<MovieModel>(async (movie) => await OnShowDetailAsync(movie));
             RefreshCommand = new DelegateCommand(async () => await RefreshMovieListAsync());
-            IsRefreshingMovieList = false;
         }
 
         protected virtual async Task OnDeleteFilmAsync(MovieModel movie)

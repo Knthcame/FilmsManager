@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using FilmsManager.Constants;
-using FilmsManager.Events;
+using FilmsManager.Managers.Interfaces;
 using FilmsManager.Models;
 using Prism.Commands;
-using Prism.Events;
 using Prism.Navigation;
 
 namespace FilmsManager.ViewModels
@@ -13,7 +12,7 @@ namespace FilmsManager.ViewModels
 	{
 		private LanguageModel _selectedLanguage;
 
-		public DelegateCommand SelectLanguageCommand { get; set; }
+        public DelegateCommand SelectLanguageCommand { get; set; }
 
         public DelegateCommand GoBackCommand { get; set; }
 
@@ -25,11 +24,8 @@ namespace FilmsManager.ViewModels
 			set { SetProperty( ref _selectedLanguage, value); }
 		}
 
-		private readonly IEventAggregator _eventAggregator;
-
-		public LanguageSelectionPageViewModel(INavigationService navigationService, IEventAggregator eventAggregator) : base(navigationService)
+		public LanguageSelectionPageViewModel(INavigationService navigationService, IHttpManager httpManager) : base(navigationService, httpManager)
 		{
-			_eventAggregator = eventAggregator;
 			SelectLanguageCommand = new DelegateCommand(async() => await OnSelectLanguageAsync());
             GoBackCommand = new DelegateCommand(async() => await OnBackButtonPressedAsync());
 		}
@@ -39,8 +35,8 @@ namespace FilmsManager.ViewModels
 			if (SelectedLanguage == null)
 				return;
             
-			_eventAggregator.GetEvent<SelectLanguageEvent>().Publish(SelectedLanguage);
+			SetAppLanguage(SelectedLanguage);
 			await NavigationService.GoBackAsync();
 		}
-	}
+    }
 }

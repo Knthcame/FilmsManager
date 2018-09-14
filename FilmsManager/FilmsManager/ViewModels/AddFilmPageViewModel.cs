@@ -16,7 +16,6 @@ using FilmsManager.Events;
 using System;
 using Prism.Logging;
 using FilmsManager.Logging.Interfaces;
-using FilmsManager.Services.Interfaces;
 using FilmsManager.Managers.Interfaces;
 using FilmsManager.Constants;
 
@@ -52,8 +51,6 @@ namespace FilmsManager.ViewModels
         private readonly IPageDialogService _pageDialogService;
 
         private readonly IEventAggregator _eventAggregator;
-
-        private readonly IHttpManager _httpManager;
 
         private readonly ICustomLogger _logger;
 
@@ -102,12 +99,11 @@ namespace FilmsManager.ViewModels
         }
         #endregion
 
-        public AddFilmPageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IPageDialogService pageDialogService, IHttpManager httpManager, ICustomLogger logger) : base(navigationService)
+        public AddFilmPageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IPageDialogService pageDialogService, IHttpManager httpManager, ICustomLogger logger) : base(navigationService, httpManager)
         {
             Title = AppResources.AddFilmPageTitle;
             _movieImage = _defaultMovieImage;
             _eventAggregator = eventAggregator;
-            _httpManager = httpManager;
             _logger = logger;
             AddCommand = new DelegateCommand(async () => await OnAddAsync());
             OpenGalleryCommand = new DelegateCommand(async () => await OnOpenGalleryAsync());

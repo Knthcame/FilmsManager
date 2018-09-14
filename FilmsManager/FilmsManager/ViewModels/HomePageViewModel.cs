@@ -86,7 +86,6 @@ namespace FilmsManager.ViewModels
             : base(navigationService, httpManager, genreModelManager, pageDialogService, logger)
 		{
 			_eventAggregator = eventAggregator;
-			_eventAggregator.GetEvent<SelectLanguageEvent>().Subscribe(async (language) => await UpdatePageLanguage(language));
 			_eventAggregator.GetEvent<AddFilmEvent>().Subscribe(async () => await RefreshMovieListAsync());
             _eventAggregator.GetEvent<ConnectionErrorEvent>().Subscribe(async () => await NotifyConnectionErrorAsync());
             _eventAggregator.GetEvent<MovieListRefreshedEvent>().Subscribe(NotifyMovieListRefreshed);
@@ -100,8 +99,8 @@ namespace FilmsManager.ViewModels
         {
             await InitializeAppLanguageAsync();
             LoadResources();
-            await GetGenresAsync();
-            await RefreshMovieListAsync();
+            GetGenresAsync();
+            RefreshMovieListAsync();
         }
 
         private void NotifyMovieListRefreshed()
@@ -135,22 +134,6 @@ namespace FilmsManager.ViewModels
 			}
             RefreshGenreList();
 		}
-
-        private async Task UpdatePageLanguage(LanguageModel language)
-        {
-            SetAppLanguage(language);
-            LoadResources();
-            UpdateMovieListLanguage();
-        }
-
-        private void SetAppLanguage(LanguageModel language)
-        {
-            _httpManager.SaveEntityAsync(language, false);
-            var ci = new CultureInfo(language.Abreviation);
-            AppResources.Culture = ci;
-            Xamarin.Forms.DependencyService.Get<ILocalize>().SetCurrentCultureInfo(ci);
-
-        }
 
         private async Task InitializeAppLanguageAsync()
         {
@@ -194,5 +177,10 @@ namespace FilmsManager.ViewModels
 			await NavigationService.NavigateAsync(nameof(AddFilmPage), parameters);
 		}
 
-	}
+        public override async void OnAppearingAsync()
+        {
+            base.OnAppearingAsync();
+            await InitializeHomePageAsync();
+        }
+    }
 }

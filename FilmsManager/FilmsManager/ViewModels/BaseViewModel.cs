@@ -1,10 +1,11 @@
-﻿using Prism.Mvvm;
+﻿using FilmsManager.Managers.Interfaces;
+using FilmsManager.Models;
+using FilmsManager.Resources;
+using FilmsManager.ResxLocalization;
+using Prism.Mvvm;
 using Prism.Navigation;
-using SQLite;
-using System;
-using System.IO;
+using System.Globalization;
 using System.Threading.Tasks;
-using Xamarin.Forms;
 
 namespace FilmsManager.ViewModels
 {
@@ -12,19 +13,19 @@ namespace FilmsManager.ViewModels
 	{
 		protected INavigationService NavigationService { get; private set; }
 
-		private string _title;
+		protected string _title;
+        protected readonly IHttpManager _httpManager;
 
-		public string Title
+        public string Title
 		{
 			get { return _title; }
 			set { SetProperty(ref _title, value); }
 		}
-
-
 		
-		public BaseViewModel(INavigationService navigationService)
+		public BaseViewModel(INavigationService navigationService, IHttpManager httpManager)
 		{
 			NavigationService = navigationService;
+            _httpManager = httpManager;
 		}
 
 		public virtual void OnNavigatedFrom(NavigationParameters parameters) { }
@@ -35,7 +36,7 @@ namespace FilmsManager.ViewModels
 
 		public virtual void Destroy() { }
 
-		public virtual void OnAppearing() { }
+		public virtual void OnAppearingAsync() { }
 
 		public virtual async Task<bool> OnBackButtonPressedAsync()
 		{
@@ -56,5 +57,13 @@ namespace FilmsManager.ViewModels
 			else
 				return outProperty;
 		}
-	}
+
+        protected void SetAppLanguage(LanguageModel language)
+        {
+            _httpManager.SaveEntityAsync(language, false);
+            var ci = new CultureInfo(language.Abreviation);
+            AppResources.Culture = ci;
+            Xamarin.Forms.DependencyService.Get<ILocalize>().SetCurrentCultureInfo(ci);
+        }
+    }
 }

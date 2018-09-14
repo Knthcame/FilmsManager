@@ -1,5 +1,6 @@
 ﻿using FilmsManager.Events;
 using FilmsManager.Logging.Interfaces;
+using FilmsManager.Managers.Interfaces;
 using FilmsManager.Models;
 using FilmsManager.Resources;
 using Models.Resources;
@@ -68,7 +69,8 @@ namespace FilmsManager.ViewModels
 
         #endregion
 
-        public PickImagePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IPageDialogService pageDialogService, ICustomLogger logger) : base(navigationService)
+        public PickImagePageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IPageDialogService pageDialogService, ICustomLogger logger, IHttpManager httpManager)
+            : base(navigationService, httpManager)
 		{
 			Title = AppResources.PickImagePageTitle;
 			_eventAggregator = eventAggregator;

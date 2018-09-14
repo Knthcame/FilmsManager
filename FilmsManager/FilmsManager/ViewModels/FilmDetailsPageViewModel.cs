@@ -1,4 +1,5 @@
-﻿using FilmsManager.Models;
+﻿using FilmsManager.Managers.Interfaces;
+using FilmsManager.Models;
 using FilmsManager.Resources;
 using Models.Classes;
 using Models.Resources;
@@ -18,7 +19,7 @@ namespace FilmsManager.ViewModels
 			set { SetProperty(ref _movie, value); }
 		}
 
-		public FilmDetailsPageViewModel(INavigationService navigationService) : base(navigationService)
+		public FilmDetailsPageViewModel(INavigationService navigationService, IHttpManager httpManager) : base(navigationService, httpManager)
 		{
 			Title = AppResources.FilmDetailsPageTitle;
 		}
