@@ -11,7 +11,7 @@ namespace FilmsManager.Logging
         {
             string messageToLog =
                 String.Format(System.Globalization.CultureInfo.InvariantCulture,
-                    "{1}: {2}. Priority: {3}. Timestamp:{0:u}.",
+                    "          {1}: {2}. Priority: {3}. Timestamp:{0:u}.",
                     DateTime.Now,
                     category.ToString().ToUpperInvariant(),
                     message,

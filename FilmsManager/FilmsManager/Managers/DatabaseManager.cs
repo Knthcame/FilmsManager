@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using FilmsManager.Models;
+using FilmsManager.Logging.Interfaces;
+using Prism.Logging;
 
 namespace FilmsManager.Managers
 {
@@ -12,24 +14,29 @@ namespace FilmsManager.Managers
     {
         public IDatabase Database { get; set; }
 
-        public DatabaseManager(IDatabase database)
+        private readonly ICustomLogger _logger;
+
+        public DatabaseManager(IDatabase database, ICustomLogger logger)
         {
             Database = database;
+            _logger = logger;
         }
 
         public async Task<TResponse> FindAllAsync<TEntity, TResponse>()
             where TEntity : class, IEntity, new()
             where TResponse : class, new()
         {
+            TResponse response = default(TResponse);
+
             if (typeof(TEntity) == typeof(MovieModel))
             {
-                var result = new List<MovieModel>();
+                var list = new List<MovieModel>();
                 var movies = await Database.FindAllAsync<TEntity, TResponse>() as List<MovieModel>;
                 foreach (MovieModel movie in movies)
                 {
-                    result.Add(DeserializeMovie<TEntity>(movie) as MovieModel);
+                    list.Add(DeserializeMovie<TEntity>(movie) as MovieModel);
                 }
-                return result as TResponse;
+                response = list as TResponse;
             }
             else if (typeof(TResponse) == typeof(GenreResponse))
             {
@@ -37,66 +44,99 @@ namespace FilmsManager.Managers
                 if (genres == null)
                     return default(TResponse);
 
-                return DeserializeGenreResponse(genres);
+                response = DeserializeGenreResponse(genres);
             }
-            else if (typeof(TResponse) == typeof(LanguageModel))
-                return await Database.FindAllAsync<TEntity, TResponse>();
-
             else
-                return await Database.FindAllAsync<TEntity, TResponse>();
+                response = await Database.FindAllAsync<TEntity, TResponse>();
+
+            if (response == null)
+                _logger.Log($"Failed to get {typeof(TEntity).Name} from database", Category.Warn, Priority.Medium);
+            else
+                _logger.Log($"Succesfully got {typeof(TEntity).Name} from database", Category.Info, Priority.Low);
+
+            return response;
         }
 
         public async Task<TEntity> FindAsync<TEntity>(int id) 
             where TEntity : class, IEntity, new()
         {
+            TEntity entity = default(TEntity);
+
             if (typeof(TEntity) == typeof(MovieModel))
             {
                 MovieModel movie = await Database.FindAsync<TEntity>(id) as MovieModel;
-                return DeserializeMovie<TEntity>(movie);
+                entity = DeserializeMovie<TEntity>(movie);
             }
             else
             {
-                return await Database.FindAsync<TEntity>(id);
+                entity = await Database.FindAsync<TEntity>(id);
             }
+
+            if (entity == null)
+                _logger.Log($"Failed to get {typeof(TEntity).Name} from database", Category.Warn, Priority.Medium);
+            else
+                _logger.Log($"Succesfully got {typeof(TEntity).Name} from database", Category.Info, Priority.Low);
+
+            return entity;
         }
+
         public async Task<bool> AddOrUpdateAsync<TEntity>(IEnumerable<TEntity> entities) 
             where TEntity : class, IEntity, new()
         {
+            int fails = 0;
+            int oks = 0;
             foreach (TEntity entity in entities)
             {
                 if (!await AddOrUpdateAsync(entity))
-                {
-                    return false;
-                }
+                    fails++;
             }
-            return true;
+            _logger.Log($"Added/updated {oks}/{oks + fails} {typeof(TEntity).Name}", Category.Info, Priority.Medium);
+            return fails == 0;
         }
 
         public async Task<bool> AddOrUpdateAsync<TEntity>(TEntity entity) 
             where TEntity : class, IEntity, new()
         {
+            bool succes;
             if (typeof(TEntity) == typeof(GenreResponse))
-                return await Database.AddOrUpdateAsync(SerializeGenreResponse(entity), true);
+                succes = await Database.AddOrUpdateAsync(SerializeGenreResponse(entity), true);
             else if (typeof(TEntity) == typeof(MovieModel))
             {
-                return await Database.AddOrUpdateAsync(SerializeMovie(entity));
+                succes = await Database.AddOrUpdateAsync(SerializeMovie(entity));
             }
-            else if (typeof(TEntity) == typeof(LanguageModel))
-                return await Database.AddOrUpdateAsync(entity, true);
             else
-                return await Database.AddOrUpdateAsync(entity);
+                succes = await Database.AddOrUpdateAsync(entity, typeof(TEntity) == typeof(LanguageModel));
+
+            if (succes)
+                _logger.Log($"Succesfully added/updated a {typeof(TEntity).Name}", Category.Info, Priority.Low);
+            else
+                _logger.Log($"Failed to add/update a {typeof(TEntity).Name}", Category.Info, Priority.Low);
+
+            return succes;
         }
 
         public async Task<bool> RemoveAllAsync<TEntity>() 
             where TEntity : new()
         {
-            return await Database.RemoveAllAsync<TEntity>();
+            var succes = await Database.RemoveAllAsync<TEntity>();
+            if (succes)
+                _logger.Log($"Succesfully removed all {typeof(TEntity).Name}", Category.Info, Priority.Low);
+            else
+                _logger.Log($"Failed to remove all {typeof(TEntity).Name}", Category.Warn, Priority.High);
+
+            return succes;
         }
 
         public async Task<bool> RemoveAsync<TEntity>(TEntity entity) 
             where TEntity : new()
         {
-            return await Database.RemoveAsync(entity);
+            var succes = await Database.RemoveAsync(entity);
+            if (succes)
+                _logger.Log($"Succesfully removed {typeof(TEntity).Name}", Category.Info, Priority.Low);
+            else
+                _logger.Log($"Failed to remove {typeof(TEntity).Name}", Category.Warn, Priority.High);
+
+            return succes;
         }
 
         private TResponse SerializeGenreResponse<TResponse>(TResponse response)
@@ -108,14 +148,6 @@ namespace FilmsManager.Managers
             return genres as TResponse;
         }
 
-        private string SerializeGenreList(IList<GenreModel> list)
-        {
-            if (list == null)
-                return null;
-            else
-                return JsonConvert.SerializeObject(list);
-        }
-
         private TResponse DeserializeGenreResponse<TResponse>(TResponse response)
             where TResponse : class
         {
@@ -123,6 +155,14 @@ namespace FilmsManager.Managers
             genres.English = DeserializeGenreList(genres.EnglishGenresBlobbed);
             genres.Spanish = DeserializeGenreList(genres.SpanishGenresBlobbed);
             return genres as TResponse;
+        }
+
+        private string SerializeGenreList(IList<GenreModel> list)
+        {
+            if (list == null)
+                return null;
+            else
+                return JsonConvert.SerializeObject(list);
         }
 
         private IList<GenreModel> DeserializeGenreList(string listBlobbed)

@@ -1,10 +1,12 @@
-﻿using FilmsManager.Managers.Interfaces;
+﻿using FilmsManager.Logging.Interfaces;
+using FilmsManager.Managers.Interfaces;
 using FilmsManager.Models;
 using FilmsManager.Services.Interfaces;
 using Models.Classes;
 using Models.Constants;
 using Plugin.Connectivity;
 using Prism.Events;
+using Prism.Logging;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -22,12 +24,15 @@ namespace FilmsManager.Managers
 
         private readonly IEventAggregator _eventAggregator;
 
-        public HttpManager(IDatabaseManager databaseManager, IRestService restService, IUrlService urlService, IEventAggregator eventAggregator)
+        private readonly ICustomLogger _logger;
+
+        public HttpManager(IDatabaseManager databaseManager, IRestService restService, IUrlService urlService, IEventAggregator eventAggregator, ICustomLogger logger)
         {
             _databaseManager = databaseManager;
             _restService = restService;
             _urlService = urlService;
             _eventAggregator = eventAggregator;
+            _logger = logger;
         }
 
         public async Task<TResponse> RefreshDataAsync<TEntity, TResponse>() 
@@ -58,7 +63,7 @@ namespace FilmsManager.Managers
                 }
             }catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                _logger.Log(ex.Message, Category.Exception, Priority.High);
                 return default(TResponse);
             }
         }
