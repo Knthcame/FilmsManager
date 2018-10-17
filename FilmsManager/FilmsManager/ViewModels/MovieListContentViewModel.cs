@@ -158,8 +158,8 @@ namespace FilmsManager.ViewModels
             _logger.Log("Refreshing movie list", Category.Info, Priority.Medium);
             await RetrieveMovieListAsync();
 
-            while (IsRefreshingMovieList)
-                await Task.Delay(100);
+            //while (IsRefreshingMovieList)
+            //    await Task.Delay(100);
          
             IsMovieListEmpty = !MovieList.Any();
 
