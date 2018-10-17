@@ -14,7 +14,6 @@ using FilmsManager.Logging.Interfaces;
 using FilmsManager.Managers.Interfaces;
 using FilmsManager.Models;
 using FilmsManager.ResxLocalization;
-using System.Globalization;
 using Nito.AsyncEx;
 using FilmsManager.Constants;
 
@@ -88,7 +87,6 @@ namespace FilmsManager.ViewModels
 			_eventAggregator = eventAggregator;
 			_eventAggregator.GetEvent<AddFilmEvent>().Subscribe(async () => await RefreshMovieListAsync());
             _eventAggregator.GetEvent<ConnectionErrorEvent>().Subscribe(async () => await NotifyConnectionErrorAsync());
-            _eventAggregator.GetEvent<MovieListRefreshedEvent>().Subscribe(NotifyMovieListRefreshed);
             InitializationNotifier = NotifyTaskCompletion.Create(async () => await InitializeHomePageAsync());
 			AddFilmCommand = new DelegateCommand(async () => await OnAddButtonClickedAsync());
 			SearchCommand = new DelegateCommand(async () => await OnSearchAsync());
@@ -101,11 +99,6 @@ namespace FilmsManager.ViewModels
             LoadResources();
             GetGenresAsync();
             RefreshMovieListAsync();
-        }
-
-        private void NotifyMovieListRefreshed()
-        {
-            IsRefreshingMovieList = false;
         }
 
         private async Task NotifyConnectionErrorAsync()
@@ -176,6 +169,12 @@ namespace FilmsManager.ViewModels
 			};
 			await NavigationService.NavigateAsync(nameof(AddFilmPage), parameters);
 		}
+
+        protected override async Task RefreshMovieListAsync()
+        {
+            await base.RefreshMovieListAsync();
+            IsRefreshingMovieList = false;
+        }
 
         public override async void OnAppearingAsync()
         {
