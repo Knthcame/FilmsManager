@@ -92,7 +92,7 @@ namespace FilmsManagerApi.Controllers
         // TODO Implement
         private int GenerateId()
         {
-            return Thread.CurrentThread.ManagedThreadId % System.DateTime.Now.Millisecond;
+            return (int)DateTime.Now.ToBinary() * 10 + Thread.CurrentThread.ManagedThreadId ;
         }
     }
 }

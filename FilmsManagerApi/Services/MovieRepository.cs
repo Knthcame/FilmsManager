@@ -44,9 +44,9 @@ namespace FilmsManagerApi.Services
         {
             _movieList = new List<MovieModel>
             {
-                new MovieModel ("Infinity war", new GenreModel(GenreKeys.SuperHeroesGenre, "Super heroes"), AppImages.InfinityWar),
-                new MovieModel ("Shrek", new GenreModel(GenreKeys.HumourGenre, "Humour"), AppImages.Shrek),
-                new MovieModel ("Shrek 2", new GenreModel(GenreKeys.HumourGenre, "Humour"), AppImages.Shrek2)
+                new MovieModel ("Infinity war", new GenreModel(GenreKeys.SuperHeroesGenre, "Super heroes"), AppImages.InfinityWar, 1),
+                new MovieModel ("Shrek", new GenreModel(GenreKeys.HumourGenre, "Humour"), AppImages.Shrek, 2),
+                new MovieModel ("Shrek 2", new GenreModel(GenreKeys.HumourGenre, "Humour"), AppImages.Shrek2, 3)
             };
         }
     }
