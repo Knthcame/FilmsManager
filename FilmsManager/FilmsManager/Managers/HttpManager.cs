@@ -1,5 +1,4 @@
-﻿using FilmsManager.Events;
-using FilmsManager.Managers.Interfaces;
+﻿using FilmsManager.Managers.Interfaces;
 using FilmsManager.Models;
 using FilmsManager.Services.Interfaces;
 using Models.Classes;
@@ -7,7 +6,6 @@ using Models.Constants;
 using Plugin.Connectivity;
 using Prism.Events;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -55,10 +53,6 @@ namespace FilmsManager.Managers
                         response = GetDefaultGenres() as TResponse;
                         _databaseManager.AddOrUpdateAsync(genres);
                     }
-                    if (typeof(TResponse) == typeof(List<MovieModel>))
-                    {
-                        _eventAggregator.GetEvent<MovieListRefreshedEvent>().Publish(); //Sometimes the refreshing icon stays on anyway 
-                    }
 
                     return response;
                 }
@@ -72,7 +66,7 @@ namespace FilmsManager.Managers
         public async Task SaveEntityAsync<TEntity>(TEntity entity, bool isNewItem)
             where TEntity : class, IEntity, new()
         {
-            if(await IsApiReachableAsync<TEntity>())
+            if(await IsApiReachableAsync<TEntity>() && typeof(TEntity) != typeof(LanguageModel))
             {
                 _restService.SaveEntityAsync(entity, isNewItem);
             }
@@ -81,7 +75,7 @@ namespace FilmsManager.Managers
         public async Task DeleteEntityAsync<TEntity>(TEntity entity) 
             where TEntity : IEntity, new()
         {
-            if(await IsApiReachableAsync<TEntity>())
+            if(await IsApiReachableAsync<TEntity>() && typeof(TEntity) != typeof(LanguageModel))
             {
                 _restService.DeleteEntityAsync<TEntity>(entity.Id);
             }
@@ -90,8 +84,8 @@ namespace FilmsManager.Managers
 
         public async Task<bool> IsApiReachableAsync<TEntity>()
         {
-            var url = _urlService.GetUri<TEntity>(string.Empty).AbsoluteUri;
-            return await CrossConnectivity.Current.IsReachable(url, 3000);
+            var uri = _urlService.GetUri<TEntity>();
+            return await CrossConnectivity.Current.IsRemoteReachable(uri.Host, uri.Port, 3000);
         }
 
         public GenreResponse GetDefaultGenres()
