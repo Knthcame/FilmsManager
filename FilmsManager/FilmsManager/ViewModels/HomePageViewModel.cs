@@ -87,15 +87,17 @@ namespace FilmsManager.ViewModels
 			_eventAggregator = eventAggregator;
 			_eventAggregator.GetEvent<AddFilmEvent>().Subscribe(async () => await RefreshMovieListAsync());
             _eventAggregator.GetEvent<ConnectionErrorEvent>().Subscribe(async () => await NotifyConnectionErrorAsync());
-            InitializationNotifier = NotifyTaskCompletion.Create(async () => await InitializeHomePageAsync());
+            _eventAggregator.GetEvent<SelectLanguageEvent>().Subscribe(async(language) => await InitializeHomePageAsync(language));
+            InitializationNotifier = NotifyTaskCompletion.Create(async() => await InitializeHomePageAsync());
 			AddFilmCommand = new DelegateCommand(async () => await OnAddButtonClickedAsync());
 			SearchCommand = new DelegateCommand(async () => await OnSearchAsync());
 			LanguageOptionsCommand = new DelegateCommand(async () => await OnLanguageOptionsAsync());
         }
 
-        private async Task InitializeHomePageAsync()
+        private async Task InitializeHomePageAsync(LanguageModel language = null)
         {
-            await InitializeAppLanguageAsync();
+            IsRefreshingMovieList = true;
+            await InitializeAppLanguageAsync(language);
             LoadResources();
             GetGenresAsync();
             RefreshMovieListAsync();
@@ -128,16 +130,18 @@ namespace FilmsManager.ViewModels
             RefreshGenreList();
 		}
 
-        private async Task InitializeAppLanguageAsync()
+        private async Task InitializeAppLanguageAsync(LanguageModel language = null)
         {
-            var language = await _httpManager.RefreshDataAsync<LanguageModel, LanguageModel>();
+            if (language == null)
+                language = await _httpManager.RefreshDataAsync<LanguageModel, LanguageModel>();
+
             if (language == null)
             {
                 var culture = Xamarin.Forms.DependencyService.Get<ILocalize>().GetMobileCultureInfo();
                 if (!LanguageConstants.SupportedCultures.TryGetValue(culture.Name, out language))
                     language = LanguageConstants.DefaultLanguage;
             }
-            SetAppLanguage(language);
+            await SetAppLanguageAsync(language);
         }
 
 		private async Task OnLanguageOptionsAsync()
@@ -172,14 +176,9 @@ namespace FilmsManager.ViewModels
 
         protected override async Task RefreshMovieListAsync()
         {
+            IsRefreshingMovieList = true;
             await base.RefreshMovieListAsync();
             IsRefreshingMovieList = false;
-        }
-
-        public override async void OnAppearingAsync()
-        {
-            base.OnAppearingAsync();
-            await InitializeHomePageAsync();
         }
     }
 }

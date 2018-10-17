@@ -58,9 +58,9 @@ namespace FilmsManager.ViewModels
 				return outProperty;
 		}
 
-        protected void SetAppLanguage(LanguageModel language)
+        protected async Task SetAppLanguageAsync(LanguageModel language)
         {
-            _httpManager.SaveEntityAsync(language, false);
+            await _httpManager.SaveEntityAsync(language, false);
             var ci = new CultureInfo(language.Abreviation);
             AppResources.Culture = ci;
             Xamarin.Forms.DependencyService.Get<ILocalize>().SetCurrentCultureInfo(ci);
