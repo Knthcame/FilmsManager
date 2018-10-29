@@ -14,12 +14,12 @@ namespace Models.Classes
 
         public string Image { get; set; }
 
-        public MovieModel(string title, GenreModel genre, string image, int id = default(int))
+        public MovieModel(string title, GenreModel genre, string image, int apiId = default(int))
         {
             Title = title;
             Genre = genre;
             Image = image;
-            Id = id;
+            ApiId = apiId;
         }
 
         public MovieModel() { }

@@ -32,10 +32,10 @@ namespace FilmsManagerApi.Controllers
 
             try
             {
-                if (_movieRepository.DoesItemExist(item.Id))
+                if (_movieRepository.DoesItemExist(item.ApiId))
                     return StatusCode(StatusCodes.Status409Conflict, ErrorCodeEnum.EntityIdInUse.ToString());
 
-                item.Id = GenerateId();
+                item.ApiId = GenerateId();
                 _movieRepository.Insert(item);
             }
             catch (Exception)
@@ -54,7 +54,7 @@ namespace FilmsManagerApi.Controllers
 
             try
             {
-                var foundItem = _movieRepository.Find(item.Id);
+                var foundItem = _movieRepository.Find(item.ApiId);
 
                 if (foundItem == null)
                     return NotFound(ErrorCodeEnum.RecordNotFound.ToString());

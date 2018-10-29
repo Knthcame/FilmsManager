@@ -6,5 +6,7 @@ namespace Models.Classes
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
+
+        public int ApiId { get; set; }
     }
 }

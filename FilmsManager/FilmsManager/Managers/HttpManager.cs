@@ -5,6 +5,7 @@ using FilmsManager.Services.Interfaces;
 using Models.Classes;
 using Models.Constants;
 using Plugin.Connectivity;
+using Plugin.Connectivity.Abstractions;
 using Prism.Events;
 using Prism.Logging;
 using System;
@@ -26,6 +27,8 @@ namespace FilmsManager.Managers
 
         private readonly ICustomLogger _logger;
 
+        private bool isApiUnsynchronized;
+
         public HttpManager(IDatabaseManager databaseManager, IRestService restService, IUrlService urlService, IEventAggregator eventAggregator, ICustomLogger logger)
         {
             _databaseManager = databaseManager;
@@ -33,6 +36,7 @@ namespace FilmsManager.Managers
             _urlService = urlService;
             _eventAggregator = eventAggregator;
             _logger = logger;
+            CrossConnectivity.Current.ConnectivityChanged += async(sender, args) => await Current_ConnectivityChangedAsync(sender, args);
         }
 
         public async Task<TResponse> RefreshDataAsync<TEntity, TResponse>() 
@@ -41,16 +45,18 @@ namespace FilmsManager.Managers
         {
             try
             {
+                var response = default(TResponse);
                 if (typeof(TEntity) == typeof(LanguageModel))
-                    return await _databaseManager.FindAllAsync<TEntity, TResponse>();
+                    response = await _databaseManager.FindAllAsync<TEntity, TResponse>();
 
-                if (await IsApiReachableAsync<TEntity>())
+                else if (await IsApiReachableAsync<TEntity>())
                 {
-                    return await _restService.RefreshDataAsync<TEntity, TResponse>();
+                    response = await _restService.RefreshDataAsync<TEntity, TResponse>();
+                    //_databaseManager.
                 }
                 else
                 {
-                    var response = await _databaseManager.FindAllAsync<TEntity, TResponse>();
+                    response = await _databaseManager.FindAllAsync<TEntity, TResponse>();
 
                     if (typeof(TEntity) == typeof(GenreModel) && IsGenresNullOrEmpty(response as GenreResponse))
                     {
@@ -58,9 +64,9 @@ namespace FilmsManager.Managers
                         response = GetDefaultGenres() as TResponse;
                         _databaseManager.AddOrUpdateAsync(genres);
                     }
-
-                    return response;
                 }
+                return response;
+
             }catch (Exception ex)
             {
                 _logger.Log(ex.Message, Category.Exception, Priority.High);
@@ -108,6 +114,25 @@ namespace FilmsManager.Managers
                 return true;
             else
                 return !response.English.Any() && !response.Spanish.Any();
+        }
+
+        private async Task Current_ConnectivityChangedAsync(object sender, ConnectivityChangedEventArgs args)
+        {
+            if (args.IsConnected && await IsApiReachableAsync<MovieModel>())
+            {
+                SyncApi<MovieModel>();
+                //SyncApi<GenreModel>(); Unnecessary for now
+            }
+        }
+
+        private void SyncApi<TEntity>()
+        {
+
+        }
+
+        private void SyncDatabase<TEntity>()
+        {
+
         }
     }
 }
