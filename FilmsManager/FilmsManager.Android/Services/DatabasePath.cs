@@ -1,5 +1,4 @@
-﻿using System.IO;
-using FilmsManager.Services.Interfaces;
+﻿using FilmsManager.Services.Interfaces;
 
 namespace FilmsManager.Droid.Services
 {

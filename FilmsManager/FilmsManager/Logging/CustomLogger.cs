@@ -1,7 +1,7 @@
-﻿using FilmsManager.Logging.Interfaces;
+﻿using System;
+using FilmsManager.Logging.Interfaces;
 using Newtonsoft.Json;
 using Prism.Logging;
-using System;
 
 namespace FilmsManager.Logging
 {

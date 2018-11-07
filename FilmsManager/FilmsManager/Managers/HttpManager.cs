@@ -1,4 +1,7 @@
-﻿using FilmsManager.Logging.Interfaces;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using FilmsManager.Logging.Interfaces;
 using FilmsManager.Managers.Interfaces;
 using FilmsManager.Models;
 using FilmsManager.Services.Interfaces;
@@ -8,10 +11,6 @@ using Plugin.Connectivity;
 using Plugin.Connectivity.Abstractions;
 using Prism.Events;
 using Prism.Logging;
-using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FilmsManager.Managers
 {

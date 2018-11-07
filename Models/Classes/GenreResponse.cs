@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 using SQLite;
-using System.Collections.Generic;
 
 namespace Models.Classes
 {

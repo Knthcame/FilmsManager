@@ -4,7 +4,7 @@ using SQLite;
 
 namespace FilmsManager.Models
 {
-	public class LanguageModel : BindableBase, IEntity
+    public class LanguageModel : BindableBase, IEntity
 	{
 		private string _language;
 		private string _abreviation;

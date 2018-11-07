@@ -1,16 +1,16 @@
 ﻿using Android.App;
 using Android.Content.PM;
-using Android.Views;
 using Android.OS;
-using Xamarin.Forms;
-using Prism;
-using Prism.Ioc;
-using Plugin.Permissions;
 using Android.Runtime;
+using Android.Views;
 using FilmsManager.Droid.ResxLocalization;
+using FilmsManager.Droid.Services;
 using FilmsManager.ResxLocalization;
 using FilmsManager.Services.Interfaces;
-using FilmsManager.Droid.Services;
+using Plugin.Permissions;
+using Prism;
+using Prism.Ioc;
+using Xamarin.Forms;
 
 namespace FilmsManager.Droid
 {

@@ -1,4 +1,7 @@
-﻿using FilmsManager.Events;
+﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using FilmsManager.Events;
 using FilmsManager.Logging.Interfaces;
 using FilmsManager.Managers.Interfaces;
 using FilmsManager.Models;
@@ -12,9 +15,6 @@ using Prism.Events;
 using Prism.Logging;
 using Prism.Navigation;
 using Prism.Services;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace FilmsManager.ViewModels

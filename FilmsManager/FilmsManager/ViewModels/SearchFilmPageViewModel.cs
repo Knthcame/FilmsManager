@@ -1,19 +1,19 @@
-﻿using Models.Constants;
-using Models.Managers.Interfaces;
-using Models.Classes;
-using Prism.Commands;
-using Prism.Navigation;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
-using FilmsManager.Resources;
+using FilmsManager.Constants;
 using FilmsManager.Enums;
-using Prism.Services;
 using FilmsManager.Extensions;
-using Prism.Logging;
 using FilmsManager.Logging.Interfaces;
 using FilmsManager.Managers.Interfaces;
-using FilmsManager.Constants;
+using FilmsManager.Resources;
+using Models.Classes;
+using Models.Constants;
+using Models.Managers.Interfaces;
+using Prism.Commands;
+using Prism.Logging;
+using Prism.Navigation;
+using Prism.Services;
 
 namespace FilmsManager.ViewModels
 {

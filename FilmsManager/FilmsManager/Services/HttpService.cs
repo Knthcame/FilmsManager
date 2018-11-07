@@ -1,10 +1,9 @@
-﻿using FilmsManager.Services.Interfaces;
-using Models.Classes;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using FilmsManager.Services.Interfaces;
+using Newtonsoft.Json;
 
 namespace FilmsManager.Services
 {

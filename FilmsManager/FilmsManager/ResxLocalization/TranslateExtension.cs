@@ -1,15 +1,14 @@
-﻿using FilmsManager.Resources;
-using Models.Resources;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Reflection;
 using System.Resources;
+using FilmsManager.Resources;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace FilmsManager.ResxLocalization
 {
-	[ContentProperty("Text")]
+    [ContentProperty("Text")]
 	public class TranslateExtension : IMarkupExtension
 	{
 		public static CultureInfo CultureInfo { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Threading;
+using FilmsManager.Constants;
 using FilmsManager.iOS.ResxLocalization;
 using FilmsManager.ResxLocalization;
 using Foundation;

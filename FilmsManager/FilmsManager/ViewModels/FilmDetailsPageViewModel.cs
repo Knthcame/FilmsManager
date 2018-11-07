@@ -1,5 +1,4 @@
 ﻿using FilmsManager.Managers.Interfaces;
-using FilmsManager.Models;
 using FilmsManager.Resources;
 using Models.Classes;
 using Models.Resources;
@@ -7,7 +6,7 @@ using Prism.Navigation;
 
 namespace FilmsManager.ViewModels
 {
-	public class FilmDetailsPageViewModel : BaseViewModel
+    public class FilmDetailsPageViewModel : BaseViewModel
 	{
 		private MovieModel _movie;
 

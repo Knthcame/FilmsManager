@@ -1,16 +1,15 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Collections.Generic;
+using FilmsManagerApi.Services;
+using FilmsManagerApi.Services.Interfaces;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using FilmsManagerApi.Services;
-using FilmsManagerApi.Services.Interfaces;
 using Models.Classes;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace FilmsManagerApi
 {
-	public class Startup
+    public class Startup
     {
         public Startup(IConfiguration configuration)
         {

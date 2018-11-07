@@ -1,11 +1,11 @@
-﻿using FilmsManager.Managers.Interfaces;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using FilmsManager.Logging.Interfaces;
+using FilmsManager.Managers.Interfaces;
+using FilmsManager.Models;
 using FilmsManager.Services.Interfaces;
 using Models.Classes;
-using System.Collections.Generic;
 using Newtonsoft.Json;
-using System.Threading.Tasks;
-using FilmsManager.Models;
-using FilmsManager.Logging.Interfaces;
 using Prism.Logging;
 
 namespace FilmsManager.Managers

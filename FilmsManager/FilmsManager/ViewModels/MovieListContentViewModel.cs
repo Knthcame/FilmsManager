@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using FilmsManager.Extensions;
 using FilmsManager.Logging.Interfaces;
+using FilmsManager.Managers.Interfaces;
 using FilmsManager.Resources;
 using FilmsManager.ResxLocalization;
 using FilmsManager.Views;
@@ -15,8 +17,6 @@ using Prism.Commands;
 using Prism.Logging;
 using Prism.Navigation;
 using Prism.Services;
-using FilmsManager.Managers.Interfaces;
-using System.Linq;
 
 namespace FilmsManager.ViewModels
 {

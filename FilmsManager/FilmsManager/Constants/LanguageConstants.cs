@@ -1,8 +1,7 @@
-﻿using FilmsManager.Models;
-using Models.Resources;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
+using FilmsManager.Models;
+using Models.Resources;
 
 namespace FilmsManager.Constants
 {

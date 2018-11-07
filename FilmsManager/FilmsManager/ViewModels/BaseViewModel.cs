@@ -1,11 +1,11 @@
-﻿using FilmsManager.Managers.Interfaces;
+﻿using System.Globalization;
+using System.Threading.Tasks;
+using FilmsManager.Managers.Interfaces;
 using FilmsManager.Models;
 using FilmsManager.Resources;
 using FilmsManager.ResxLocalization;
 using Prism.Mvvm;
 using Prism.Navigation;
-using System.Globalization;
-using System.Threading.Tasks;
 
 namespace FilmsManager.ViewModels
 {

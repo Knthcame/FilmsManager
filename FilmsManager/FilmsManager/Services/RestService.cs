@@ -1,13 +1,13 @@
-﻿using Models.Classes;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Prism.Events;
 using FilmsManager.Events;
-using Prism.Logging;
 using FilmsManager.Logging.Interfaces;
 using FilmsManager.Services.Interfaces;
+using Models.Classes;
+using Newtonsoft.Json;
+using Prism.Events;
+using Prism.Logging;
 
 namespace FilmsManager.Services
 {

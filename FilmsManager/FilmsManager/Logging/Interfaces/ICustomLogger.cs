@@ -1,5 +1,4 @@
 ﻿using Prism.Logging;
-using System;
 
 namespace FilmsManager.Logging.Interfaces
 {

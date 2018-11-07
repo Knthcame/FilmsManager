@@ -3,7 +3,7 @@ using Xamarin.Forms;
 
 namespace FilmsManager.Models
 {
-	public class PickImageModel : BindableBase 
+    public class PickImageModel : BindableBase 
 	{
 		private string _imageName;
 

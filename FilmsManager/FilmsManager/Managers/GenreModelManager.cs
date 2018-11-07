@@ -1,7 +1,7 @@
-﻿using Models.Constants;
-using Models.Managers.Interfaces;
+﻿using FilmsManager.Resources;
 using Models.Classes;
-using FilmsManager.Resources;
+using Models.Constants;
+using Models.Managers.Interfaces;
 
 namespace Models.Managers
 {

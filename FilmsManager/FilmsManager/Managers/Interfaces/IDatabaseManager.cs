@@ -1,7 +1,7 @@
-﻿using FilmsManager.Services.Interfaces;
-using Models.Classes;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using FilmsManager.Services.Interfaces;
+using Models.Classes;
 
 namespace FilmsManager.Managers.Interfaces
 {

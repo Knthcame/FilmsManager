@@ -1,23 +1,23 @@
-﻿using Models.Resources;
-using Models.Classes;
-using Prism.Commands;
-using Prism.Events;
-using Prism.Navigation;
-using Prism.Services;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Forms;
-using FilmsManager.Resources;
-using FilmsManager.Models;
-using FilmsManager.Views;
+using FilmsManager.Constants;
 using FilmsManager.Events;
-using System;
-using Prism.Logging;
 using FilmsManager.Logging.Interfaces;
 using FilmsManager.Managers.Interfaces;
-using FilmsManager.Constants;
+using FilmsManager.Models;
+using FilmsManager.Resources;
+using FilmsManager.Views;
+using Models.Classes;
+using Models.Resources;
+using Prism.Commands;
+using Prism.Events;
+using Prism.Logging;
+using Prism.Navigation;
+using Prism.Services;
+using Xamarin.Forms;
 
 namespace FilmsManager.ViewModels
 {

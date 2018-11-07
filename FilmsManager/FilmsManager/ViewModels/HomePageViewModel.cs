@@ -1,21 +1,21 @@
-﻿using Prism.Commands;
-using Prism.Navigation;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows.Input;
-using Models.Resources;
-using Prism.Events;
-using Xamarin.Forms;
-using Models.Managers.Interfaces;
-using FilmsManager.Resources;
-using FilmsManager.Views;
+using FilmsManager.Constants;
 using FilmsManager.Events;
-using Prism.Services;
 using FilmsManager.Logging.Interfaces;
 using FilmsManager.Managers.Interfaces;
 using FilmsManager.Models;
+using FilmsManager.Resources;
 using FilmsManager.ResxLocalization;
+using FilmsManager.Views;
+using Models.Managers.Interfaces;
+using Models.Resources;
 using Nito.AsyncEx;
-using FilmsManager.Constants;
+using Prism.Commands;
+using Prism.Events;
+using Prism.Navigation;
+using Prism.Services;
+using Xamarin.Forms;
 
 namespace FilmsManager.ViewModels
 {

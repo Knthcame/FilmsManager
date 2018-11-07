@@ -1,12 +1,12 @@
-﻿using FilmsManager.Services.Interfaces;
-using Models.Classes;
-using SQLite;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using FilmsManager.Logging.Interfaces;
-using Prism.Logging;
 using FilmsManager.Models;
+using FilmsManager.Services.Interfaces;
+using Models.Classes;
+using Prism.Logging;
+using SQLite;
 
 namespace FilmsManager.Services
 {
